@@ -1,14 +1,14 @@
 const NEWS = [
   // category: 'event' | 'media' | 'release' | 'other'
   {
-    id: '',
-    date: '',
-    category: 'event',
-    title: '',
-    titleEn: '',
-    body: '',
-    bodyEn: '',
-    url: '',
+    id: 'relattice',
+    date: '2026.04.26',
+    category: 'release',
+    title: 'コンピレーションアルバム『Relattice』に参加',
+    titleEn: 'Participated in Compilation Album "Relattice"',
+    body: 'ネットレーベル「Relattice」のコンピレーションアルバム『Relattice』に参加しました。Tr.02「PURE」およびTr.12「キーポイント」（Sakuとの共作）を提供しています。',
+    bodyEn: 'Contributed two tracks to "Relattice," a compilation album by net label Relattice. Tr.02 "PURE" and Tr.12 "Key Point" (co-written with Saku).',
+    url: 'https://relattice.tumblr.com/',
     image: '',
   },
   {
