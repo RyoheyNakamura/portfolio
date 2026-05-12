@@ -212,8 +212,8 @@ work('dish-jockey', {
   title:     '株式会社NTTドコモ・スタジオ＆ライブ<br>DISH JOCKEY',
   titleEn:   'NTT Docomo Studio & Live<br>DISH JOCKEY',
 
-  desc:      'DISH JOCKEYは、「音」を盛り付ける「音楽のビュッフェ体験」。ビュッフェでお皿に料理をのせていくように、レコードみたいなお皿に食品サンプルをのせるだけでかっこいい音楽がつくれる、ふしぎな遊び場です。つくれる楽曲は、なんと14億通り。',
-  descEn:    'Sound design for DISH JOCKEY — a "music buffet" experience where placing food samples on record-shaped dishes generates music. Over 1.4 billion possible combinations.',
+  desc:      '株式会社NTTドコモ・スタジオ＆ライブが展開するインタラクティブ音楽体験「DISH JOCKEY」のサウンドデザインを担当いたしました。',
+  descEn:    'Handled sound design for "DISH JOCKEY," an interactive music experience developed by NTT Docomo Studio & Live.',
 
   credits:   '',
   creditsEn: '',
