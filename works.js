@@ -13,7 +13,7 @@
 //    image      : 'images/ファイル名.jpg'          （任意）
 //    soundcloud : 'SoundCloud URL'               （任意・ページのURL全体）
 //    spotify    : 'track/ID または album/ID'      （任意・open.spotify.com/以降のパス）
-//    bandcamp   : 'Bandcamp embed src URL'        （任意・Bandcamp の Share/Embed から iframe の src をコピー）
+//    bandcamp   : '<iframe ...>...</iframe>'        （任意・Bandcamp の Share/Embed から埋め込みコード全体をコピー）
 //    title      : '日本語タイトル'                （必須）
 //    titleEn    : '英語タイトル'                  （省略するとtitleを表示）
 //    desc       : '日本語説明文'                  （必須）
@@ -350,7 +350,7 @@ work('dip', {
   image:      'images/dip.jpg',
   soundcloud: '',
   spotify:    '',
-  bandcamp:   'https://bandcamp.com/EmbeddedPlayer/album=2222647963/size=large/bgcol=ffffff/linkcol=0687f5/tracklist=false/artwork=small/track=606952366/transparent=true/',
+  bandcamp:   '<iframe style="border: 0; width: 100%; height: 120px;" src="https://bandcamp.com/EmbeddedPlayer/album=2222647963/size=large/bgcol=ffffff/linkcol=0687f5/tracklist=false/artwork=small/track=606952366/transparent=true/" seamless><a href="https://physicalloosesolidarity.bandcamp.com/album/hexaholic">HEXAHOLIC Ryohey Nakamura</a></iframe>',
 
   title:     'DIP',
   titleEn:   'DIP',
@@ -373,7 +373,7 @@ work('vdshttr', {
   image:      'images/vdshttr.jpg',
   soundcloud: '',
   spotify:    '',
-  bandcamp:   'https://bandcamp.com/EmbeddedPlayer/album=3320236763/size=large/bgcol=ffffff/linkcol=0687f5/tracklist=false/artwork=small/track=974101391/transparent=true/',
+  bandcamp:   '<iframe style="border: 0; width: 100%; height: 120px;" src="https://bandcamp.com/EmbeddedPlayer/album=3320236763/size=large/bgcol=ffffff/linkcol=0687f5/tracklist=false/artwork=small/track=974101391/transparent=true/" seamless><a href="https://physicalloosesolidarity.bandcamp.com/album/physicists-harddrive">Physicists&#39; Harddrive Ryohey Nakamura</a></iframe>',
 
   title:     'VDSHTTR',
   titleEn:   'VDSHTTR',
@@ -396,7 +396,7 @@ work('goodnight-to-the-world', {
   image:      'images/goodnight-to-the-world.jpg',
   soundcloud: '',
   spotify:    '',
-  bandcamp:   'https://bandcamp.com/EmbeddedPlayer/album=366363831/size=large/bgcol=ffffff/linkcol=0687f5/tracklist=false/artwork=small/track=1683783587/transparent=true/',
+  bandcamp:   '<iframe style="border: 0; width: 100%; height: 120px;" src="https://bandcamp.com/EmbeddedPlayer/album=366363831/size=large/bgcol=ffffff/linkcol=0687f5/tracklist=false/artwork=small/track=1683783587/transparent=true/" seamless><a href="https://physicalloosesolidarity.bandcamp.com/album/physicists-habit">Physicists’ Habit Ryohey Nakamura</a></iframe>',
 
   title:     'Goodnight to the World We Once Knew',
   titleEn:   'Goodnight to the World We Once Knew',

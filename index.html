@@ -1167,7 +1167,9 @@
 
     function fitBandcampEmbeds() {
       document.querySelectorAll('.work-music-player.bandcamp iframe').forEach(iframe => {
-        const origW = parseInt(iframe.style.width) || 700;
+        const widthStyle = (iframe.style.width || '').trim();
+        if (!widthStyle.endsWith('px')) return; // width: 100% 等はすでにレスポンシブなのでスキップ
+        const origW = parseInt(widthStyle) || 700;
         const origH = parseInt(iframe.style.height) || 500;
         const actualW = iframe.offsetWidth;
         if (actualW > 0 && actualW < origW) {
