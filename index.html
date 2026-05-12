@@ -1156,6 +1156,7 @@
   <!-- Works Detail -->
   <script>
     WORKS.sort((a, b) => (b.date || '').replace(/\./g, '').localeCompare((a.date || '').replace(/\./g, '')));
+    const VISIBLE_WORKS = WORKS.filter(w => !w.hidden);
 
     let currentWorkId = null;
     let prevView = 'main';
@@ -1216,7 +1217,7 @@
     function buildCards() {
       const grid = document.querySelector('#works-view .grid');
       grid.innerHTML = '';
-      WORKS.forEach(w => {
+      VISIBLE_WORKS.forEach(w => {
         const year  = (w.date || '').slice(0, 4);
         const tags  = (w.tags || '').split(',').map(s => s.trim()).filter(Boolean);
         const yt0   = ytIds(w)[0];
@@ -1397,7 +1398,7 @@
       const grid = document.querySelector('.preview-grid');
       if (!grid) return;
       grid.innerHTML = '';
-      WORKS.slice(0, 6).forEach(w => {
+      VISIBLE_WORKS.slice(0, 6).forEach(w => {
         const year  = (w.date || '').slice(0, 4);
         const tags  = (w.tags || '').split(',').map(s => s.trim()).filter(Boolean);
         const yt0   = ytIds(w)[0];

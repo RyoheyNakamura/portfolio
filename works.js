@@ -20,6 +20,7 @@
 //    descEn     : '英語説明文'                    （省略するとdescを表示）
 //    credits    : '日本語クレジット'              （任意・<br>で改行）
 //    creditsEn  : '英語クレジット'                （省略するとcreditsを表示）
+//    hidden     : true                           （非表示にしたい場合のみ記載。省略すると表示）
 //
 //  ※ 空欄のフィールドは何も表示されません
 //  ※ youtube が複数ある場合は配列に追加してください
@@ -35,9 +36,10 @@ function work(id, d) { WORKS.push({ id, ...d }); }
 // ============================================================
 
 work('suntory-boss', {
+  hidden:   false,
   category:   'client',
   date:       '2026.02.03',
-  tags:       'TVCM, BOSS, サントリー',
+  tags:       'TVCM, サントリー',
   youtube:    ['wdHi1ySp5SU'],
   vimeo:      '',
   url:        '',
@@ -57,9 +59,10 @@ work('suntory-boss', {
 })
 
 work('riddle-valorant-2026', {
+  hidden:   false,
   category:   'client',
   date:       '2026.01.10',
-  tags:       'WebMovie, RIDDLE, VALORANT',
+  tags:       'WebMovie, RIDDLE ORDER',
   youtube:    ['IOWrImWC8ZY'],
   vimeo:      '',
   url:        '',
@@ -79,6 +82,7 @@ work('riddle-valorant-2026', {
 })
 
 work('world-trigger-reboot', {
+  hidden:   false,
   category:   'client',
   date:       '2025.12.20',
   tags:       'WebMovie, ワールドトリガー',
@@ -101,9 +105,10 @@ work('world-trigger-reboot', {
 })
 
 work('lotte-painomi', {
+  hidden:   false,
   category:   'client',
   date:       '2025.11.15',
-  tags:       'WebMovie, ロッテ, パイの実',
+  tags:       'WebMovie, パイの実',
   youtube:    [],
   vimeo:      '',
   url:        'https://www.lotte.co.jp/products/brand/painomi/painone/',
@@ -123,9 +128,10 @@ work('lotte-painomi', {
 })
 
 work('coca-cola-recycle', {
+  hidden:   false,
   category:   'client',
   date:       '2025.11.01',
-  tags:       'Exhibition, Coca-Cola, Sound Design',
+  tags:       'Exhibition, Coca-Cola',
   youtube:    [],
   vimeo:      '',
   url:        'https://www.coca-cola.com/jp/ja/environment/activities/Xfes2025',
@@ -145,6 +151,7 @@ work('coca-cola-recycle', {
 })
 
 work('kyuhaku-fumufumu', {
+  hidden:   false,
   category:   'client',
   date:       '2025.10.16',
   tags:       'Exhibition, 九州国立博物館',
@@ -167,6 +174,7 @@ work('kyuhaku-fumufumu', {
 })
 
 work('pokemon-go-fest-2025', {
+  hidden:   false,
   category:   'client',
   date:       '2025.07.17',
   tags:       'WebCM, ポケモン',
@@ -189,9 +197,10 @@ work('pokemon-go-fest-2025', {
 })
 
 work('dish-jockey', {
+  hidden:   false,
   category:   'client',
   date:       '2025.05.03',
-  tags:       'Exhibition, NTTドコモ, Sound Design',
+  tags:       'Exhibition, NTTドコモ',
   youtube:    [],
   vimeo:      '',
   url:        '',
@@ -211,9 +220,10 @@ work('dish-jockey', {
 })
 
 work('meiji-kajuugumi', {
+  hidden:   false,
   category:   'client',
   date:       '2025.03.06',
-  tags:       'TVCM, 明治, 果汁グミ, Arrange',
+  tags:       'TVCM, 果汁グミ',
   youtube:    [],
   vimeo:      '',
   url:        '',
@@ -233,6 +243,7 @@ work('meiji-kajuugumi', {
 })
 
 work('valorant-gc-2024', {
+  hidden:   false,
   category:   'client',
   date:       '2024.04.26',
   tags:       'WebMovie, VALORANT',
@@ -255,9 +266,10 @@ work('valorant-gc-2024', {
 })
 
 work('crazy-raccoon-cr-fes-2024', {
+  hidden:   false,
   category:   'client',
   date:       '2024.01.29',
-  tags:       'WebMovie, CrazyRaccoon, Remix',
+  tags:       'WebMovie, CrazyRaccoon',
   youtube:    [],
   vimeo:      '',
   url:        '',
@@ -277,6 +289,7 @@ work('crazy-raccoon-cr-fes-2024', {
 })
 
 work('otafuku-gochi-on', {
+  hidden:   false,
   category:   'client',
   date:       '2023.08.29',
   tags:       'TVCM, オタフクソース',
@@ -299,9 +312,10 @@ work('otafuku-gochi-on', {
 })
 
 work('riddle-welcome-456', {
+  hidden:   false,
   category:   'client',
   date:       '2022.02.20',
-  tags:       'WebMovie, RIDDLE, APEX',
+  tags:       'WebMovie, RIDDLE ORDER',
   youtube:    ['FS5JFSd3pCk'],
   vimeo:      '',
   url:        '',
@@ -325,7 +339,31 @@ work('riddle-welcome-456', {
 //  Self Works  ←  自主制作はここに追加
 // ============================================================
 
+work('pure', {
+  hidden:   false,
+  category:   'self',
+  date:       '2026.04.26',
+  tags:       'Hyperpop',
+  youtube:    [],
+  vimeo:      '',
+  url:        '',
+  image:      'images/pure.jpg',
+  soundcloud: '',
+  spotify:    '',
+  bandcamp:   'https://bandcamp.com/EmbeddedPlayer/album=3460887448/size=large/bgcol=ffffff/linkcol=0687f5/tracklist=false/artwork=small/track=807563539/transparent=true/',
+
+  title:     'PURE',
+  titleEn:   'PURE',
+
+  desc:      'ネットレーベル『Relattice』のコンピレーションアルバム「Relattice」収録曲。',
+  descEn:    'Included in "Relattice," a compilation album by net label Relattice.',
+
+  credits:   '',
+  creditsEn: '',
+})
+
 work('dip', {
+  hidden:   false,
   category:   'self',
   date:       '2025.10.26',
   tags:       'Techno',
@@ -348,6 +386,7 @@ work('dip', {
 })
 
 work('vdshttr', {
+  hidden:   false,
   category:   'self',
   date:       '2024.10.27',
   tags:       'Metal',
@@ -370,6 +409,7 @@ work('vdshttr', {
 })
 
 work('goodnight-to-the-world', {
+  hidden:   false,
   category:   'self',
   date:       '2023.10.29',
   tags:       'Ambient',
@@ -392,6 +432,7 @@ work('goodnight-to-the-world', {
 })
 
 work('transpop', {
+  hidden:   false,
   category:   'self',
   date:       '2023.03.18',
   tags:       'Saku, 初音ミク',
@@ -414,6 +455,7 @@ work('transpop', {
 })
 
 work('pop-culture-communication', {
+  hidden:   false,
   category:   'self',
   date:       '2021.09.11',
   tags:       'ElectroHouse',
@@ -436,6 +478,7 @@ work('pop-culture-communication', {
 })
 
 work('fantom-kiss', {
+  hidden:   false,
   category:   'self',
   date:       '2021.09.08',
   tags:       'ElectroHouse, FutureHouse',
@@ -458,6 +501,7 @@ work('fantom-kiss', {
 })
 
 work('cubed-design', {
+  hidden:   false,
   category:   'self',
   date:       '2020.04.11',
   tags:       'Dubstep',
@@ -480,6 +524,7 @@ work('cubed-design', {
 })
 
 work('the-last-letter', {
+  hidden:   false,
   category:   'self',
   date:       '2019.10.27',
   tags:       'MelodicDubstep',
@@ -502,6 +547,7 @@ work('the-last-letter', {
 })
 
 work('hello-resonance', {
+  hidden:   false,
   category:   'self',
   date:       '2019.06.02',
   tags:       'Electronica',
@@ -546,10 +592,34 @@ work('hello-resonance', {
 //  Produce  ←  プロデュース案件はここに追加
 // ============================================================
 
+work('nhk-eigodeasobo-welcome-to-the-jungle', {
+  hidden:   false,
+  category:   'produce',
+  date:       '2025.10.07',
+  tags:       'NHK, Eテレ',
+  youtube:    [],
+  vimeo:      '',
+  url:        '',
+  image:      '',
+  soundcloud: '',
+  spotify:    'track/5kNqbGvqQ0Q1ilHI1HBp7V?si=9c8a2ff62a9f4aac',
+  bandcamp:   '',
+
+  title:     'NHK Eテレ「えいごであそぼ Meets the World」<br>マンスリーソング「WELCOME TO THE JUNGLE」',
+  titleEn:   'NHK E-tele "Eigo de Asobo Meets the World"<br>Monthly Song "WELCOME TO THE JUNGLE"',
+
+  desc:      'NHK Eテレで放送されている『えいごであそぼ Meets the World』2025年10月のマンスリーソング「WELCOME TO THE JUNGLE」の作編曲を担当いたしました。',
+  descEn:    'Composed and arranged "WELCOME TO THE JUNGLE," the October 2025 monthly song for NHK E-tele\'s "Eigo de Asobo Meets the World."',
+
+  credits:   '作編曲：Ryohey Nakamura',
+  creditsEn: 'Composition & Arrangement: Ryohey Nakamura',
+})
+
 work('nhk-eigodeasobo-my-old-teddy-bear', {
+  hidden:   false,
   category:   'produce',
   date:       '2024.09.12',
-  tags:       'NHK, Eテレ, 作編曲',
+  tags:       'NHK, Eテレ',
   youtube:    [],
   vimeo:      '',
   url:        '',
@@ -569,9 +639,10 @@ work('nhk-eigodeasobo-my-old-teddy-bear', {
 })
 
 work('kinoshita-tamako-soda-no-mahou', {
+  hidden:   false,
   category:   'produce',
   date:       '2023.10.29',
-  tags:       '木下珠子, Album, 作曲・編曲',
+  tags:       '木下珠子',
   youtube:    ['eEizjCmOvnY'],
   vimeo:      '',
   url:        '',
