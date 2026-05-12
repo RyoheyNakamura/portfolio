@@ -607,6 +607,11 @@
       color: var(--text-secondary);
       flex-shrink: 0;
     }
+    .news-empty {
+      font-size: 13px;
+      color: var(--text-secondary);
+      padding: 24px 0;
+    }
     .tag.cat-event   { background: #fff8d6; color: #7a5800; border-color: #f0d060; }
     .tag.cat-media   { background: #fff1d0; color: #8a4e00; border-color: #f5c070; }
     .tag.cat-release { background: #fef5e0; color: #6a5200; border-color: #e8c84a; }
@@ -971,7 +976,7 @@
           </div>
           <div class="about-link-row">
             <span class="about-link-key">YouTube</span>
-            <span class="tbd" data-i18n="youtube_tbd">準備中</span>
+            <a href="https://www.youtube.com/@ryoheynakamura" target="_blank">@ryoheynakamura</a>
           </div>
           <div class="about-link-row">
             <span class="about-link-key">Instagram</span>
@@ -1087,7 +1092,6 @@
         about_label_profile:"Profile",
         about_role:         "Sound Producer / Composer",
         about_text:         "1999年生まれ。九州大学芸術工学部音響設計学科卒業。<br><br>大学在学中よりフリーランスとして音楽活動を開始し、DTMによる制作を中心に大学内外を問わず活動の幅を広げる。音楽とその他のコンテンツの結び付きについて特に強い関心があり、映像演出などと紐づいたアプローチを得意とする。<br><br>Dubstep、Drum'n'Bass、Houseなどを音楽制作のルーツに持つ一方で、体系的な音楽理論に基づいたオーケストレーションやJazzプレイヤーとしての経験もあり、多彩なジャンルを取り入れた独自のスタイルを展開している。<br><br>2023年に株式会社インビジに入社。",
-        youtube_tbd:        "準備中",
         about_label_contact:"Contact",
         mail_note:          "お仕事のご依頼・ご相談はメールにてお気軽にどうぞ。",
         suntory_boss_title:       "サントリー BOSS×大相撲<br>『働く私の土俵際』篇",
@@ -1136,7 +1140,6 @@
         about_label_profile:"Profile",
         about_role:         "Sound Producer / Composer",
         about_text:         "Born 1999. Graduated from Kyushu University, Dept. of Acoustic Design.<br><br>Began freelance music activities during university, expanding DAW-based production both within and beyond academia. Particularly passionate about the intersection of music and other creative media, with a specialty in synchronized audiovisual approaches.<br><br>Rooted in Dubstep, Drum'n'Bass, and House, while also versed in orchestration grounded in formal music theory and experienced as a jazz performer — developing a distinctive style that bridges diverse genres.<br><br>Joined Invisi Inc. in 2023.",
-        youtube_tbd:        "Coming soon",
         about_label_contact:"Contact",
         mail_note:          "Feel free to reach out for work inquiries or consultations.",
         suntory_boss_title:       "Suntory BOSS × Grand Sumo<br>'My Workday on the Edge'",
@@ -1550,9 +1553,31 @@
       const list = document.querySelector('.news-list');
       if (!list || typeof NEWS === 'undefined') return;
       list.innerHTML = '';
-      const sorted = [...NEWS].sort((a, b) =>
-        (b.date || '').replace(/\./g, '').localeCompare((a.date || '').replace(/\./g, ''))
-      ).slice(0, 5);
+
+      const oneYearAgo = new Date();
+      oneYearAgo.setFullYear(oneYearAgo.getFullYear() - 1);
+
+      const sorted = [...NEWS]
+        .filter(n => {
+          if (!n.id || !n.date) return false;
+          const d = new Date(n.date.replace(/\./g, '-'));
+          return d >= oneYearAgo;
+        })
+        .sort((a, b) =>
+          (b.date || '').replace(/\./g, '').localeCompare((a.date || '').replace(/\./g, ''))
+        )
+        .slice(0, 5);
+
+      if (!sorted.length) {
+        const msg = document.createElement('p');
+        msg.className = 'news-empty';
+        msg.textContent = currentLang === 'en'
+          ? 'No news at this time.'
+          : '現在お知らせはありません。';
+        list.appendChild(msg);
+        return;
+      }
+
       const labels = currentLang === 'en' ? NEWS_CATEGORY_LABEL_EN : NEWS_CATEGORY_LABEL;
       sorted.forEach(n => {
         const li = document.createElement('li');
