@@ -1165,17 +1165,16 @@
 
     const CATEGORY_LABEL = { client: 'Client', self: 'Self', produce: 'Produce' };
 
-    function scaleBandcampEmbeds() {
-      document.querySelectorAll('.work-music-player.bandcamp').forEach(wrapper => {
-        const iframe = wrapper.querySelector('iframe');
-        if (!iframe) return;
-        const nativeW = iframe.offsetWidth || parseInt((iframe.style.width || '350').replace('px','')) || 350;
-        const nativeH = iframe.offsetHeight || parseInt((iframe.style.height || '120').replace('px','')) || 120;
-        const containerW = wrapper.offsetWidth;
-        if (!containerW || nativeW >= containerW) return;
-        const scale = containerW / nativeW;
-        iframe.style.transform = `scale(${scale})`;
-        wrapper.style.height = (nativeH * scale) + 'px';
+    function fitBandcampEmbeds() {
+      document.querySelectorAll('.work-music-player.bandcamp iframe').forEach(iframe => {
+        const origW = parseInt(iframe.style.width) || 700;
+        const origH = parseInt(iframe.style.height) || 500;
+        const actualW = iframe.offsetWidth;
+        if (actualW > 0 && actualW < origW) {
+          iframe.style.height = Math.round(origH * actualW / origW) + 'px';
+        } else {
+          iframe.style.height = origH + 'px';
+        }
       });
     }
 
@@ -1325,6 +1324,7 @@
         embed += `<a class="work-external-link" href="${w.url}" target="_blank" rel="noopener">↗ ${tr.view_external || '外部サイトで見る'}</a>`;
       }
       document.getElementById('wd-embed').innerHTML = embed;
+      requestAnimationFrame(fitBandcampEmbeds);
       const tags = (w.tags || '').split(',').map(s => s.trim()).filter(Boolean);
       document.getElementById('wd-tags').innerHTML  = tags.map(t => `<span class="tag">${t}</span>`).join('');
       const credits = wt(w, 'credits');
@@ -1630,6 +1630,7 @@
       if (n.spotify) embed += `<div class="work-music-player spotify"><iframe src="https://open.spotify.com/embed/${n.spotify}?utm_source=generator" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe></div>`;
       if (n.soundcloud) embed += `<div class="work-music-player soundcloud"><iframe src="https://w.soundcloud.com/player/?url=${encodeURIComponent(n.soundcloud)}&color=%23ffd559&auto_play=false&hide_related=true&show_comments=false&show_user=true&show_reposts=false&show_teaser=false"></iframe></div>`;
       document.getElementById('nd-embed').innerHTML = embed;
+      requestAnimationFrame(fitBandcampEmbeds);
       const urlEl = document.getElementById('nd-url');
       urlEl.innerHTML = n.url
         ? `<a class="work-external-link" href="${n.url}" target="_blank" rel="noopener">${lang === 'en' ? 'Open link →' : 'リンクを開く →'}</a>` : '';
@@ -1807,6 +1808,7 @@
       if (newW !== _prevW || Math.abs(newH - _prevH) > 150) {
         _prevW = newW; _prevH = newH;
         layout();
+        fitBandcampEmbeds();
       }
     });
     requestAnimationFrame(() => requestAnimationFrame(layout));
