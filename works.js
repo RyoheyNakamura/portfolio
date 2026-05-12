@@ -339,29 +339,6 @@ work('riddle-welcome-456', {
 //  Self Works  ←  自主制作はここに追加
 // ============================================================
 
-work('pure', {
-  hidden:   false,
-  category:   'self',
-  date:       '2026.04.26',
-  tags:       'Hyperpop',
-  youtube:    [],
-  vimeo:      '',
-  url:        '',
-  image:      'images/pure.jpg',
-  soundcloud: '',
-  spotify:    '',
-  bandcamp:   'https://bandcamp.com/EmbeddedPlayer/album=3460887448/size=large/bgcol=ffffff/linkcol=0687f5/tracklist=false/artwork=small/track=807563539/transparent=true/',
-
-  title:     'PURE',
-  titleEn:   'PURE',
-
-  desc:      'ネットレーベル『Relattice』のコンピレーションアルバム「Relattice」収録曲。',
-  descEn:    'Included in "Relattice," a compilation album by net label Relattice.',
-
-  credits:   '',
-  creditsEn: '',
-})
-
 work('dip', {
   hidden:   false,
   category:   'self',
