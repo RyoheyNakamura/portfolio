@@ -756,7 +756,8 @@
     }
     .work-music-player.soundcloud iframe { height: 166px; }
     .work-music-player.spotify iframe    { height: 152px; }
-    .work-music-player.bandcamp iframe   { width: 100% !important; height: 120px !important; }
+    .work-music-player.bandcamp          { overflow: visible; }
+    .work-music-player.bandcamp iframe   { max-width: 100%; display: block; }
 
     .work-external-link {
       display: inline-flex;
@@ -1069,6 +1070,7 @@
     <div class="detail-body">
       <div id="nd-image"></div>
       <p class="detail-desc" id="nd-body"></p>
+      <div id="nd-embed"></div>
       <div id="nd-url"></div>
     </div>
     <div class="detail-back-bar">
@@ -1162,6 +1164,30 @@
     let prevView = 'main';
 
     const CATEGORY_LABEL = { client: 'Client', self: 'Self', produce: 'Produce' };
+
+    function scaleBandcampEmbeds() {
+      document.querySelectorAll('.work-music-player.bandcamp').forEach(wrapper => {
+        const iframe = wrapper.querySelector('iframe');
+        if (!iframe) return;
+        const nativeW = iframe.offsetWidth || parseInt((iframe.style.width || '350').replace('px','')) || 350;
+        const nativeH = iframe.offsetHeight || parseInt((iframe.style.height || '120').replace('px','')) || 120;
+        const containerW = wrapper.offsetWidth;
+        if (!containerW || nativeW >= containerW) return;
+        const scale = containerW / nativeW;
+        iframe.style.transform = `scale(${scale})`;
+        wrapper.style.height = (nativeH * scale) + 'px';
+      });
+    }
+
+    function bandcampHeight(src) {
+      if (src.includes('size=small')) return '42px';
+      const artBig = !src.includes('artwork=small');
+      const tracklist = src.includes('tracklist=true');
+      if (artBig && tracklist) return '500px';
+      if (artBig) return '406px';
+      if (tracklist) return '350px';
+      return '120px';
+    }
 
     function wt(w, field) {
       if (currentLang === 'en') return w[field + 'En'] || w[field] || '';
@@ -1290,7 +1316,10 @@
         embed += `<div class="work-music-player spotify"><iframe src="https://open.spotify.com/embed/${w.spotify}?utm_source=generator" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe></div>`;
       }
       if (w.bandcamp) {
-        embed += `<div class="work-music-player bandcamp"><iframe src="${w.bandcamp}" seamless></iframe></div>`;
+        const bc = w.bandcamp.trimStart().startsWith('<iframe')
+          ? w.bandcamp
+          : `<iframe src="${w.bandcamp}" height="${bandcampHeight(w.bandcamp)}" seamless></iframe>`;
+        embed += `<div class="work-music-player bandcamp">${bc}</div>`;
       }
       if (w.url) {
         embed += `<a class="work-external-link" href="${w.url}" target="_blank" rel="noopener">↗ ${tr.view_external || '外部サイトで見る'}</a>`;
@@ -1586,6 +1615,21 @@
       const imgEl = document.getElementById('nd-image');
       imgEl.innerHTML = n.image
         ? `<div class="work-image-wrapper"><img src="${n.image}" alt=""></div>` : '';
+      let embed = '';
+      const ytIds = Array.isArray(n.youtube) ? n.youtube.filter(Boolean) : (n.youtube ? [n.youtube] : []);
+      ytIds.forEach(id => {
+        embed += `<div class="work-embed-wrapper"><iframe src="https://www.youtube.com/embed/${id}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>`;
+      });
+      const bcList = Array.isArray(n.bandcamp) ? n.bandcamp.filter(Boolean) : (n.bandcamp ? [n.bandcamp] : []);
+      bcList.forEach(src => {
+        const bc = src.trimStart().startsWith('<iframe')
+          ? src
+          : `<iframe src="${src}" height="${bandcampHeight(src)}" seamless></iframe>`;
+        embed += `<div class="work-music-player bandcamp">${bc}</div>`;
+      });
+      if (n.spotify) embed += `<div class="work-music-player spotify"><iframe src="https://open.spotify.com/embed/${n.spotify}?utm_source=generator" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe></div>`;
+      if (n.soundcloud) embed += `<div class="work-music-player soundcloud"><iframe src="https://w.soundcloud.com/player/?url=${encodeURIComponent(n.soundcloud)}&color=%23ffd559&auto_play=false&hide_related=true&show_comments=false&show_user=true&show_reposts=false&show_teaser=false"></iframe></div>`;
+      document.getElementById('nd-embed').innerHTML = embed;
       const urlEl = document.getElementById('nd-url');
       urlEl.innerHTML = n.url
         ? `<a class="work-external-link" href="${n.url}" target="_blank" rel="noopener">${lang === 'en' ? 'Open link →' : 'リンクを開く →'}</a>` : '';
@@ -1609,6 +1653,7 @@
     }
 
     function closeNews() {
+      document.getElementById('nd-embed').innerHTML = '';
       const mainView       = document.getElementById('main-view');
       const newsDetailView = document.getElementById('news-detail-view');
       newsDetailView.style.opacity = '0';
