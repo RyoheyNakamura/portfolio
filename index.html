@@ -1,0 +1,1803 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ryohey Nakamura</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600;9..40,700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #faf9f5;
+      --surface: #ffffff;
+      --surface-hover: #fffdf4;
+      --border: #e8e4d9;
+      --text-primary: #1a1815;
+      --text-secondary: #9a958a;
+      --accent: #ffd559;
+      --shadow-sm: 0 2px 12px rgba(30, 20, 0, 0.07);
+      --shadow-md: 0 8px 32px rgba(30, 20, 0, 0.12);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text-primary);
+      font-family: 'DM Sans', 'Helvetica Neue', Arial, sans-serif;
+      font-size: 15px;
+      line-height: 1.6;
+    }
+
+    /* 共通の水平余白：大画面では約1/3が余白 */
+    :root {
+      --px: max(48px, calc((100% - 920px) / 2));
+    }
+
+    /* ━━━━━━━━━━━━━━━━
+       Header
+    ━━━━━━━━━━━━━━━━ */
+    header {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 var(--px);
+      height: 64px;
+      background: rgba(250, 249, 245, 0.88);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .logo {
+      font-size: 14px;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      color: var(--text-primary);
+      text-decoration: none;
+    }
+
+    nav { display: flex; gap: 36px; }
+
+    nav a {
+      color: var(--text-secondary);
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: 500;
+      transition: color 0.2s;
+    }
+
+    nav a:hover { color: var(--text-primary); }
+
+    .nav-main-links {
+      display: flex;
+      gap: 36px;
+      transition: opacity 0.2s;
+    }
+    header.offmain .nav-main-links {
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    /* ━━━━━━━━━━━━━━━━
+       Hero
+    ━━━━━━━━━━━━━━━━ */
+    .hero {
+      position: relative;
+      height: 100vh;
+      min-height: 620px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 0 0 72px var(--px);
+    }
+
+    #egg-layer {
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      pointer-events: none;
+      z-index: -1;
+    }
+    #egg-layer canvas {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      pointer-events: none;
+    }
+
+    .hero-body {
+      position: relative;
+      z-index: 1;
+      max-width: 560px;
+      pointer-events: none;
+    }
+
+    .hero-eyebrow {
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--text-secondary);
+      margin-bottom: 20px;
+    }
+
+    .hero-title {
+      font-size: clamp(72px, 11vw, 132px);
+      font-weight: 700;
+      line-height: 0.90;
+      letter-spacing: -0.045em;
+      color: var(--text-primary);
+      margin-bottom: 32px;
+    }
+
+    .hero-title .accent { color: var(--accent); }
+
+    .hero-desc {
+      font-size: 14px;
+      color: var(--text-secondary);
+      line-height: 1.85;
+      max-width: 300px;
+      /* 少しインデント：非対称な印象 */
+      margin-left: 2px;
+    }
+
+    .hero-scroll {
+      position: absolute;
+      bottom: 72px;
+      right: var(--px);
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--text-secondary);
+      text-decoration: none;
+    }
+
+    .scroll-line {
+      width: 1px;
+      height: 48px;
+      background: linear-gradient(to bottom, var(--text-secondary), transparent);
+      animation: scrollDrop 2.2s ease-in-out infinite;
+    }
+
+    @keyframes scrollDrop {
+      0%         { transform: scaleY(0); transform-origin: top; opacity: 0; }
+      30%        { opacity: 1; }
+      60%        { transform: scaleY(1); transform-origin: top; }
+      61%        { transform: scaleY(1); transform-origin: bottom; }
+      100%       { transform: scaleY(0); transform-origin: bottom; opacity: 0; }
+    }
+
+    /* ━━━━━━━━━━━━━━━━
+
+    /* ━━━━━━━━━━━━━━━━
+       Works
+    ━━━━━━━━━━━━━━━━ */
+
+    /* 大きなセクション見出し */
+    .section-title {
+      font-size: clamp(44px, 6vw, 72px);
+      font-weight: 700;
+      letter-spacing: -0.04em;
+      line-height: 1;
+      color: var(--text-primary);
+    }
+
+    /* フィルタータブ */
+    .filter-tabs {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      /* ベースラインを下に揃えてタイトルと対話させる */
+      padding-bottom: 6px;
+    }
+
+    .filter-btn {
+      padding: 8px 18px;
+      border-radius: 99px;
+      border: 1.5px solid var(--border);
+      background: transparent;
+      color: var(--text-secondary);
+      font-size: 12px;
+      font-weight: 500;
+      font-family: inherit;
+      cursor: pointer;
+      transition: background 0.2s, color 0.2s, border-color 0.2s, transform 0.15s;
+    }
+
+    .filter-btn:hover {
+      border-color: var(--text-primary);
+      color: var(--text-primary);
+      transform: translateY(-1px);
+    }
+
+    .filter-btn.active {
+      background: var(--accent);
+      color: var(--text-primary);
+      border-color: var(--accent);
+      font-weight: 600;
+    }
+
+    /* グリッド */
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 16px;
+    }
+
+    .card {
+      background: var(--surface);
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      text-decoration: none;
+      color: inherit;
+      position: relative;
+      overflow: hidden;
+      border-radius: 12px;
+      border: 1.5px solid var(--border);
+      box-shadow: var(--shadow-sm);
+      transition: transform 0.28s cubic-bezier(.34, 1.4, .64, 1),
+                  box-shadow 0.28s ease,
+                  background 0.2s;
+    }
+
+    .card:hover {
+      background: var(--surface-hover);
+      transform: translateY(-5px);
+      box-shadow: var(--shadow-md);
+    }
+
+    .card.hidden { display: none; }
+
+    .card-thumb {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      background: linear-gradient(135deg, #f5f1e8, #ede8da);
+      border-radius: 8px;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      color: #c8c2b4;
+      text-transform: uppercase;
+    }
+
+    .card-thumb img { width: 100%; height: 100%; object-fit: cover; }
+
+    .card-meta {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 8px;
+      margin-top: 2px;
+    }
+
+    .card-year { font-size: 11px; color: var(--text-secondary); }
+
+    .card-tags { display: flex; gap: 6px; flex-wrap: wrap; }
+
+    .tag {
+      font-size: 10px;
+      font-weight: 500;
+      padding: 3px 9px;
+      border-radius: 99px;
+      color: var(--text-secondary);
+      border: 1px solid var(--border);
+      background: transparent;
+    }
+
+    /* カテゴリタグはフルイエロー */
+    .tag.category {
+      background: var(--accent);
+      color: var(--text-primary);
+      border-color: var(--accent);
+      font-weight: 600;
+    }
+
+    .card-title {
+      font-size: 15px;
+      font-weight: 600;
+      letter-spacing: -0.01em;
+      color: var(--text-primary);
+      line-height: 1.35;
+    }
+
+    .card-desc {
+      font-size: 12px;
+      color: var(--text-secondary);
+      line-height: 1.65;
+    }
+
+    .card-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--text-secondary);
+      margin-top: 2px;
+      transition: color 0.2s;
+    }
+
+    .card:hover .card-link { color: var(--accent); }
+    .card-link::after { content: '→'; font-weight: 400; }
+
+    /* ━━━━━━━━━━━━━━━━
+       About
+    ━━━━━━━━━━━━━━━━ */
+    .about {
+      position: relative;
+      overflow: hidden;
+      border-top: 1px solid var(--border);
+      padding: 96px var(--px) 80px;
+    }
+
+
+    .about > .section-title,
+    .about-inner {
+      position: relative;
+      z-index: 1;
+    }
+
+    .about > .section-title {
+      margin-bottom: 52px;
+    }
+
+    .about-inner {
+      max-width: 680px;
+    }
+
+    .about-profile {
+      padding: 0;
+    }
+
+    .about-block-label {
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--text-secondary);
+      margin-bottom: 20px;
+    }
+
+    .about-name {
+      font-size: clamp(24px, 3vw, 32px);
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: 6px;
+    }
+
+    /* ロールはシンプルにアクセントカラーのテキスト */
+    .about-role {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--accent);
+      margin-bottom: 32px;
+      letter-spacing: 0.02em;
+    }
+
+    .about-text {
+      font-size: 13px;
+      color: var(--text-secondary);
+      line-height: 2.0;
+    }
+
+    .about-links {
+      margin-top: 40px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .about-link-row {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .about-link-key {
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-secondary);
+      width: 80px;
+      flex-shrink: 0;
+    }
+
+    .about-link-row a {
+      font-size: 13px;
+      color: var(--text-primary);
+      text-decoration: none;
+      border-bottom: 1px solid transparent;
+      padding-bottom: 1px;
+      transition: color 0.2s, border-color 0.2s;
+    }
+
+    .about-link-row a:hover {
+      color: var(--accent);
+      border-color: var(--accent);
+    }
+
+    .tbd { font-size: 13px; color: var(--text-secondary); }
+
+    /* メール問い合わせブロック */
+    .about-mail-block {
+      margin-top: 44px;
+      padding-top: 36px;
+      border-top: 1px solid var(--border);
+    }
+
+    .about-mail-label {
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--text-secondary);
+      margin-bottom: 10px;
+    }
+
+    .about-mail-note {
+      font-size: 13px;
+      color: var(--text-secondary);
+      margin-bottom: 14px;
+    }
+
+    .about-mail-address {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--text-primary);
+      text-decoration: none;
+      border-bottom: 2px solid var(--accent);
+      padding-bottom: 3px;
+      transition: color 0.2s;
+    }
+
+    .about-mail-address:hover { color: var(--accent); }
+
+    /* ━━━━━━━━━━━━━━━━
+       Footer
+    ━━━━━━━━━━━━━━━━ */
+    footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 24px var(--px);
+      font-size: 12px;
+      color: var(--text-secondary);
+      border-top: 1px solid var(--border);
+    }
+
+    .footer-yolk {
+      display: inline-block;
+      width: 7px; height: 7px;
+      border-radius: 50%;
+      background: var(--accent);
+      margin-right: 8px;
+      vertical-align: middle;
+    }
+
+    /* ━━━━━━━━━━━━━━━━
+       Responsive
+    ━━━━━━━━━━━━━━━━ */
+    /* ━━━━━━━━━━━━━━━━
+       Page Transitions
+    ━━━━━━━━━━━━━━━━ */
+    #main-view, #works-view, #detail-view, #news-detail-view {
+      transition: opacity 0.22s ease;
+    }
+    #main-view { position: relative; isolation: isolate; }
+
+    /* ━━━━━━━━━━━━━━━━
+       Works CTA (main view)
+    ━━━━━━━━━━━━━━━━ */
+    .works-cta {
+      padding: 96px var(--px);
+      border-top: 1px solid var(--border);
+    }
+
+    .works-cta-top { margin-bottom: 52px; }
+
+    .works-cta-bottom {
+      margin-top: 48px;
+      display: flex;
+      justify-content: center;
+    }
+
+    .works-cta-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 14px 32px;
+      background: var(--text-primary);
+      color: var(--bg);
+      border: none;
+      border-radius: 8px;
+      font-family: inherit;
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      cursor: pointer;
+      transition: opacity 0.2s;
+    }
+    .works-cta-btn:hover { opacity: 0.72; }
+
+    /* ━━━━━━━━━━━━━━━━
+       News
+    ━━━━━━━━━━━━━━━━ */
+    .news-section {
+      padding: 96px var(--px);
+      border-top: 1px solid var(--border);
+    }
+    .news-section > .section-title {
+      margin-bottom: 52px;
+    }
+    .news-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    .news-item {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 18px 0;
+      border-bottom: 1px solid var(--border);
+      cursor: pointer;
+      transition: opacity 0.2s;
+    }
+    .news-item:first-child { border-top: 1px solid var(--border); }
+    .news-item:hover { opacity: 0.55; }
+    .news-item-date {
+      font-size: 11px;
+      color: var(--text-secondary);
+      letter-spacing: 0.04em;
+      flex-shrink: 0;
+      width: 88px;
+    }
+    .news-item-cat { flex-shrink: 0; }
+    .news-item-title {
+      font-size: 14px;
+      font-weight: 600;
+      flex: 1;
+    }
+    .news-item-arrow {
+      font-size: 11px;
+      color: var(--text-secondary);
+      flex-shrink: 0;
+    }
+    .tag.cat-event   { background: #fff8d6; color: #7a5800; border-color: #f0d060; }
+    .tag.cat-media   { background: #fff1d0; color: #8a4e00; border-color: #f5c070; }
+    .tag.cat-release { background: #fef5e0; color: #6a5200; border-color: #e8c84a; }
+    .tag.cat-other   { background: transparent; color: var(--text-secondary); border-color: var(--border); }
+
+    /* ━━━━━━━━━━━━━━━━
+       Works View
+    ━━━━━━━━━━━━━━━━ */
+    #works-view {
+      position: relative;
+      z-index: 1;
+      padding-top: 64px;
+      background: var(--bg);
+      min-height: 100vh;
+    }
+
+    .works-view-inner {
+      padding: 64px var(--px) 80px;
+    }
+
+    .works-view-header {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      margin-bottom: 52px;
+      gap: 24px;
+      flex-wrap: wrap;
+    }
+
+    /* ━━━━━━━━━━━━━━━━
+       Detail Page
+    ━━━━━━━━━━━━━━━━ */
+    #detail-view, #news-detail-view {
+      position: relative;
+      z-index: 1;
+      padding-top: 64px;
+      background: var(--bg);
+      min-height: 100vh;
+    }
+
+    .detail-back-bar {
+      display: flex;
+      padding: 24px var(--px);
+      border-top: 1px solid var(--border);
+    }
+
+    .work-back {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: none;
+      border: none;
+      font-family: inherit;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-secondary);
+      cursor: pointer;
+      padding: 0;
+      transition: color 0.2s;
+    }
+    .work-back:hover { color: var(--text-primary); }
+
+    .detail-hero-section {
+      padding: 64px var(--px) 48px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .detail-meta {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 24px;
+    }
+
+    .detail-date {
+      font-size: 12px;
+      color: var(--text-secondary);
+      letter-spacing: 0.04em;
+    }
+
+    .detail-title {
+      font-size: clamp(36px, 6vw, 72px);
+      font-weight: 700;
+      letter-spacing: -0.04em;
+      line-height: 1.1;
+      max-width: 760px;
+    }
+
+    .detail-body {
+      padding: 64px var(--px) 80px;
+    }
+
+    .work-embed-wrapper {
+      aspect-ratio: 16 / 9;
+      width: 100%;
+      max-width: 800px;
+      margin-bottom: 40px;
+      border-radius: 12px;
+      overflow: hidden;
+      background: #111;
+    }
+    .work-embed-wrapper iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+      display: block;
+    }
+
+    .work-image-wrapper {
+      width: 100%;
+      max-width: 800px;
+      margin-bottom: 40px;
+      border-radius: 12px;
+      overflow: hidden;
+    }
+    .work-image-wrapper img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    .work-music-player {
+      width: 100%;
+      max-width: 800px;
+      margin-bottom: 32px;
+      border-radius: 12px;
+      overflow: hidden;
+    }
+    .work-music-player iframe {
+      width: 100%;
+      border: none;
+      display: block;
+    }
+    .work-music-player.soundcloud iframe { height: 166px; }
+    .work-music-player.spotify iframe    { height: 152px; }
+    .work-music-player.bandcamp iframe   { width: 100% !important; height: 120px !important; }
+
+    .work-external-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      margin-bottom: 40px;
+      padding: 14px 24px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-primary);
+      text-decoration: none;
+      transition: background 0.2s, border-color 0.2s;
+    }
+    .work-external-link:hover {
+      background: var(--surface-hover);
+      border-color: var(--text-secondary);
+    }
+
+    .detail-desc {
+      font-size: 14px;
+      color: var(--text-secondary);
+      line-height: 2.0;
+      max-width: 640px;
+      margin-bottom: 20px;
+    }
+
+    .detail-credits {
+      font-size: 12px;
+      color: var(--text-secondary);
+      opacity: 0.7;
+      line-height: 2.0;
+      max-width: 640px;
+      margin-bottom: 28px;
+      padding-top: 16px;
+      border-top: 1px solid var(--border);
+    }
+
+    .detail-tags {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-top: 20px;
+    }
+
+    .detail-footer-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 24px var(--px);
+      font-size: 12px;
+      color: var(--text-secondary);
+      border-top: 1px solid var(--border);
+    }
+
+    /* ━━━━━━━━━━━━━━━━
+       Lang Switcher
+    ━━━━━━━━━━━━━━━━ */
+    .lang-switcher {
+      display: flex;
+      align-items: center;
+      gap: 2px;
+      padding-left: 20px;
+      margin-left: 8px;
+      border-left: 1px solid var(--border);
+    }
+
+    .lang-btn {
+      background: none;
+      border: none;
+      padding: 4px 6px;
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.05em;
+      font-family: inherit;
+      color: var(--text-secondary);
+      cursor: pointer;
+      border-radius: 3px;
+      transition: color 0.15s;
+      line-height: 1;
+    }
+
+    .lang-btn:hover { color: var(--text-primary); }
+    .lang-btn.active { color: var(--text-primary); font-weight: 700; }
+
+    @media (max-width: 768px) {
+      :root { --px: 20px; }
+
+      /* Header */
+      nav { gap: 20px; }
+      .nav-main-links { gap: 18px; }
+      .logo { font-size: 13px; }
+
+      /* Hero */
+      .hero { padding: 0 0 52px var(--px); }
+      .hero-scroll { display: none; }
+
+      /* Section titles */
+      .section-title { font-size: clamp(36px, 10vw, 52px); }
+
+      /* Works preview grid → 1 column */
+      .grid { grid-template-columns: 1fr; }
+
+      /* Works CTA */
+      .works-cta { padding: 64px var(--px); }
+      .works-cta-top { margin-bottom: 36px; }
+      .works-cta-bottom { margin-top: 32px; }
+
+      /* Works view */
+      .works-view-inner { padding: 48px var(--px) 64px; }
+      .works-view-header {
+        flex-direction: column;
+        align-items: flex-start;
+        margin-bottom: 36px;
+        gap: 20px;
+      }
+      .filter-tabs { gap: 6px; }
+      .filter-btn { padding: 7px 14px; font-size: 11px; }
+
+      /* News section */
+      .news-section { padding: 64px var(--px); }
+      .news-item { gap: 10px; padding: 16px 0; }
+      .news-item-date { width: 74px; font-size: 10px; }
+      .news-item-title { font-size: 13px; }
+      .news-item-arrow { display: none; }
+
+      /* About */
+      .about { padding: 64px var(--px) 64px; }
+
+      /* Detail view */
+      .detail-hero-section { padding: 48px var(--px) 36px; }
+      .detail-body { padding: 48px var(--px) 64px; }
+      .detail-title { font-size: clamp(28px, 8vw, 48px); }
+
+      /* Footer */
+      footer { flex-direction: column; gap: 6px; text-align: center; }
+      .detail-footer-bar { flex-direction: column; gap: 6px; text-align: center; }
+    }
+
+    /* ナビが非常に狭い場合 */
+    @media (max-width: 400px) {
+      .nav-main-links { display: none; }
+    }
+
+    /* タッチデバイスではカードのtranslateYを無効化 */
+    @media (hover: none) {
+      .card:hover { transform: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <header>
+    <a class="logo" href="#">Ryohey Nakamura</a>
+    <nav>
+      <span class="nav-main-links">
+        <a href="#works">Works</a>
+        <a href="#news-section">News</a>
+        <a href="#about">About</a>
+      </span>
+      <div class="lang-switcher">
+        <button class="lang-btn active" data-lang="ja">JA</button>
+        <button class="lang-btn" data-lang="en">EN</button>
+      </div>
+    </nav>
+  </header>
+
+  <div id="main-view">
+
+  <div id="egg-layer">
+    <canvas id="egg-canvas"></canvas>
+  </div>
+
+  <!-- Hero -->
+  <section class="hero" id="hero-section">
+    <div class="hero-body">
+      <p class="hero-eyebrow" data-i18n="hero_eyebrow">Sound Producer / Composer</p>
+      <h1 class="hero-title">
+        Ryohey<br>
+        <span class="accent">Nakamura</span>
+      </h1>
+    </div>
+
+    <a class="hero-scroll" href="#works">
+      <div class="scroll-line"></div>
+      Scroll
+    </a>
+  </section>
+
+
+  <!-- Works Preview -->
+  <section class="works-cta" id="works">
+    <div class="works-cta-top">
+      <h2 class="section-title">Works</h2>
+    </div>
+    <div class="grid preview-grid"></div>
+    <div class="works-cta-bottom">
+      <button class="works-cta-btn" id="works-cta-btn" data-i18n="works_cta">すべての作品を見る →</button>
+    </div>
+  </section>
+
+  <!-- News -->
+  <section class="news-section" id="news-section">
+    <h2 class="section-title">News</h2>
+    <ul class="news-list"></ul>
+  </section>
+
+  <!-- About -->
+  <section class="about" id="about">
+    <h2 class="section-title">About</h2>
+    <div class="about-inner">
+
+      <div class="about-profile">
+        <p class="about-block-label" data-i18n="about_label_profile">Profile</p>
+        <h3 class="about-name">Ryohey Nakamura</h3>
+        <p class="about-role" data-i18n="about_role">Sound Producer / Composer</p>
+        <p class="about-text" data-i18n="about_text">1999年生まれ。九州大学芸術工学部音響設計学科卒業。<br><br>大学在学中よりフリーランスとして音楽活動を開始し、DTMによる制作を中心に大学内外を問わず活動の幅を広げる。音楽とその他のコンテンツの結び付きについて特に強い関心があり、映像演出などと紐づいたアプローチを得意とする。<br><br>Dubstep、Drum'n'Bass、Houseなどを音楽制作のルーツに持つ一方で、体系的な音楽理論に基づいたオーケストレーションやJazzプレイヤーとしての経験もあり、多彩なジャンルを取り入れた独自のスタイルを展開している。<br><br>2023年に株式会社インビジに入社。</p>
+        <div class="about-links">
+          <div class="about-link-row">
+            <span class="about-link-key">X / Twitter</span>
+            <a href="https://x.com/RyoheyNakamura" target="_blank">@RyoheyNakamura</a>
+          </div>
+          <div class="about-link-row">
+            <span class="about-link-key">YouTube</span>
+            <span class="tbd" data-i18n="youtube_tbd">準備中</span>
+          </div>
+          <div class="about-link-row">
+            <span class="about-link-key">Instagram</span>
+            <a href="https://www.instagram.com/ryoheynakamura/" target="_blank">@ryoheynakamura</a>
+          </div>
+        </div>
+
+        <div class="about-mail-block">
+          <p class="about-mail-label" data-i18n="about_label_contact">Contact</p>
+          <p class="about-mail-note" data-i18n="mail_note">お仕事のご依頼・ご相談はメールにてお気軽にどうぞ。</p>
+          <a class="about-mail-address" href="mailto:ryoheynakamura@invisi.jp">ryoheynakamura@invisi.jp</a>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <span><span class="footer-yolk"></span>Ryohey Nakamura</span>
+    <span>© 2026</span>
+  </footer>
+
+  </div><!-- /#main-view -->
+
+  <!-- Works View -->
+  <div id="works-view" hidden>
+    <div class="works-view-inner">
+      <div class="works-view-header">
+        <h2 class="section-title">Works</h2>
+        <div class="filter-tabs">
+          <button class="filter-btn active" data-filter="all">All</button>
+          <button class="filter-btn" data-filter="client">Client Works</button>
+          <button class="filter-btn" data-filter="self">Self Works</button>
+          <button class="filter-btn" data-filter="produce">Produce</button>
+        </div>
+      </div>
+      <div class="grid"></div>
+    </div>
+    <div class="detail-back-bar">
+      <button class="work-back" id="works-back" data-i18n="works_back">← ホームへ</button>
+    </div>
+    <footer class="detail-footer-bar">
+      <span><span class="footer-yolk"></span>Ryohey Nakamura</span>
+      <span>© 2026</span>
+    </footer>
+  </div>
+
+  <!-- Detail View -->
+  <div id="detail-view" hidden>
+    <div class="detail-hero-section">
+      <div class="detail-meta">
+        <span class="tag category" id="wd-category"></span>
+        <span class="detail-date" id="wd-date"></span>
+      </div>
+      <h1 class="detail-title" id="wd-title"></h1>
+      <div class="detail-tags" id="wd-tags"></div>
+    </div>
+    <div class="detail-body">
+      <div id="wd-embed"></div>
+      <p class="detail-desc" id="wd-desc"></p>
+      <div class="detail-credits" id="wd-credits"></div>
+    </div>
+    <div class="detail-back-bar">
+      <button class="work-back" id="work-back" data-i18n="detail_back">← 一覧へ</button>
+    </div>
+    <footer class="detail-footer-bar">
+      <span><span class="footer-yolk"></span>Ryohey Nakamura</span>
+      <span>© 2026</span>
+    </footer>
+  </div>
+
+  <!-- News Detail View -->
+  <div id="news-detail-view" hidden>
+    <div class="detail-hero-section">
+      <div class="detail-meta">
+        <span class="tag" id="nd-category"></span>
+        <span class="detail-date" id="nd-date"></span>
+      </div>
+      <h1 class="detail-title" id="nd-title"></h1>
+    </div>
+    <div class="detail-body">
+      <div id="nd-image"></div>
+      <p class="detail-desc" id="nd-body"></p>
+      <div id="nd-url"></div>
+    </div>
+    <div class="detail-back-bar">
+      <button class="work-back" id="news-back" data-i18n="news_back">← Newsへ</button>
+    </div>
+    <footer class="detail-footer-bar">
+      <span><span class="footer-yolk"></span>Ryohey Nakamura</span>
+      <span>© 2026</span>
+    </footer>
+  </div>
+
+  <script src="news.js"></script>
+  <script src="works.js"></script>
+
+  <!-- i18n -->
+  <script>
+    const i18n = {
+      ja: {
+        hero_eyebrow:       "Sound Producer / Composer",
+        filter_all:         "All",
+        filter_client:      "Client Works",
+        filter_self:        "Self Works",
+        filter_produce:     "Produce",
+        card_desc_client:   "プロジェクトの概要をここに記載してください。どんな案件で、どんな役割を担ったか。",
+        card_desc_self:     "楽曲の制作背景やコンセプトをここに記載してください。",
+        card_desc_produce:  "プロデュースした企画・イベント・コンテンツの概要をここに記載してください。",
+        card_link_project:  "View Project",
+        card_link_listen:   "Listen",
+        about_label_profile:"Profile",
+        about_role:         "Sound Producer / Composer",
+        about_text:         "1999年生まれ。九州大学芸術工学部音響設計学科卒業。<br><br>大学在学中よりフリーランスとして音楽活動を開始し、DTMによる制作を中心に大学内外を問わず活動の幅を広げる。音楽とその他のコンテンツの結び付きについて特に強い関心があり、映像演出などと紐づいたアプローチを得意とする。<br><br>Dubstep、Drum'n'Bass、Houseなどを音楽制作のルーツに持つ一方で、体系的な音楽理論に基づいたオーケストレーションやJazzプレイヤーとしての経験もあり、多彩なジャンルを取り入れた独自のスタイルを展開している。<br><br>2023年に株式会社インビジに入社。",
+        youtube_tbd:        "準備中",
+        about_label_contact:"Contact",
+        mail_note:          "お仕事のご依頼・ご相談はメールにてお気軽にどうぞ。",
+        suntory_boss_title:       "サントリー BOSS×大相撲<br>『働く私の土俵際』篇",
+        suntory_boss_desc:        "サントリーホールディングス様のTVCM『働く私の土俵際』篇の音楽を担当いたしました。",
+        riddle_valorant_2026_title: "RIDDLE ORDER<br>VALORANT 2026 ROSTER",
+        riddle_valorant_2026_desc:  "プロゲーミングチーム「RIDDLE ORDER」のVALORANT部門の2026年ロスター映像の音楽を担当いたしました。",
+        world_trigger_title:      "アニメ「ワールドトリガー」REBOOT<br>プロジェクト ティザームービー",
+        world_trigger_desc:       "アニメ「ワールドトリガー」REBOOTプロジェクトのティザームービーの音楽を担当いたしました。",
+        lotte_painomi_title:      "株式会社ロッテ - パイの実<br>特別コンテンツ「パイの音 64奏」",
+        lotte_painomi_desc:       "株式会社ロッテが展開する『パイの実』の特別コンテンツ「パイの音 64奏」の音楽を担当いたしました。",
+        coca_cola_recycle_title:  "Coca-Cola X Fes 2025<br>Recycle Music Box",
+        coca_cola_recycle_desc:   "Coca-Cola X Fes 2025にて展示された、ターンテーブル型リサイクルボックス「Recycle Music Box」のサウンドデザインを担当いたしました。",
+        kyuhaku_fumufumu_title:   "九州国立博物館<br>キューハクふむふむ",
+        kyuhaku_fumufumu_desc:    "九州国立博物館の文化交流展示室に設置されている対話型コンテンツ「キューハクふむふむ」の音楽を担当いたしました。",
+        pokemon_go_fest_title:    "Pokémon GO Japan<br>Web CM「Pokémon GO Fest 2025」",
+        pokemon_go_fest_desc:     "Pokémon GO Japanの新しいWeb CM「Pokémon GO Fest 2025」の音楽を担当いたしました。",
+        dish_jockey_title:        "株式会社NTTドコモ・スタジオ＆ライブ<br>DISH JOCKEY",
+        dish_jockey_desc:         "DISH JOCKEYは、「音」を盛り付ける「音楽のビュッフェ体験」。ビュッフェでお皿に料理をのせていくように、レコードみたいなお皿に食品サンプルをのせるだけでかっこいい音楽がつくれる、ふしぎな遊び場です。つくれる楽曲は、なんと14億通り。",
+        meiji_kajuugumi_title:    "明治株式会社 - 果汁グミ<br>CM「ぷにぷにくだもの篇」",
+        meiji_kajuugumi_desc:     "しなこさんが出演している『果汁グミ』の新しいTVCM「ぷにぷにくだもの篇」のリミックスを担当いたしました。",
+        valorant_gc_2024_title:   "VALORANT Game Changers<br>Japan 2024 Teaser",
+        valorant_gc_2024_desc:    "VALORANT Game Changers Japan 2024 Teaserの音楽を担当いたしました。",
+        crazy_raccoon_title:      "Crazy Raccoon<br>『CR FES 2024』告知映像",
+        crazy_raccoon_desc:       "プロゲーミングチーム「Crazy Raccoon」が主催するファンイベント「CR FES 2024」の開催告知映像の音楽を担当いたしました。本楽曲は、「'CR ANTHEM' - nqrse × FAKE TYPE.」の特別リミックスver.となります。",
+        otafuku_title:            "オタフクソース株式会社<br>Gochi On ミート TVCM",
+        otafuku_desc:             "『Gochi On ミート お肉にのせるソース』の新しいTVCM「瀬戸内レモン＆粒にんにく」篇の音楽を担当いたしました。",
+        riddle_welcome_456_title: "RIDDLE ORDER<br>WELCOME 456",
+        riddle_welcome_456_desc:  "プロゲーミングチームRIDDLE ORDERのAPEX LEGENDS部門へ「456」Yukio, Hesiko, Naohiro, 4ssiiの4名が加入することをアナウンスする映像の音楽を制作いたしました。",
+        view_external:            "外部サイトで見る",
+        detail_back:              "← ホームへ",
+        works_cta:                "すべての作品を見る →",
+        works_back:               "← ホームへ",
+        news_back:                "← ホームへ",
+      },
+      en: {
+        hero_eyebrow:       "Sound Producer / Composer",
+        filter_all:         "All",
+        filter_client:      "Client Works",
+        filter_self:        "Self Works",
+        filter_produce:     "Produce",
+        card_desc_client:   "Project overview — the brief, my role, and what was delivered.",
+        card_desc_self:     "Background and concept behind this original track.",
+        card_desc_produce:  "Overview of the produced project, event, or content.",
+        card_link_project:  "View Project",
+        card_link_listen:   "Listen",
+        about_label_profile:"Profile",
+        about_role:         "Sound Producer / Composer",
+        about_text:         "Born 1999. Graduated from Kyushu University, Dept. of Acoustic Design.<br><br>Began freelance music activities during university, expanding DAW-based production both within and beyond academia. Particularly passionate about the intersection of music and other creative media, with a specialty in synchronized audiovisual approaches.<br><br>Rooted in Dubstep, Drum'n'Bass, and House, while also versed in orchestration grounded in formal music theory and experienced as a jazz performer — developing a distinctive style that bridges diverse genres.<br><br>Joined Invisi Inc. in 2023.",
+        youtube_tbd:        "Coming soon",
+        about_label_contact:"Contact",
+        mail_note:          "Feel free to reach out for work inquiries or consultations.",
+        suntory_boss_title:       "Suntory BOSS × Grand Sumo<br>'My Workday on the Edge'",
+        suntory_boss_desc:        "Composed the music for Suntory Holdings' BOSS Coffee TV commercial.",
+        riddle_valorant_2026_title: "RIDDLE ORDER<br>VALORANT 2026 ROSTER",
+        riddle_valorant_2026_desc:  "Composed the music for pro gaming team RIDDLE ORDER's VALORANT 2026 roster announcement video.",
+        world_trigger_title:      "World Trigger REBOOT Project<br>Teaser Movie",
+        world_trigger_desc:       "Composed the music for the teaser movie of the World Trigger anime REBOOT project.",
+        lotte_painomi_title:      "Lotte - Painomi<br>Special Content \"Painone 64 Melodies\"",
+        lotte_painomi_desc:       "Composed the music for Lotte's special content \"Painone 64 Melodies\" for their Painomi brand.",
+        coca_cola_recycle_title:  "Coca-Cola X Fes 2025<br>Recycle Music Box",
+        coca_cola_recycle_desc:   "Sound design for \"Recycle Music Box,\" a turntable-style recycling installation exhibited at Coca-Cola X Fes 2025.",
+        kyuhaku_fumufumu_title:   "Kyushu National Museum<br>Kyuhaku Fumufumu",
+        kyuhaku_fumufumu_desc:    "Composed the music for \"Kyuhaku Fumufumu,\" an interactive installation in the Kyushu National Museum's Cultural Exchange Exhibition Room.",
+        pokemon_go_fest_title:    "Pokémon GO Japan<br>Web CM \"Pokémon GO Fest 2025\"",
+        pokemon_go_fest_desc:     "Composed the music for Pokémon GO Japan's web commercial \"Pokémon GO Fest 2025.\"",
+        dish_jockey_title:        "NTT Docomo Studio & Live<br>DISH JOCKEY",
+        dish_jockey_desc:         "Sound design for DISH JOCKEY — a \"music buffet\" experience where placing food samples on record-shaped dishes generates music. Over 1.4 billion possible combinations.",
+        meiji_kajuugumi_title:    "Meiji - Kajuugumi<br>CM \"Punipuni Kudamono\" Remix",
+        meiji_kajuugumi_desc:     "Created the remix for Meiji's Kajuugumi TVCM \"Punipuni Kudamono\" featuring Shinako.",
+        valorant_gc_2024_title:   "VALORANT Game Changers<br>Japan 2024 Teaser",
+        valorant_gc_2024_desc:    "Composed the music for the VALORANT Game Changers Japan 2024 teaser video.",
+        crazy_raccoon_title:      "Crazy Raccoon<br>CR FES 2024 Announcement",
+        crazy_raccoon_desc:       "Composed the music for the CR FES 2024 announcement video by pro gaming team Crazy Raccoon. The track is a special remix of \"CR ANTHEM\" by nqrse × FAKE TYPE.",
+        otafuku_title:            "Otafuku Sauce<br>Gochi On Meat TVCM",
+        otafuku_desc:             "Composed the music for Otafuku Sauce's TVCM \"Setouchi Lemon & Minced Garlic\" edition of the Gochi On Meat sauce.",
+        riddle_welcome_456_title: "RIDDLE ORDER<br>WELCOME 456",
+        riddle_welcome_456_desc:  "Composed the music for RIDDLE ORDER's APEX LEGENDS division welcome announcement video for players Yukio, Hesiko, Naohiro, and 4ssii.",
+        view_external:            "View on external site",
+        detail_back:              "← Home",
+        works_cta:                "View All Works →",
+        works_back:               "← Home",
+        news_back:                "← Home",
+      },
+    };
+
+    let currentLang = 'ja';
+
+    function setLang(lang) {
+      if (!i18n[lang]) return;
+      currentLang = lang;
+      localStorage.setItem('lang', lang);
+      document.documentElement.lang = lang;
+      const t = i18n[lang];
+      document.querySelectorAll('[data-i18n]').forEach(el => {
+        const v = t[el.dataset.i18n];
+        if (v !== undefined) el.innerHTML = v;
+      });
+      document.querySelectorAll('.lang-btn').forEach(btn => {
+        btn.classList.toggle('active', btn.dataset.lang === lang);
+      });
+      if (typeof buildCards        === 'function') buildCards();
+      if (typeof buildPreviewCards === 'function') buildPreviewCards();
+      if (typeof buildNewsList     === 'function') buildNewsList();
+      if (typeof currentWorkId !== 'undefined' && currentWorkId) {
+        renderDetail(currentWorkId, lang);
+      }
+      if (typeof currentNewsId !== 'undefined' && currentNewsId) {
+        renderNewsDetail(currentNewsId, lang);
+      }
+    }
+
+    document.querySelectorAll('.lang-btn').forEach(btn => {
+      btn.addEventListener('click', () => setLang(btn.dataset.lang));
+    });
+
+    setLang(localStorage.getItem('lang') || 'ja');
+  </script>
+
+  <!-- Works Detail -->
+  <script>
+    WORKS.sort((a, b) => (b.date || '').replace(/\./g, '').localeCompare((a.date || '').replace(/\./g, '')));
+
+    let currentWorkId = null;
+    let prevView = 'main';
+
+    const CATEGORY_LABEL = { client: 'Client', self: 'Self', produce: 'Produce' };
+
+    function wt(w, field) {
+      if (currentLang === 'en') return w[field + 'En'] || w[field] || '';
+      return w[field] || '';
+    }
+
+    // Normalize youtube field to array regardless of whether it's a string or array
+    function ytIds(w) {
+      if (!w.youtube) return [];
+      return Array.isArray(w.youtube) ? w.youtube.filter(Boolean) : [w.youtube];
+    }
+
+    const _vimeoCache = {};
+    async function getVimeoThumb(id) {
+      if (_vimeoCache[id]) return _vimeoCache[id];
+      try {
+        const res  = await fetch(`https://vimeo.com/api/oembed.json?url=https://vimeo.com/${id}&width=640`);
+        const data = await res.json();
+        _vimeoCache[id] = data.thumbnail_url || '';
+        return _vimeoCache[id];
+      } catch (e) { return ''; }
+    }
+
+    const _spotifyCache = {};
+    async function getSpotifyThumb(path) {
+      if (_spotifyCache[path]) return _spotifyCache[path];
+      try {
+        const res  = await fetch(`https://open.spotify.com/oembed?url=https://open.spotify.com/${path}`);
+        const data = await res.json();
+        _spotifyCache[path] = data.thumbnail_url || '';
+        return _spotifyCache[path];
+      } catch (e) { return ''; }
+    }
+
+    const _scCache = {};
+    async function getSoundCloudThumb(url) {
+      if (_scCache[url]) return _scCache[url];
+      try {
+        const res  = await fetch(`https://soundcloud.com/oembed?url=${encodeURIComponent(url)}&format=json`);
+        const data = await res.json();
+        _scCache[url] = data.thumbnail_url || '';
+        return _scCache[url];
+      } catch (e) { return ''; }
+    }
+
+    let currentFilter = 'all';
+    function applyFilter() {
+      document.querySelectorAll('#works-view .card').forEach(c => {
+        c.classList.toggle('hidden', currentFilter !== 'all' && c.dataset.category !== currentFilter);
+      });
+    }
+
+    function buildCards() {
+      const grid = document.querySelector('#works-view .grid');
+      grid.innerHTML = '';
+      WORKS.forEach(w => {
+        const year  = (w.date || '').slice(0, 4);
+        const tags  = (w.tags || '').split(',').map(s => s.trim()).filter(Boolean);
+        const yt0   = ytIds(w)[0];
+        const thumb = yt0          ? `<img src="https://img.youtube.com/vi/${yt0}/mqdefault.jpg" alt="">`
+                    : w.image      ? `<img src="${w.image}" alt="">`
+                    : w.vimeo      ? `<img class="js-vimeo-thumb" alt="">`
+                    : w.soundcloud ? `<img class="js-sc-thumb" alt="">`
+                    : w.spotify    ? `<img class="js-sp-thumb" alt="">`
+                    :                 'No Image';
+        const linkKey = w.category === 'self' ? 'card_link_listen' : 'card_link_project';
+        const el = document.createElement('a');
+        el.className = 'card';
+        el.href = `#${w.id}`;
+        el.dataset.category = w.category;
+        el.dataset.workId   = w.id;
+        el.innerHTML = `
+          <div class="card-thumb">${thumb}</div>
+          <div class="card-meta">
+            <span class="card-year">${year}</span>
+            <div class="card-tags">
+              <span class="tag category">${CATEGORY_LABEL[w.category] || w.category}</span>
+              ${tags.map(t => `<span class="tag">${t}</span>`).join('')}
+            </div>
+          </div>
+          <h3 class="card-title">${wt(w, 'title')}</h3>
+          <p class="card-desc">${wt(w, 'desc')}</p>
+          <span class="card-link">${i18n[currentLang][linkKey] || 'View Project'}</span>
+        `;
+        el.addEventListener('click', e => { e.preventDefault(); openWork(w.id); });
+        grid.appendChild(el);
+        if (w.vimeo && !yt0 && !w.image) {
+          const img = el.querySelector('.js-vimeo-thumb');
+          getVimeoThumb(w.vimeo).then(url => { if (url && img) img.src = url; });
+        }
+        if (w.soundcloud && !yt0 && !w.image && !w.vimeo) {
+          const img = el.querySelector('.js-sc-thumb');
+          getSoundCloudThumb(w.soundcloud).then(url => { if (url && img) img.src = url; });
+        }
+        if (w.spotify && !yt0 && !w.image && !w.vimeo && !w.soundcloud) {
+          const img = el.querySelector('.js-sp-thumb');
+          getSpotifyThumb(w.spotify).then(url => { if (url && img) img.src = url; });
+        }
+      });
+      applyFilter();
+    }
+
+    function renderDetail(id) {
+      const w = WORKS.find(x => x.id === id);
+      if (!w) return;
+      const tr = i18n[currentLang];
+      document.getElementById('wd-category').textContent = CATEGORY_LABEL[w.category] || w.category;
+      document.getElementById('wd-date').textContent     = w.date || '';
+      document.getElementById('wd-title').innerHTML      = wt(w, 'title');
+      document.getElementById('wd-desc').innerHTML       = wt(w, 'desc');
+      let embed = '';
+      const yt = ytIds(w);
+      yt.forEach(id => {
+        embed += `<div class="work-embed-wrapper"><iframe src="https://www.youtube.com/embed/${id}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>`;
+      });
+      if (w.vimeo) {
+        embed += `<div class="work-embed-wrapper"><iframe src="https://player.vimeo.com/video/${w.vimeo}" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe></div>`;
+      }
+      if (w.image) {
+        embed += `<div class="work-image-wrapper"><img src="${w.image}" alt="${wt(w, 'title').replace(/<[^>]*>/g, '')}"></div>`;
+      }
+      if (w.soundcloud) {
+        embed += `<div class="work-music-player soundcloud"><iframe src="https://w.soundcloud.com/player/?url=${encodeURIComponent(w.soundcloud)}&color=%23ffd559&auto_play=false&hide_related=true&show_comments=false&show_user=true&show_reposts=false&show_teaser=false"></iframe></div>`;
+      }
+      if (w.spotify) {
+        embed += `<div class="work-music-player spotify"><iframe src="https://open.spotify.com/embed/${w.spotify}?utm_source=generator" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe></div>`;
+      }
+      if (w.bandcamp) {
+        embed += `<div class="work-music-player bandcamp"><iframe src="${w.bandcamp}" seamless></iframe></div>`;
+      }
+      if (w.url) {
+        embed += `<a class="work-external-link" href="${w.url}" target="_blank" rel="noopener">↗ ${tr.view_external || '外部サイトで見る'}</a>`;
+      }
+      document.getElementById('wd-embed').innerHTML = embed;
+      const tags = (w.tags || '').split(',').map(s => s.trim()).filter(Boolean);
+      document.getElementById('wd-tags').innerHTML  = tags.map(t => `<span class="tag">${t}</span>`).join('');
+      const credits = wt(w, 'credits');
+      const creditsEl = document.getElementById('wd-credits');
+      creditsEl.innerHTML = credits;
+      creditsEl.hidden = !credits;
+    }
+
+    const header = document.querySelector('header');
+    function setNavMain(on) { header.classList.toggle('offmain', !on); }
+
+    function openWorks() {
+      const mainView  = document.getElementById('main-view');
+      const worksView = document.getElementById('works-view');
+      setNavMain(false);
+      mainView.style.opacity = '0';
+      setTimeout(() => {
+        mainView.hidden  = true;
+        worksView.hidden = false;
+        worksView.style.opacity = '0';
+        window.scrollTo(0, 0);
+        requestAnimationFrame(() => requestAnimationFrame(() => worksView.style.opacity = '1'));
+      }, 220);
+      history.pushState({ view: 'works' }, '', '#works');
+    }
+
+    function closeWorks() {
+      const mainView  = document.getElementById('main-view');
+      const worksView = document.getElementById('works-view');
+      worksView.style.opacity = '0';
+      setTimeout(() => {
+        worksView.hidden = true;
+        mainView.hidden  = false;
+        mainView.style.opacity = '0';
+        requestAnimationFrame(() => {
+          window.scrollTo({ top: document.getElementById('works').offsetTop - 64, behavior: 'instant' });
+          requestAnimationFrame(() => mainView.style.opacity = '1');
+        });
+      }, 220);
+      setNavMain(true);
+      history.pushState(null, '', location.pathname);
+    }
+
+    function openWork(id) {
+      if (!WORKS.find(x => x.id === id)) return;
+      currentWorkId = id;
+      renderDetail(id);
+      const worksView  = document.getElementById('works-view');
+      const mainView   = document.getElementById('main-view');
+      const detailView = document.getElementById('detail-view');
+      prevView = worksView.hidden ? 'main' : 'works';
+      const fromView = prevView === 'works' ? worksView : mainView;
+      setNavMain(false);
+      fromView.style.opacity = '0';
+      setTimeout(() => {
+        fromView.hidden = true;
+        detailView.hidden = false;
+        detailView.style.opacity = '0';
+        window.scrollTo(0, 0);
+        requestAnimationFrame(() => requestAnimationFrame(() => detailView.style.opacity = '1'));
+      }, 220);
+      history.pushState({ workId: id }, '', `#${id}`);
+    }
+
+    function closeWork() {
+      document.getElementById('wd-embed').innerHTML = '';
+      const mainView   = document.getElementById('main-view');
+      const worksView  = document.getElementById('works-view');
+      const detailView = document.getElementById('detail-view');
+      setNavMain(true);
+      detailView.style.opacity = '0';
+      setTimeout(() => {
+        detailView.hidden = true;
+        worksView.hidden  = true;
+        mainView.hidden   = false;
+        mainView.style.opacity = '0';
+        requestAnimationFrame(() => {
+          window.scrollTo(0, 0);
+          requestAnimationFrame(() => mainView.style.opacity = '1');
+        });
+      }, 220);
+      history.pushState(null, '', location.pathname);
+      currentWorkId = null;
+    }
+
+
+    function buildPreviewCards() {
+      const grid = document.querySelector('.preview-grid');
+      if (!grid) return;
+      grid.innerHTML = '';
+      WORKS.slice(0, 6).forEach(w => {
+        const year  = (w.date || '').slice(0, 4);
+        const tags  = (w.tags || '').split(',').map(s => s.trim()).filter(Boolean);
+        const yt0   = ytIds(w)[0];
+        const thumb = yt0          ? `<img src="https://img.youtube.com/vi/${yt0}/mqdefault.jpg" alt="">`
+                    : w.image      ? `<img src="${w.image}" alt="">`
+                    : w.vimeo      ? `<img class="js-vimeo-thumb" alt="">`
+                    : w.soundcloud ? `<img class="js-sc-thumb" alt="">`
+                    : w.spotify    ? `<img class="js-sp-thumb" alt="">`
+                    :                 'No Image';
+        const linkKey = w.category === 'self' ? 'card_link_listen' : 'card_link_project';
+        const el = document.createElement('a');
+        el.className = 'card';
+        el.href = `#${w.id}`;
+        el.dataset.category = w.category;
+        el.innerHTML = `
+          <div class="card-thumb">${thumb}</div>
+          <div class="card-meta">
+            <span class="card-year">${year}</span>
+            <div class="card-tags">
+              <span class="tag category">${CATEGORY_LABEL[w.category] || w.category}</span>
+              ${tags.map(t => `<span class="tag">${t}</span>`).join('')}
+            </div>
+          </div>
+          <h3 class="card-title">${wt(w, 'title')}</h3>
+          <p class="card-desc">${wt(w, 'desc')}</p>
+          <span class="card-link">${i18n[currentLang][linkKey] || 'View Project'}</span>
+        `;
+        el.addEventListener('click', e => { e.preventDefault(); openWork(w.id); });
+        grid.appendChild(el);
+        if (w.vimeo && !yt0 && !w.image) {
+          const img = el.querySelector('.js-vimeo-thumb');
+          getVimeoThumb(w.vimeo).then(url => { if (url && img) img.src = url; });
+        }
+        if (w.soundcloud && !yt0 && !w.image && !w.vimeo) {
+          const img = el.querySelector('.js-sc-thumb');
+          getSoundCloudThumb(w.soundcloud).then(url => { if (url && img) img.src = url; });
+        }
+        if (w.spotify && !yt0 && !w.image && !w.vimeo && !w.soundcloud) {
+          const img = el.querySelector('.js-sp-thumb');
+          getSpotifyThumb(w.spotify).then(url => { if (url && img) img.src = url; });
+        }
+      });
+    }
+
+    buildCards();
+    buildPreviewCards();
+
+    document.getElementById('work-back').addEventListener('click', closeWork);
+    document.getElementById('works-back').addEventListener('click', closeWorks);
+    document.getElementById('works-cta-btn').addEventListener('click', openWorks);
+
+    document.addEventListener('keydown', e => {
+      if (e.key !== 'Escape') return;
+      if (currentWorkId) closeWork();
+      else if (!document.getElementById('works-view').hidden) closeWorks();
+      else if (typeof currentNewsId !== 'undefined' && currentNewsId) closeNews();
+    });
+
+    document.querySelectorAll('.nav-main-links a').forEach(a => {
+      a.addEventListener('click', e => {
+        e.preventDefault();
+        const target = document.querySelector(a.getAttribute('href'));
+        if (target) target.scrollIntoView({ behavior: 'smooth' });
+      });
+    });
+
+    window.addEventListener('popstate', e => {
+      if (e.state?.workId) openWork(e.state.workId);
+      else if (e.state?.newsId) openNews(e.state.newsId);
+      else if (e.state?.view === 'works') {
+        if (currentWorkId) {
+          document.getElementById('wd-embed').innerHTML = '';
+          document.getElementById('detail-view').hidden = true;
+          const wv = document.getElementById('works-view');
+          wv.hidden = false; wv.style.opacity = '1';
+          currentWorkId = null;
+        } else if (document.getElementById('works-view').hidden) openWorks();
+      } else {
+        if (currentWorkId) closeWork();
+        else if (!document.getElementById('works-view').hidden) closeWorks();
+        else if (typeof currentNewsId !== 'undefined' && currentNewsId) closeNews();
+      }
+    });
+
+    const initHash = location.hash.slice(1);
+    if (initHash && WORKS.find(x => x.id === initHash)) openWork(initHash);
+    else if (initHash === 'works') openWorks();
+    else if (initHash.startsWith('news-') && typeof NEWS !== 'undefined' && NEWS.find(x => x.id === initHash)) openNews(initHash);
+  </script>
+
+  <!-- News -->
+  <script>
+    const NEWS_CATEGORY_LABEL = {
+      event:   'イベント',
+      media:   'メディア掲載',
+      release: 'リリース',
+      other:   'その他',
+    };
+    const NEWS_CATEGORY_LABEL_EN = {
+      event:   'Event',
+      media:   'Media',
+      release: 'Release',
+      other:   'Other',
+    };
+
+    let currentNewsId = null;
+
+    function buildNewsList() {
+      const list = document.querySelector('.news-list');
+      if (!list || typeof NEWS === 'undefined') return;
+      list.innerHTML = '';
+      const sorted = [...NEWS].sort((a, b) =>
+        (b.date || '').replace(/\./g, '').localeCompare((a.date || '').replace(/\./g, ''))
+      ).slice(0, 5);
+      const labels = currentLang === 'en' ? NEWS_CATEGORY_LABEL_EN : NEWS_CATEGORY_LABEL;
+      sorted.forEach(n => {
+        const li = document.createElement('li');
+        li.className = 'news-item';
+        const title = currentLang === 'en' ? (n.titleEn || n.title) : n.title;
+        const label = labels[n.category] || n.category;
+        li.innerHTML = `
+          <span class="news-item-date">${n.date || ''}</span>
+          <span class="tag news-item-cat cat-${n.category}">${label}</span>
+          <span class="news-item-title">${title}</span>
+          <span class="news-item-arrow">→</span>
+        `;
+        li.addEventListener('click', () => openNews(n.id));
+        list.appendChild(li);
+      });
+    }
+
+    function renderNewsDetail(id, lang) {
+      const n = NEWS.find(x => x.id === id);
+      if (!n) return;
+      const nt = key => n[(key + (lang === 'en' ? 'En' : ''))] || n[key] || '';
+      const labels = lang === 'en' ? NEWS_CATEGORY_LABEL_EN : NEWS_CATEGORY_LABEL;
+      const catEl = document.getElementById('nd-category');
+      catEl.textContent = labels[n.category] || n.category;
+      catEl.className = `tag cat-${n.category}`;
+      document.getElementById('nd-date').textContent = n.date || '';
+      document.getElementById('nd-title').textContent = nt('title');
+      document.getElementById('nd-body').innerHTML = nt('body');
+      const imgEl = document.getElementById('nd-image');
+      imgEl.innerHTML = n.image
+        ? `<div class="work-image-wrapper"><img src="${n.image}" alt=""></div>` : '';
+      const urlEl = document.getElementById('nd-url');
+      urlEl.innerHTML = n.url
+        ? `<a class="work-external-link" href="${n.url}" target="_blank" rel="noopener">${lang === 'en' ? 'Open link →' : 'リンクを開く →'}</a>` : '';
+    }
+
+    function openNews(id) {
+      const mainView       = document.getElementById('main-view');
+      const newsDetailView = document.getElementById('news-detail-view');
+      setNavMain(false);
+      mainView.style.opacity = '0';
+      setTimeout(() => {
+        mainView.hidden       = true;
+        newsDetailView.hidden = false;
+        newsDetailView.style.opacity = '0';
+        window.scrollTo(0, 0);
+        renderNewsDetail(id, currentLang);
+        requestAnimationFrame(() => requestAnimationFrame(() => newsDetailView.style.opacity = '1'));
+      }, 220);
+      history.pushState({ newsId: id }, '', '#' + id);
+      currentNewsId = id;
+    }
+
+    function closeNews() {
+      const mainView       = document.getElementById('main-view');
+      const newsDetailView = document.getElementById('news-detail-view');
+      newsDetailView.style.opacity = '0';
+      setTimeout(() => {
+        newsDetailView.hidden = true;
+        mainView.hidden       = false;
+        mainView.style.opacity = '0';
+        requestAnimationFrame(() => {
+          window.scrollTo(0, 0);
+          requestAnimationFrame(() => mainView.style.opacity = '1');
+        });
+      }, 220);
+      setNavMain(true);
+      history.pushState(null, '', location.pathname);
+      currentNewsId = null;
+    }
+
+    document.getElementById('news-back').addEventListener('click', closeNews);
+
+    buildNewsList();
+  </script>
+
+  <!-- Filter -->
+  <script>
+    document.querySelectorAll('.filter-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        currentFilter = btn.dataset.filter;
+        applyFilter();
+      });
+    });
+  </script>
+
+  <!-- Liquid Egg -->
+  <script>
+  (function () {
+    const PHI = 2.3999632;
+
+    function sn(t, off) {
+      return (
+        Math.sin(t * 0.71 + off)        * 0.55 +
+        Math.sin(t * 1.63 + off * 1.37) * 0.30 +
+        Math.sin(t * 3.07 + off * 0.73) * 0.15
+      );
+    }
+
+    function blobPts(cx, cy, baseR, n, offsets, speed, t, mouse, maxDisplace, amplitude) {
+      const pts = [];
+      for (let i = 0; i < n; i++) {
+        const angle = (i / n) * Math.PI * 2 - Math.PI / 2;
+        const r = baseR * (1 + sn(t * speed, offsets[i]) * amplitude);
+        let px = cx + Math.cos(angle) * r;
+        let py = cy + Math.sin(angle) * r;
+        if (maxDisplace > 0) {
+          const dx = px - mouse.x, dy = py - mouse.y;
+          const dist = Math.sqrt(dx * dx + dy * dy);
+          const maxD = baseR * 2.2;
+          if (dist < maxD) {
+            const inf = Math.pow(1 - dist / maxD, 2) * maxDisplace;
+            px += (-dy / (dist + 1)) * inf;
+            py += ( dx / (dist + 1)) * inf;
+          }
+        }
+        pts.push({ x: px, y: py });
+      }
+      return pts;
+    }
+
+    function drawCurve(ctx, pts) {
+      const n = pts.length;
+      ctx.beginPath();
+      for (let i = 0; i < n; i++) {
+        const p0 = pts[(i-1+n)%n], p1 = pts[i];
+        const p2 = pts[(i+1)%n],   p3 = pts[(i+2)%n];
+        const c1x = p1.x+(p2.x-p0.x)/6, c1y = p1.y+(p2.y-p0.y)/6;
+        const c2x = p2.x-(p3.x-p1.x)/6, c2y = p2.y-(p3.y-p1.y)/6;
+        if (i === 0) ctx.moveTo(p1.x, p1.y);
+        ctx.bezierCurveTo(c1x, c1y, c2x, c2y, p2.x, p2.y);
+      }
+      ctx.closePath();
+    }
+
+    const canvas = document.getElementById('egg-canvas');
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+
+    // Per-egg state: horizontal position fn + animation state
+    const EGG_DEFS = [
+      {
+        getX: (W, wR) => W - wR * 0.18,
+        yolk: (bx, by, yR) => ({ yx: bx - yR * 0.50, yy: by + yR * 0.08 }),
+      },
+      {
+        getX: (W, wR) => -wR * 0.06,
+        yolk: (bx, by, yR) => ({ yx: bx + yR * 0.60, yy: by + yR * 0.42 }),
+      },
+      {
+        getX: (W, wR, yR) => W * 0.62 + yR,
+        yolk: (bx, by, yR) => ({ yx: bx - yR * 0.45, yy: by + yR * 0.28 }),
+      },
+      {
+        getX: (W, wR, yR) => W * 0.38 - yR,
+        yolk: (bx, by, yR) => ({ yx: bx + yR * 0.20, yy: by - yR * 0.15 }),
+      },
+    ];
+
+    const eggs = EGG_DEFS.map(def => ({
+      def,
+      wOff: Array.from({length: 14}, (_, i) => i * PHI + Math.random() * 2),
+      yOff: Array.from({length: 10}, (_, i) => i * PHI + 1.618 + Math.random() * 2),
+      vel: 0, targetVel: 0,
+      time: Math.random() * 300,
+      bx: 0, by: 0, yx: 0, yy: 0, wR: 0, yR: 0,
+    }));
+
+    let W = 0, pageH = 0;
+    let mouse     = { x: -9999, y: -9999 };
+    let prevMouse = { x: -9999, y: -9999 };
+
+    function layout() {
+      const mainView = document.getElementById('main-view');
+      W     = window.innerWidth;
+      pageH = mainView ? mainView.scrollHeight : window.innerHeight * 3;
+      canvas.width  = W;
+      canvas.height = pageH;
+      canvas.style.height = pageH + 'px';
+
+      const vh = window.innerHeight;
+      const base = W < 768 ? W : vh;
+      const wR = base * 0.78;
+      const yR = base * 0.30;
+      const interval = pageH / 3;
+
+      eggs.forEach((egg, i) => {
+        const slotTop = i * interval;
+        const bx = egg.def.getX(W, wR, yR);
+        // by = offset within slot, same ratio as original viewport-relative values
+        const by = slotTop + wR * [0.44, 0.15, 0.18, 0.22][i];
+        const { yx, yy } = egg.def.yolk(bx, by, yR);
+        egg.bx = bx; egg.by = by;
+        egg.yx = yx; egg.yy = yy;
+        egg.wR = wR; egg.yR = yR;
+      });
+    }
+
+    let _prevW = window.innerWidth, _prevH = window.innerHeight;
+    window.addEventListener('resize', () => {
+      const newW = window.innerWidth, newH = window.innerHeight;
+      // モバイルのアドレスバー出現による微小な高さ変化は無視する
+      if (newW !== _prevW || Math.abs(newH - _prevH) > 150) {
+        _prevW = newW; _prevH = newH;
+        layout();
+      }
+    });
+    requestAnimationFrame(() => requestAnimationFrame(layout));
+
+    // Mouse in page coordinates (clientY + scrollY)
+    window.addEventListener('mousemove', e => {
+      const px = e.clientX;
+      const py = e.clientY + window.scrollY;
+      const dx = px - prevMouse.x, dy = py - prevMouse.y;
+      const v  = Math.min(60, Math.sqrt(dx*dx + dy*dy) * 0.5);
+      eggs.forEach(egg => {
+        if (Math.abs(py - egg.by) < egg.wR * 2.5) egg.targetVel = Math.max(egg.targetVel, v);
+      });
+      prevMouse = { x: px, y: py };
+      mouse = { x: px, y: py };
+    });
+    window.addEventListener('touchmove', e => {
+      const t  = e.touches[0];
+      const px = t.clientX;
+      const py = t.clientY + window.scrollY;
+      const dx = px - prevMouse.x, dy = py - prevMouse.y;
+      const v  = Math.min(60, Math.sqrt(dx*dx + dy*dy) * 0.5);
+      eggs.forEach(egg => {
+        if (Math.abs(py - egg.by) < egg.wR * 2.5) egg.targetVel = Math.max(egg.targetVel, v);
+      });
+      prevMouse = { x: px, y: py };
+      mouse = { x: px, y: py };
+    }, { passive: true });
+
+    function draw() {
+      requestAnimationFrame(draw);
+      if (!pageH) return;
+      ctx.clearRect(0, 0, W, pageH);
+
+      eggs.forEach(egg => {
+        egg.vel       += (egg.targetVel - egg.vel) * 0.04;
+        egg.targetVel *= 0.93;
+        egg.time      += 0.007;
+
+        const maxDisplace = (egg.vel / 60) * egg.yR;
+        const wPts = blobPts(egg.bx, egg.by, egg.wR, 14, egg.wOff, 0.45, egg.time, mouse, maxDisplace, 0.11);
+        drawCurve(ctx, wPts);
+        ctx.shadowColor = 'rgba(200, 170, 60, 0.10)';
+        ctx.shadowBlur  = 48;
+        ctx.fillStyle   = 'rgba(255, 251, 236, 0.82)';
+        ctx.fill();
+        ctx.shadowBlur  = 0;
+
+        const yPts = blobPts(egg.yx, egg.yy, egg.yR, 10, egg.yOff, 0.30, egg.time, {x:-9999,y:-9999}, 0, 0.03);
+        drawCurve(ctx, yPts);
+        ctx.fillStyle = '#ffd559';
+        ctx.fill();
+      });
+    }
+    draw();
+  })();
+  </script>
+
+</body>
+</html>
