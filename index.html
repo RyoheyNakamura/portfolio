@@ -11,18 +11,55 @@
     gtag('js', new Date());
     gtag('config', 'G-XXRZ0TSQRP');
   </script>
-  <title>Ryohey Nakamura</title>
+  <title>Ryohey Nakamura | Sound Producer / Composer</title>
   <link rel="icon" type="image/png" href="/favicon.png">
-  <meta name="description" content="Sound Producer / Composer — Ryohey Nakamura">
+  <link rel="canonical" href="https://ryoheynakamura.com/">
+  <meta name="description" content="作曲家・サウンドプロデューサー Ryohey Nakamura（リョウヘイ・ナカムラ）のポートフォリオ。広告・CM音楽、映像音楽、楽曲提供・プロデュースまで、映像と結びついた多彩なサウンドを制作。株式会社インビジ所属。">
   <meta property="og:type" content="website">
-  <meta property="og:url" content="https://ryoheynakamura.com">
-  <meta property="og:title" content="Ryohey Nakamura">
-  <meta property="og:description" content="Sound Producer / Composer">
+  <meta property="og:url" content="https://ryoheynakamura.com/">
+  <meta property="og:site_name" content="Ryohey Nakamura">
+  <meta property="og:locale" content="ja_JP">
+  <meta property="og:locale:alternate" content="en_US">
+  <meta property="og:title" content="Ryohey Nakamura | Sound Producer / Composer">
+  <meta property="og:description" content="作曲家・サウンドプロデューサー Ryohey Nakamura のポートフォリオ。広告・CM音楽、映像音楽、楽曲提供・プロデュースを手がける。">
   <meta property="og:image" content="https://ryoheynakamura.com/og-image.png">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Ryohey Nakamura">
-  <meta name="twitter:description" content="Sound Producer / Composer">
+  <meta name="twitter:title" content="Ryohey Nakamura | Sound Producer / Composer">
+  <meta name="twitter:description" content="作曲家・サウンドプロデューサー Ryohey Nakamura のポートフォリオ。広告・CM音楽、映像音楽、楽曲提供・プロデュースを手がける。">
   <meta name="twitter:image" content="https://ryoheynakamura.com/og-image.png">
+
+  <!-- Structured data: Person (entity for search / knowledge graph) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": "Ryohey Nakamura",
+    "alternateName": "リョウヘイ・ナカムラ",
+    "jobTitle": "Sound Producer / Composer",
+    "description": "作曲家・サウンドプロデューサー。広告・CM音楽、映像音楽、楽曲提供・プロデュースを手がける。",
+    "url": "https://ryoheynakamura.com/",
+    "image": "https://ryoheynakamura.com/og-image.png",
+    "email": "ryoheynakamura@invisi.jp",
+    "birthDate": "1999",
+    "worksFor": {
+      "@type": "Organization",
+      "name": "invisi Inc.",
+      "url": "https://invisi.jp/"
+    },
+    "alumniOf": {
+      "@type": "CollegeOrUniversity",
+      "name": "Kyushu University, School of Design"
+    },
+    "knowsAbout": ["Music Composition", "Sound Design", "Film Scoring", "Commercial Music", "Music Production"],
+    "sameAs": [
+      "https://x.com/RyoheyNakamura",
+      "https://www.youtube.com/@ryoheynakamura",
+      "https://www.instagram.com/ryoheynakamura/",
+      "https://soundcloud.com/ryoheynakamura",
+      "https://invisi.jp/members/ryohey-nakamura"
+    ]
+  }
+  </script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600;9..40,700&display=swap" rel="stylesheet">
@@ -1159,6 +1196,31 @@
   <script>
     WORKS.sort((a, b) => (b.date || '').replace(/\./g, '').localeCompare((a.date || '').replace(/\./g, '')));
     const VISIBLE_WORKS = WORKS.filter(w => !w.hidden);
+
+    // Structured data: works as an ItemList, generated from works.js so it never drifts.
+    (function injectWorksJsonLd() {
+      const clean = s => (s || '').replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim();
+      const itemList = {
+        "@context": "https://schema.org",
+        "@type": "ItemList",
+        "name": "Works — Ryohey Nakamura",
+        "itemListElement": VISIBLE_WORKS.map((w, i) => ({
+          "@type": "ListItem",
+          "position": i + 1,
+          "item": {
+            "@type": w.category === 'self' ? "MusicRecording" : "CreativeWork",
+            "name": clean(w.title),
+            "url": "https://ryoheynakamura.com/#" + w.id,
+            "datePublished": (w.date || '').replace(/\./g, '-'),
+            "creator": { "@type": "Person", "name": "Ryohey Nakamura", "url": "https://ryoheynakamura.com/" }
+          }
+        }))
+      };
+      const el = document.createElement('script');
+      el.type = 'application/ld+json';
+      el.textContent = JSON.stringify(itemList);
+      document.head.appendChild(el);
+    })();
 
     let currentWorkId = null;
     let prevView = 'main';
