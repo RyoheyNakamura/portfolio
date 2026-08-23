@@ -74,8 +74,9 @@
       --text-primary: #1a1815;
       --text-secondary: #9a958a;
       --accent: #ffd559;
-      --shadow-sm: 0 2px 12px rgba(30, 20, 0, 0.07);
-      --shadow-md: 0 8px 32px rgba(30, 20, 0, 0.12);
+      --accent-deep: #ffc933;
+      --shadow-sm: 0 1px 2px rgba(30, 20, 0, 0.04), 0 12px 32px rgba(30, 20, 0, 0.07);
+      --shadow-md: 0 2px 4px rgba(30, 20, 0, 0.05), 0 20px 48px rgba(30, 20, 0, 0.11);
     }
 
     html { scroll-behavior: smooth; }
@@ -91,6 +92,8 @@
     /* 共通の水平余白：大画面では約1/3が余白 */
     :root {
       --px: max(48px, calc((100% - 920px) / 2));
+      /* Worksグリッドだけ本文より広い（1120px） */
+      --px-grid: max(20px, calc((100% - 1120px) / 2));
     }
 
     /* ━━━━━━━━━━━━━━━━
@@ -193,7 +196,7 @@
       margin-bottom: 32px;
     }
 
-    .hero-title .accent { color: var(--accent); }
+    .hero-title .accent { color: var(--accent-deep); }
 
 .hero-desc {
       font-size: 14px;
@@ -290,21 +293,19 @@
     .grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-      gap: 16px;
+      gap: 28px;
+      padding: 0 var(--px-grid);
     }
 
     .card {
       background: var(--surface);
-      padding: 20px;
       display: flex;
       flex-direction: column;
-      gap: 10px;
       text-decoration: none;
       color: inherit;
       position: relative;
       overflow: hidden;
-      border-radius: 12px;
-      border: 1.5px solid var(--border);
+      border-radius: 18px;
       box-shadow: var(--shadow-sm);
       transition: transform 0.28s cubic-bezier(.34, 1.4, .64, 1),
                   box-shadow 0.28s ease,
@@ -323,7 +324,6 @@
       width: 100%;
       aspect-ratio: 16 / 9;
       background: linear-gradient(135deg, #f5f1e8, #ede8da);
-      border-radius: 8px;
       overflow: hidden;
       display: flex;
       align-items: center;
@@ -337,12 +337,20 @@
 
     .card-thumb img { width: 100%; height: 100%; object-fit: cover; }
 
+    /* サムネ以下のテキスト領域（サムネはカードにフル幅で接する） */
+    .card-body {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 8px;
+      padding: 18px 20px 20px;
+    }
+
     .card-meta {
       display: flex;
       flex-direction: column;
       align-items: flex-start;
       gap: 8px;
-      margin-top: 2px;
     }
 
     .card-year { font-size: 11px; color: var(--text-secondary); }
@@ -380,22 +388,6 @@
       color: var(--text-secondary);
       line-height: 1.65;
     }
-
-    .card-link {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      font-size: 11px;
-      font-weight: 600;
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-      color: var(--text-secondary);
-      margin-top: 2px;
-      transition: color 0.2s;
-    }
-
-    .card:hover .card-link { color: var(--accent); }
-    .card-link::after { content: '→'; font-weight: 400; }
 
     /* ━━━━━━━━━━━━━━━━
        About
@@ -577,11 +569,11 @@
        Works CTA (main view)
     ━━━━━━━━━━━━━━━━ */
     .works-cta {
-      padding: 96px var(--px);
+      padding: 96px 0;
       border-top: 1px solid var(--border);
     }
 
-    .works-cta-top { margin-bottom: 52px; }
+    .works-cta-top { margin-bottom: 52px; padding: 0 var(--px); }
 
     .works-cta-bottom {
       margin-top: 48px;
@@ -673,7 +665,7 @@
     }
 
     .works-view-inner {
-      padding: 64px var(--px) 80px;
+      padding: 64px 0 80px;
     }
 
     .works-view-header {
@@ -681,6 +673,7 @@
       align-items: flex-end;
       justify-content: space-between;
       margin-bottom: 52px;
+      padding: 0 var(--px);
       gap: 24px;
       flex-wrap: wrap;
     }
@@ -897,15 +890,16 @@
       .section-title { font-size: clamp(36px, 10vw, 52px); }
 
       /* Works preview grid → 1 column */
-      .grid { grid-template-columns: 1fr; }
+      .grid { grid-template-columns: 1fr; gap: 20px; }
+      .card { border-radius: 16px; }
 
       /* Works CTA */
-      .works-cta { padding: 64px var(--px); }
+      .works-cta { padding: 64px 0; }
       .works-cta-top { margin-bottom: 36px; }
       .works-cta-bottom { margin-top: 32px; }
 
       /* Works view */
-      .works-view-inner { padding: 48px var(--px) 64px; }
+      .works-view-inner { padding: 48px 0 64px; }
       .works-view-header {
         flex-direction: column;
         align-items: flex-start;
@@ -1127,8 +1121,6 @@
     const i18n = {
       ja: {
         hero_eyebrow:       "Sound Producer / Composer",
-        card_link_project:  "View Project",
-        card_link_listen:   "Listen",
         about_label_profile:"Profile",
         about_role:         "Sound Producer / Composer",
         about_text:         "1999年生まれ。九州大学芸術工学部音響設計学科卒業。<br><br>大学在学中よりフリーランスとして音楽活動を開始し、DTMによる制作を中心に大学内外を問わず活動の幅を広げる。音楽とその他のコンテンツの結び付きについて特に強い関心があり、映像演出などと紐づいたアプローチを得意とする。<br><br>Dubstep、Drum'n'Bass、Houseなどを音楽制作のルーツに持つ一方で、体系的な音楽理論に基づいたオーケストレーションやJazzプレイヤーとしての経験もあり、多彩なジャンルを取り入れた独自のスタイルを展開している。<br><br>2023年に株式会社インビジに入社。",
@@ -1143,8 +1135,6 @@
       },
       en: {
         hero_eyebrow:       "Sound Producer / Composer",
-        card_link_project:  "View Project",
-        card_link_listen:   "Listen",
         about_label_profile:"Profile",
         about_role:         "Sound Producer / Composer",
         about_text:         "Born 1999. Graduated from Kyushu University, Dept. of Acoustic Design.<br><br>Began freelance music activities during university, expanding DAW-based production both within and beyond academia. Particularly passionate about the intersection of music and other creative media, with a specialty in synchronized audiovisual approaches.<br><br>Rooted in Dubstep, Drum'n'Bass, and House, while also versed in orchestration grounded in formal music theory and experienced as a jazz performer — developing a distinctive style that bridges diverse genres.<br><br>Joined Invisi Inc. in 2023.",
@@ -1316,7 +1306,6 @@
                     : w.soundcloud ? `<img class="js-sc-thumb" alt="">`
                     : w.spotify    ? `<img class="js-sp-thumb" alt="">`
                     :                 'No Image';
-        const linkKey = w.category === 'self' ? 'card_link_listen' : 'card_link_project';
         const el = document.createElement('a');
         el.className = 'card';
         el.href = `#${w.id}`;
@@ -1324,16 +1313,17 @@
         el.dataset.workId   = w.id;
         el.innerHTML = `
           <div class="card-thumb">${thumb}</div>
-          <div class="card-meta">
-            <span class="card-year">${year}</span>
-            <div class="card-tags">
-              <span class="tag category">${CATEGORY_LABEL[w.category] || w.category}</span>
-              ${tags.map(t => `<span class="tag">${t}</span>`).join('')}
+          <div class="card-body">
+            <div class="card-meta">
+              <span class="card-year">${year}</span>
+              <div class="card-tags">
+                <span class="tag category">${CATEGORY_LABEL[w.category] || w.category}</span>
+                ${tags.map(t => `<span class="tag">${t}</span>`).join('')}
+              </div>
             </div>
+            <h3 class="card-title">${wt(w, 'title')}</h3>
+            <p class="card-desc">${wt(w, 'desc')}</p>
           </div>
-          <h3 class="card-title">${wt(w, 'title')}</h3>
-          <p class="card-desc">${wt(w, 'desc')}</p>
-          <span class="card-link">${i18n[currentLang][linkKey] || 'View Project'}</span>
         `;
         el.addEventListener('click', e => { e.preventDefault(); openWork(w.id); });
         grid.appendChild(el);
@@ -1501,23 +1491,23 @@
                     : w.soundcloud ? `<img class="js-sc-thumb" alt="">`
                     : w.spotify    ? `<img class="js-sp-thumb" alt="">`
                     :                 'No Image';
-        const linkKey = w.category === 'self' ? 'card_link_listen' : 'card_link_project';
         const el = document.createElement('a');
         el.className = 'card';
         el.href = `#${w.id}`;
         el.dataset.category = w.category;
         el.innerHTML = `
           <div class="card-thumb">${thumb}</div>
-          <div class="card-meta">
-            <span class="card-year">${year}</span>
-            <div class="card-tags">
-              <span class="tag category">${CATEGORY_LABEL[w.category] || w.category}</span>
-              ${tags.map(t => `<span class="tag">${t}</span>`).join('')}
+          <div class="card-body">
+            <div class="card-meta">
+              <span class="card-year">${year}</span>
+              <div class="card-tags">
+                <span class="tag category">${CATEGORY_LABEL[w.category] || w.category}</span>
+                ${tags.map(t => `<span class="tag">${t}</span>`).join('')}
+              </div>
             </div>
+            <h3 class="card-title">${wt(w, 'title')}</h3>
+            <p class="card-desc">${wt(w, 'desc')}</p>
           </div>
-          <h3 class="card-title">${wt(w, 'title')}</h3>
-          <p class="card-desc">${wt(w, 'desc')}</p>
-          <span class="card-link">${i18n[currentLang][linkKey] || 'View Project'}</span>
         `;
         el.addEventListener('click', e => { e.preventDefault(); openWork(w.id); });
         grid.appendChild(el);
