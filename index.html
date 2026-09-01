@@ -1568,7 +1568,7 @@
         worksView.hidden = false;
         worksView.style.opacity = '0';
         window.scrollTo(0, 0);
-        requestAnimationFrame(() => requestAnimationFrame(() => worksView.style.opacity = '1'));
+        fadeIn(worksView);
       }, 220);
       history.pushState({ view: 'works' }, '', '#works');
     }
@@ -1581,10 +1581,8 @@
         worksView.hidden = true;
         mainView.hidden  = false;
         mainView.style.opacity = '0';
-        requestAnimationFrame(() => {
-          window.scrollTo({ top: document.getElementById('works').offsetTop - 64, behavior: 'instant' });
-          requestAnimationFrame(() => mainView.style.opacity = '1');
-        });
+        scrollToSection('#works', 'instant');
+        fadeIn(mainView);
       }, 220);
       history.pushState(null, '', location.pathname);
     }
@@ -1604,7 +1602,7 @@
         schedule(() => {
           renderDetail(id);
           window.scrollTo({ top: 0, behavior: 'instant' });
-          detailView.style.opacity = '1';
+          fadeIn(detailView);
         }, 180);
         if (!fromHistory) history.pushState({ workId: id }, '', `#${id}`);
         return;
@@ -1625,7 +1623,7 @@
         detailView.hidden = false;
         detailView.style.opacity = '0';
         window.scrollTo(0, 0);
-        requestAnimationFrame(() => requestAnimationFrame(() => detailView.style.opacity = '1'));
+        fadeIn(detailView);
       }, 220);
       if (!fromHistory) history.pushState({ workId: id }, '', `#${id}`);
     }
@@ -1642,15 +1640,13 @@
           worksView.hidden = false;
           worksView.style.opacity = '0';
           window.scrollTo(0, 0);
-          requestAnimationFrame(() => requestAnimationFrame(() => worksView.style.opacity = '1'));
+          fadeIn(worksView);
           history.pushState({ view: 'works' }, '', '#works');
         } else {
           mainView.hidden = false;
           mainView.style.opacity = '0';
-          requestAnimationFrame(() => {
-            window.scrollTo(0, 0);
-            requestAnimationFrame(() => mainView.style.opacity = '1');
-          });
+          window.scrollTo(0, 0);
+          fadeIn(mainView);
           history.pushState(null, '', location.pathname);
         }
       }, 220);
@@ -1821,7 +1817,7 @@
         newsDetailView.style.opacity = '0';
         window.scrollTo(0, 0);
         renderNewsDetail(id, currentLang);
-        requestAnimationFrame(() => requestAnimationFrame(() => newsDetailView.style.opacity = '1'));
+        fadeIn(newsDetailView);
       }, 220);
       history.pushState({ newsId: id }, '', '#' + id);
       currentNewsId = id;
@@ -1836,10 +1832,8 @@
         newsDetailView.hidden = true;
         mainView.hidden       = false;
         mainView.style.opacity = '0';
-        requestAnimationFrame(() => {
-          window.scrollTo(0, 0);
-          requestAnimationFrame(() => mainView.style.opacity = '1');
-        });
+        window.scrollTo(0, 0);
+        fadeIn(mainView);
       }, 220);
       history.pushState(null, '', location.pathname);
       currentNewsId = null;
