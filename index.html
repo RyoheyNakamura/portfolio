@@ -406,10 +406,6 @@
     }
 
     .about-inner {
-      /* 卵の上でも本文が読めるように薄い白を敷く（.section-veil と同じ・本人発注 2026-09-01） */
-      background: rgba(255, 255, 255, 0.72);
-      border-radius: 18px;
-      padding: 40px;
       max-width: 920px;
       display: grid;
       grid-template-columns: minmax(0, clamp(240px, 34%, 340px)) minmax(0, 1fr);
@@ -523,6 +519,14 @@
     }
 
     .tbd { font-size: 13px; color: var(--text-secondary); }
+
+    /* 本文の可読性（卵の上）＝文章の列だけカードに載せる（全体を1枚で囲うと掲示板に見える・本人差し戻し） */
+    .about-profile {
+      background: var(--surface);
+      border-radius: 18px;
+      padding: 32px;
+      box-shadow: var(--shadow-sm);
+    }
 
     /* メール問い合わせブロック */
     .about-mail-block {
@@ -953,29 +957,26 @@
     .commission-status.is-limited .status-dot { background: var(--accent-deep); }
     .commission-status.is-full    .status-dot { background: var(--text-secondary); }
 
-    /* 卵の上でも本文が読めるように敷く薄い白（本人発注 2026-09-01）。枠線・影は付けない */
-    .section-veil {
-      background: rgba(255, 255, 255, 0.72);
-      border-radius: 18px;
-    }
-
-    .commission-veil {
-      max-width: 1000px;
-      padding: 40px;
-      margin-top: 30px;
-    }
-
     .commission-lead {
       max-width: 640px;
-      margin-bottom: 56px;
+      margin: 30px 0 44px;
     }
 
     .commission-grid {
-      max-width: 920px;
+      max-width: 960px;
       display: grid;
       grid-template-columns: 1fr 1fr 1.1fr;
-      gap: 40px 56px;
+      gap: 24px;
       margin-bottom: 56px;
+    }
+
+    /* 1枚の大きな囲いは「掲示板」に見える（本人差し戻し 2026-09-01）。
+       囲うなら works のカードと同じ文法＝白・角丸・影・枠線なしで、1ブロック1枚 */
+    .commission-field {
+      background: var(--surface);
+      border-radius: 18px;
+      padding: 26px 24px;
+      box-shadow: var(--shadow-sm);
     }
 
     .commission-field-title {
@@ -1020,7 +1021,7 @@
 
     .commission-note {
       font-size: 13px;
-      color: var(--text-secondary);
+      color: var(--text-primary);
       text-align: center;
     }
 
@@ -1073,13 +1074,14 @@
       /* Commission */
       .commission { padding: 64px var(--px); }
       .commission > .section-title { margin-bottom: 12px; }
-      .commission-veil { padding: 22px; border-radius: 16px; margin-top: 24px; }
-      .commission-lead { margin-bottom: 36px; }
+      .commission-lead { margin: 22px 0 32px; }
+      .commission-field { padding: 22px 20px; border-radius: 16px; }
       .commission-grid { grid-template-columns: 1fr; gap: 28px; margin-bottom: 40px; }
 
       /* About */
       .about { padding: 64px var(--px) 64px; }
-      .about-inner { grid-template-columns: 1fr; gap: 32px; padding: 22px; border-radius: 16px; }
+      .about-inner { grid-template-columns: 1fr; gap: 32px; }
+      .about-profile { padding: 24px 20px; border-radius: 16px; }
       .about-portrait { max-width: 300px; border-radius: 14px; }
 
       /* Detail view */
@@ -1188,7 +1190,6 @@
     <h2 class="section-title">Commission</h2>
     <!-- 空き状況の変え方: is-open / is-limited / is-full を付け替え、i18n の com_status（ja/en）を更新 -->
     <p class="commission-status is-open"><span class="status-dot"></span><span data-i18n="com_status">空きあり（2026年9月時点）</span></p>
-    <div class="section-veil commission-veil">
     <p class="commission-lead" data-i18n="com_lead">TVCM・Webムービー・アニメーションPVなどの映像音楽を中心に、楽曲制作のご依頼を受け付けています。企画やコンテの段階からのご相談も歓迎です。</p>
     <div class="commission-grid">
       <div class="commission-field">
@@ -1213,7 +1214,6 @@
       <p class="commission-note" data-i18n="com_note">上記以外の音まわりのご相談も歓迎です。納期・費用は内容によって変わります。</p>
       <a class="works-cta-btn" href="mailto:ryoheynakamura@invisi.jp" data-i18n="com_mail">メールで相談する →</a>
     </div>
-    </div><!-- /.section-veil -->
   </section>
 
   <!-- About -->
