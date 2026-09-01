@@ -963,10 +963,11 @@
       margin: 30px 0 44px;
     }
 
+    /* カード4枚（対応領域3＋進め方）＝2×2。3列に4枚目を足すと1枚あたりが痩せて読めない */
     .commission-grid {
       max-width: 960px;
       display: grid;
-      grid-template-columns: 1fr 1fr 1.1fr;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
       gap: 24px;
       margin-bottom: 56px;
     }
@@ -1051,6 +1052,7 @@
     .about-mail-address::before {
       content: '';
       display: block;
+      position: relative;
       flex-shrink: 0;
       background-color: currentColor;
       -webkit-mask-repeat: no-repeat;  mask-repeat: no-repeat;
@@ -1081,6 +1083,16 @@
       -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' %3E%3Cpath stroke='none' d='M0 0h24v24H0z' fill='none' /%3E%3Cpath d='M3 7a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v10a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-10' /%3E%3Cpath d='M3 7l9 6l9 -6' /%3E%3C/svg%3E"); mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' %3E%3Cpath stroke='none' d='M0 0h24v24H0z' fill='none' /%3E%3Cpath d='M3 7a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v10a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-10' /%3E%3Cpath d='M3 7l9 6l9 -6' /%3E%3C/svg%3E");
       width: 18px; height: 18px;
     }
+
+    /* 視覚上の重心合わせ。align-items:center が揃えるのは行ボックスであって字面ではないので、
+       アイコンがわずかに下がる。ヘッドレスで 6倍描画して字面とアイコンのインクを実測した結果
+       （+ はアイコンが下）：
+         works-cta-btn 和文 +0.67 / 欧文 +0.33 ／ work-external-link +0.58 ／ about-mail-address +0.50
+         work-back +0.08 ／ news-item-arrow +0.00 ＝この2つは既に合っているので触らない
+       0.5px 持ち上げると最大ズレが 0.67 → 0.17px になる。計測手順は Knowledge/portfolio-icon-optical-align.md */
+    .works-cta-btn::after,
+    .work-external-link::before,
+    .about-mail-address::before { top: -0.5px; }
 
     /* 文字だった時にできなかった動き＝矢印だけを進行方向へ滑らせる */
     .works-cta-btn:hover::after               { transform: translateX(4px); }
@@ -1270,6 +1282,10 @@
         <p class="commission-field-desc" data-i18n="com_f2_d">アーティストへの楽曲提供・作編曲・プロデュース。エレクトロニックからオーケストラ、Jazzまで幅広く対応します。</p>
       </div>
       <div class="commission-field">
+        <h3 class="commission-field-title" data-i18n="com_fsd_t">サウンドデザイン</h3>
+        <p class="commission-field-desc" data-i18n="com_fsd_d">アプリ・プロダクトのUIサウンドや通知音、サウンドロゴ、映像の効果音など、「機能する音」の設計。鳴る場面から逆算して、音楽と同じ耳で作ります。</p>
+      </div>
+      <div class="commission-field">
         <h3 class="commission-field-title" data-i18n="com_f3_t">進め方</h3>
         <ol class="commission-steps">
           <li data-i18n="com_s1">メールでお問い合わせ</li>
@@ -1435,6 +1451,8 @@
         com_f1_d:           "TVCM・Webムービー・アニメーションPV / ティザーの音楽制作。映像の演出と同期したアプローチを得意としています。",
         com_f2_t:           "楽曲制作・プロデュース",
         com_f2_d:           "アーティストへの楽曲提供・作編曲・プロデュース。エレクトロニックからオーケストラ、Jazzまで幅広く対応します。",
+        com_fsd_t:          "サウンドデザイン",
+        com_fsd_d:          "アプリ・プロダクトのUIサウンドや通知音、サウンドロゴ、映像の効果音など、「機能する音」の設計。鳴る場面から逆算して、音楽と同じ耳で作ります。",
         com_f3_t:           "進め方",
         com_s1:             "メールでお問い合わせ",
         com_s2:             "ヒアリングとお見積り",
@@ -1463,6 +1481,8 @@
         com_f1_d:           "Original music for TV commercials, web films, and animation teasers — composed in sync with the visual direction.",
         com_f2_t:           "Songwriting & Production",
         com_f2_d:           "Songwriting, arrangement, and production for artists — from electronic to orchestral and jazz.",
+        com_fsd_t:          "Sound Design",
+        com_fsd_d:          "UI and notification sounds, sonic logos, and SFX for film and apps — functional sound, designed backwards from the moment it plays.",
         com_f3_t:           "How it works",
         com_s1:             "Email me a brief",
         com_s2:             "Hearing & quote",
