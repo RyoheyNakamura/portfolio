@@ -411,7 +411,37 @@
     }
 
     .about-inner {
-      max-width: 680px;
+      max-width: 920px;
+      display: grid;
+      grid-template-columns: minmax(0, clamp(240px, 34%, 340px)) minmax(0, 1fr);
+      gap: clamp(32px, 5vw, 64px);
+      align-items: start;
+    }
+
+    /* Aboutのポートレート */
+    .about-portrait {
+      position: relative;
+      aspect-ratio: 4 / 5;
+      border-radius: 16px;
+      overflow: hidden;
+      background: var(--surface);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .about-portrait img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    /* 寒色の写真をサイトの温かい紙色に馴染ませる薄いウォッシュ */
+    .about-portrait::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(160deg, rgba(255, 213, 89, 0) 45%, rgba(255, 213, 89, 0.10) 100%);
+      pointer-events: none;
     }
 
     .about-profile {
@@ -918,6 +948,8 @@
 
       /* About */
       .about { padding: 64px var(--px) 64px; }
+      .about-inner { grid-template-columns: 1fr; gap: 32px; }
+      .about-portrait { max-width: 300px; border-radius: 14px; }
 
       /* Detail view */
       .detail-hero-section { padding: 48px var(--px) 36px; }
@@ -1002,6 +1034,11 @@
   <section class="about" id="about">
     <h2 class="section-title">About</h2>
     <div class="about-inner">
+
+      <figure class="about-portrait">
+        <img src="images/about-portrait.jpg" width="1000" height="1000"
+             loading="lazy" decoding="async" alt="Ryohey Nakamura">
+      </figure>
 
       <div class="about-profile">
         <p class="about-block-label" data-i18n="about_label_profile">Profile</p>
