@@ -136,11 +136,6 @@
     .nav-main-links {
       display: flex;
       gap: 36px;
-      transition: opacity 0.2s;
-    }
-    header.offmain .nav-main-links {
-      opacity: 0;
-      pointer-events: none;
     }
 
     /* ━━━━━━━━━━━━━━━━
@@ -1424,15 +1419,48 @@
       creditsEl.hidden = !credits;
     }
 
-    const header = document.querySelector('header');
-    function setNavMain(on) { header.classList.toggle('offmain', !on); }
+    // 進行中のビュー切替（220ms）。ナビはどのビューでも押せるので、
+    // 切替の途中で押されると後から発火したコールバックが main-view を隠し返す
+    let viewTimer = null;
+
+    // どのビューに居ても Main へ戻る。sel を渡すとそのセクションまで送る
+    function goMain(sel) {
+      clearTimeout(viewTimer);
+      const mainView       = document.getElementById('main-view');
+      const worksView      = document.getElementById('works-view');
+      const detailView     = document.getElementById('detail-view');
+      const newsDetailView = document.getElementById('news-detail-view');
+      // 切替の途中は main-view がまだ hidden=false だが、ハッシュは先に積まれている。
+      // URL も判定材料に入れないと #works のまま Main を出して、リロードで戻ってしまう
+      const away = mainView.hidden || !!location.hash;
+      // 埋め込みを両方止める（裏で再生が続くのを防ぐ）
+      document.getElementById('wd-embed').innerHTML = '';
+      document.getElementById('nd-embed').innerHTML = '';
+      [detailView, worksView, newsDetailView].forEach(v => { v.hidden = true; v.style.opacity = '0'; });
+      currentWorkId = null;
+      if (typeof currentNewsId !== 'undefined') currentNewsId = null;
+      mainView.hidden = false;
+      // ここでフェードさせない。rAF が来ないと opacity 0 のまま白紙になるため
+      mainView.style.opacity = '1';
+      // 別ビューから来た時は飛ばす（全ページ分をスクロールさせない）
+      const behavior = away ? 'instant' : 'smooth';
+      const target = sel && document.querySelector(sel);
+      if (target) {
+        // getBoundingClientRect の参照で強制リフローを起こす。main-view を出した直後は
+        // まだ旧レイアウトのままで、これが無いと scroll が効かない（closeWorks と同じ罠）
+        const y = target.getBoundingClientRect().top + window.scrollY - 64;
+        window.scrollTo({ top: Math.max(0, y), behavior });
+      } else {
+        window.scrollTo({ top: 0, behavior });
+      }
+      if (away) history.pushState(null, '', location.pathname);
+    }
 
     function openWorks() {
       const mainView  = document.getElementById('main-view');
       const worksView = document.getElementById('works-view');
-      setNavMain(false);
       mainView.style.opacity = '0';
-      setTimeout(() => {
+      viewTimer = setTimeout(() => {
         mainView.hidden  = true;
         worksView.hidden = false;
         worksView.style.opacity = '0';
@@ -1446,7 +1474,7 @@
       const mainView  = document.getElementById('main-view');
       const worksView = document.getElementById('works-view');
       worksView.style.opacity = '0';
-      setTimeout(() => {
+      viewTimer = setTimeout(() => {
         worksView.hidden = true;
         mainView.hidden  = false;
         mainView.style.opacity = '0';
@@ -1455,7 +1483,6 @@
           requestAnimationFrame(() => mainView.style.opacity = '1');
         });
       }, 220);
-      setNavMain(true);
       history.pushState(null, '', location.pathname);
     }
 
@@ -1473,9 +1500,8 @@
         ? (currentLang === 'en' ? '← Works' : '← 一覧へ')
         : (currentLang === 'en' ? '← Home'  : '← ホームへ');
       const fromView = prevView === 'works' ? worksView : mainView;
-      setNavMain(false);
       fromView.style.opacity = '0';
-      setTimeout(() => {
+      viewTimer = setTimeout(() => {
         fromView.hidden = true;
         detailView.hidden = false;
         detailView.style.opacity = '0';
@@ -1491,7 +1517,7 @@
       const worksView  = document.getElementById('works-view');
       const detailView = document.getElementById('detail-view');
       detailView.style.opacity = '0';
-      setTimeout(() => {
+      viewTimer = setTimeout(() => {
         detailView.hidden = true;
         if (prevView === 'works') {
           worksView.hidden = false;
@@ -1500,7 +1526,6 @@
           requestAnimationFrame(() => requestAnimationFrame(() => worksView.style.opacity = '1'));
           history.pushState({ view: 'works' }, '', '#works');
         } else {
-          setNavMain(true);
           mainView.hidden = false;
           mainView.style.opacity = '0';
           requestAnimationFrame(() => {
@@ -1572,22 +1597,7 @@
 
     document.querySelector('.logo').addEventListener('click', e => {
       e.preventDefault();
-      document.getElementById('wd-embed').innerHTML = '';
-      const mainView       = document.getElementById('main-view');
-      const worksView      = document.getElementById('works-view');
-      const detailView     = document.getElementById('detail-view');
-      const newsDetailView = document.getElementById('news-detail-view');
-      [detailView, worksView, newsDetailView].forEach(v => { v.hidden = true; v.style.opacity = '0'; });
-      currentWorkId = null;
-      if (typeof currentNewsId !== 'undefined') currentNewsId = null;
-      setNavMain(true);
-      mainView.hidden = false;
-      mainView.style.opacity = '0';
-      requestAnimationFrame(() => {
-        window.scrollTo(0, 0);
-        requestAnimationFrame(() => mainView.style.opacity = '1');
-      });
-      history.pushState(null, '', location.pathname);
+      goMain(null);
     });
 
     document.addEventListener('keydown', e => {
@@ -1600,8 +1610,7 @@
     document.querySelectorAll('.nav-main-links a').forEach(a => {
       a.addEventListener('click', e => {
         e.preventDefault();
-        const target = document.querySelector(a.getAttribute('href'));
-        if (target) target.scrollIntoView({ behavior: 'smooth' });
+        goMain(a.getAttribute('href'));
       });
     });
 
@@ -1730,9 +1739,8 @@
     function openNews(id) {
       const mainView       = document.getElementById('main-view');
       const newsDetailView = document.getElementById('news-detail-view');
-      setNavMain(false);
       mainView.style.opacity = '0';
-      setTimeout(() => {
+      viewTimer = setTimeout(() => {
         mainView.hidden       = true;
         newsDetailView.hidden = false;
         newsDetailView.style.opacity = '0';
@@ -1749,7 +1757,7 @@
       const mainView       = document.getElementById('main-view');
       const newsDetailView = document.getElementById('news-detail-view');
       newsDetailView.style.opacity = '0';
-      setTimeout(() => {
+      viewTimer = setTimeout(() => {
         newsDetailView.hidden = true;
         mainView.hidden       = false;
         mainView.style.opacity = '0';
@@ -1758,7 +1766,6 @@
           requestAnimationFrame(() => mainView.style.opacity = '1');
         });
       }, 220);
-      setNavMain(true);
       history.pushState(null, '', location.pathname);
       currentNewsId = null;
     }
