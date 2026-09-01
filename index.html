@@ -1039,11 +1039,12 @@
       width: 44px;
       height: 44px;
       border-radius: 50%;
-      background: rgba(255, 213, 89, 0.32);
+      background: var(--accent);
       display: flex;
       align-items: center;
       justify-content: center;
-      color: var(--text-primary);
+      /* アイコンは白抜き（本人発注 2026-09-01。mask + currentColor なので color がそのまま抜き色） */
+      color: var(--surface);
     }
 
     .step-icon::before {
@@ -1370,7 +1371,7 @@
       <ol class="commission-steps">
         <li><span class="step-icon step-icon-mail" aria-hidden="true"></span><span class="step-label" data-i18n="com_s1">メールでお問い合わせ</span></li>
         <li><span class="step-icon step-icon-hearing" aria-hidden="true"></span><span class="step-label" data-i18n="com_s2">ヒアリングとお見積り</span></li>
-        <li><span class="step-icon step-icon-demo" aria-hidden="true"></span><span class="step-label" data-i18n="com_s3">デモ制作・方向性のすり合わせ</span></li>
+        <li><span class="step-icon step-icon-demo" aria-hidden="true"></span><span class="step-label" data-i18n="com_s3">デモと方向性のすり合わせ</span></li>
         <li><span class="step-icon step-icon-deliver" aria-hidden="true"></span><span class="step-label" data-i18n="com_s4">本制作・納品</span></li>
       </ol>
     </div>
@@ -1535,7 +1536,7 @@
         com_f3_t:           "進め方",
         com_s1:             "メールでお問い合わせ",
         com_s2:             "ヒアリングとお見積り",
-        com_s3:             "デモ制作・方向性のすり合わせ",
+        com_s3:             "デモと方向性のすり合わせ",
         com_s4:             "本制作・納品",
         com_note:           "上記以外の音まわりのご相談も歓迎です。納期・費用は内容によって変わります。",
         com_mail:           "メールで相談する",
