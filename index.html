@@ -2011,7 +2011,10 @@
 
 
     function buildPreviewCards() {
-      renderCards(document.querySelector('.preview-grid'), VISIBLE_WORKS.slice(0, 6), false);
+      // ホームの Works＝featured（おすすめ）の中から新しい順に6件。
+      // featured が1件も無い時だけ従来どおり全体の新しい順（ホームを空にしない保険）
+      const FEATURED_WORKS = VISIBLE_WORKS.filter(w => w.featured);
+      renderCards(document.querySelector('.preview-grid'), (FEATURED_WORKS.length ? FEATURED_WORKS : VISIBLE_WORKS).slice(0, 6), false);
     }
 
     buildCards();

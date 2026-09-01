@@ -21,6 +21,7 @@
 //    credits    : '日本語クレジット'              （任意・<br>で改行）
 //    creditsEn  : '英語クレジット'                （省略するとcreditsを表示）
 //    hidden     : true                           （非表示にしたい場合のみ記載。省略すると表示）
+//    featured   : true                           （おすすめ。ホームの Works はこの中から新しい順に6件を表示。省略すると一覧のみ）
 //
 //  ※ 空欄のフィールドは何も表示されません
 //  ※ youtube が複数ある場合は配列に追加してください
@@ -36,6 +37,7 @@ function work(id, d) { WORKS.push({ id, ...d }); }
 // ============================================================
 
 work('suntory-boss', {
+  featured:   true,
   hidden:   false,
   category:   'client',
   date:       '2026.02.03',
@@ -59,6 +61,7 @@ work('suntory-boss', {
 })
 
 work('riddle-valorant-2026', {
+  featured:   true,
   hidden:   false,
   category:   'client',
   date:       '2026.01.10',
@@ -82,6 +85,7 @@ work('riddle-valorant-2026', {
 })
 
 work('world-trigger-reboot', {
+  featured:   true,
   hidden:   false,
   category:   'client',
   date:       '2025.12.20',
@@ -105,6 +109,7 @@ work('world-trigger-reboot', {
 })
 
 work('lotte-painomi', {
+  featured:   true,
   hidden:   false,
   category:   'client',
   date:       '2025.11.15',
@@ -128,6 +133,7 @@ work('lotte-painomi', {
 })
 
 work('coca-cola-recycle', {
+  featured:   true,
   hidden:   false,
   category:   'client',
   date:       '2025.11.01',
@@ -340,6 +346,7 @@ work('riddle-welcome-456', {
 // ============================================================
 
 work('dip', {
+  featured:   true,
   hidden:   false,
   category:   'self',
   date:       '2025.10.26',
