@@ -54,7 +54,7 @@ work('suntory-boss', {
   desc:      'サントリーホールディングス様のTVCM『働く私の土俵際』篇の音楽を担当いたしました。',
   descEn:    "Composed the music for Suntory Holdings' BOSS Coffee TV commercial.",
 
-  credits:   '',
+  credits:   'Music Producer : Masayuki Noda<br>Music : Ryohey Nakamura',
   creditsEn: '',
 })
 
@@ -100,7 +100,7 @@ work('world-trigger-reboot', {
   desc:      'アニメ「ワールドトリガー」REBOOTプロジェクトのティザームービーの音楽を担当いたしました。',
   descEn:    'Composed the music for the teaser movie of the World Trigger anime REBOOT project.',
 
-  credits:   '',
+  credits:   'Music Producer : Masayuki Noda<br>Music : Ryohey Nakamura',
   creditsEn: '',
 })
 
@@ -146,7 +146,7 @@ work('coca-cola-recycle', {
   desc:      'Coca-Cola X Fes 2025にて展示された、ターンテーブル型リサイクルボックス「Recycle Music Box」のサウンドデザインを担当いたしました。',
   descEn:    'Sound design for "Recycle Music Box," a turntable-style recycling installation exhibited at Coca-Cola X Fes 2025.',
 
-  credits:   '',
+  credits:   'Producer, Technical Director : Tsuyoshi Otabe<br>Technical Director : Kenichi Takahana<br>Sound Design : Ryohey Nakamura, Takaki Kiminori<br>Character Voice : Yuichi Nakamura',
   creditsEn: '',
 })
 
@@ -169,7 +169,7 @@ work('kyuhaku-fumufumu', {
   desc:      '九州国立博物館の文化交流展示室に設置されている対話型コンテンツ「キューハクふむふむ」の音楽を担当いたしました。',
   descEn:    'Composed the music for "Kyuhaku Fumufumu," an interactive installation in the Kyushu National Museum\'s Cultural Exchange Exhibition Room.',
 
-  credits:   '',
+  credits:   'Producer : Yuichi Nakamura<br>Composer : Ryohey Nakamura',
   creditsEn: '',
 })
 
@@ -192,7 +192,7 @@ work('pokemon-go-fest-2025', {
   desc:      'Pokémon GO JapanのWeb CM「Pokémon GO Fest 2025」の音楽を担当いたしました。',
   descEn:    'Composed the music for Pokémon GO Japan\'s web commercial "Pokémon GO Fest 2025."',
 
-  credits:   '',
+  credits:   'Producer : Masayuki Noda<br>Composer : Ryohey Nakamura',
   creditsEn: '',
 })
 
@@ -215,7 +215,7 @@ work('dish-jockey', {
   desc:      '株式会社NTTドコモ・スタジオ＆ライブが展開するインタラクティブ音楽体験「DISH JOCKEY」のサウンドデザインを担当いたしました。',
   descEn:    'Handled sound design for "DISH JOCKEY," an interactive music experience developed by NTT Docomo Studio & Live.',
 
-  credits:   '',
+  credits:   'Producer : Masayuki Noda<br>Technical Director : Kenichi Takahana<br>Sound Director : CD HATA<br>Composer : Ryohey Nakamura',
   creditsEn: '',
 })
 

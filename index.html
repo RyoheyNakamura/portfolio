@@ -979,9 +979,24 @@
       .detail-footer-bar { flex-direction: column; gap: 6px; text-align: center; }
     }
 
-    /* ナビが非常に狭い場合 */
-    @media (max-width: 400px) {
-      .nav-main-links { display: none; }
+    /* 狭い画面。ハンバーガーを持たないので、ナビは消さずに詰めて残す。
+       2段階にしてあるのは、1段階だと 400〜430px でロゴとナビが接してしまうため */
+    @media (max-width: 460px) {
+      nav { gap: 14px; }
+      nav a { font-size: 12px; }
+      .logo { font-size: 12px; letter-spacing: 0.04em; }
+      .nav-main-links { gap: 14px; }
+      .lang-switcher { padding-left: 14px; margin-left: 0; }
+      .lang-btn { padding: 4px 4px; font-size: 10px; }
+    }
+
+    @media (max-width: 360px) {
+      nav { gap: 10px; }
+      nav a { font-size: 11px; }
+      .logo { font-size: 11px; letter-spacing: 0.02em; }
+      .nav-main-links { gap: 10px; }
+      .lang-switcher { padding-left: 8px; }
+      .lang-btn { padding: 4px 2px; }
     }
 
     /* タッチデバイスではカードのtranslateYを無効化 */
@@ -1491,6 +1506,22 @@
       viewTimer = setTimeout(fn, ms);
     }
 
+    // hidden を外した直後はまだ旧レイアウトのままで scroll が効かない。
+    // getBoundingClientRect の参照で強制リフローを起こしてから飛ばす（closeWorks と同じ罠）
+    function scrollToSection(sel, behavior) {
+      const target = sel && document.querySelector(sel);
+      const y = target ? target.getBoundingClientRect().top + window.scrollY - 64 : 0;
+      window.scrollTo({ top: Math.max(0, y), behavior });
+    }
+
+    // rAF はバックグラウンドタブで発火しない＝待つと opacity 0 のまま白紙で固まる。
+    // 強制リフローで遷移の起点を確定させる（同期なので必ず 1 に戻る）
+    function fadeIn(el) {
+      el.style.opacity = '0';
+      void el.offsetHeight;
+      el.style.opacity = '1';
+    }
+
     // どのビューに居ても Main へ戻る。sel を渡すとそのセクションまで送る
     function goMain(sel) {
       clearTimeout(viewTimer);
@@ -1501,27 +1532,31 @@
       // 切替の途中は main-view がまだ hidden=false だが、ハッシュは先に積まれている。
       // URL も判定材料に入れないと #works のまま Main を出して、リロードで戻ってしまう
       const away = mainView.hidden || !!location.hash;
-      // 埋め込みを両方止める（裏で再生が続くのを防ぐ）
-      document.getElementById('wd-embed').innerHTML = '';
-      document.getElementById('nd-embed').innerHTML = '';
-      [detailView, worksView, newsDetailView].forEach(v => { v.hidden = true; v.style.opacity = '0'; });
-      currentWorkId = null;
-      if (typeof currentNewsId !== 'undefined') currentNewsId = null;
-      mainView.hidden = false;
-      // ここでフェードさせない。rAF が来ないと opacity 0 のまま白紙になるため
-      mainView.style.opacity = '1';
-      // 別ビューから来た時は飛ばす（全ページ分をスクロールさせない）
-      const behavior = away ? 'instant' : 'smooth';
-      const target = sel && document.querySelector(sel);
-      if (target) {
-        // getBoundingClientRect の参照で強制リフローを起こす。main-view を出した直後は
-        // まだ旧レイアウトのままで、これが無いと scroll が効かない（closeWorks と同じ罠）
-        const y = target.getBoundingClientRect().top + window.scrollY - 64;
-        window.scrollTo({ top: Math.max(0, y), behavior });
-      } else {
-        window.scrollTo({ top: 0, behavior });
-      }
-      if (away) history.pushState(null, '', location.pathname);
+      // すでに Main に居るなら、その場でスクロールするだけ
+      if (!away) { scrollToSection(sel, 'smooth'); return; }
+
+      const swap = () => {
+        // 埋め込みを両方止める（裏で再生が続くのを防ぐ）
+        document.getElementById('wd-embed').innerHTML = '';
+        document.getElementById('nd-embed').innerHTML = '';
+        [detailView, worksView, newsDetailView].forEach(v => { v.hidden = true; v.style.opacity = '0'; });
+        currentWorkId = null;
+        if (typeof currentNewsId !== 'undefined') currentNewsId = null;
+        // 出す前に 0 にしておく（全開で1フレーム映ってから沈むのを防ぐ）
+        mainView.style.opacity = '0';
+        mainView.hidden = false;
+        // 別ビューから来た時は飛ばす（全ページ分をスクロールさせない）
+        scrollToSection(sel, 'instant');
+        fadeIn(mainView);
+        history.pushState(null, '', location.pathname);
+      };
+
+      // 出ていく側をフェードアウトさせてから入れ替える（closeWork / closeWorks と同じリズム）。
+      // 切替の途中でフェードさせる相手が居ない時だけ、待たずに入れ替える
+      const fromView = [detailView, newsDetailView, worksView].find(v => !v.hidden);
+      if (!fromView) { swap(); return; }
+      fromView.style.opacity = '0';
+      schedule(swap, 220);
     }
 
     function openWorks() {
