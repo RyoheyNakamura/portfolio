@@ -1565,7 +1565,7 @@
       schedule(swap, 220);
     }
 
-    function openWorks() {
+    function openWorks(fromHistory) {
       const mainView  = document.getElementById('main-view');
       const worksView = document.getElementById('works-view');
       mainView.style.opacity = '0';
@@ -1576,10 +1576,10 @@
         window.scrollTo(0, 0);
         fadeIn(worksView);
       }, 220);
-      history.pushState({ view: 'works' }, '', '#works');
+      if (!fromHistory) history.pushState({ view: 'works' }, '', '#works');
     }
 
-    function closeWorks() {
+    function closeWorks(fromHistory) {
       const mainView  = document.getElementById('main-view');
       const worksView = document.getElementById('works-view');
       worksView.style.opacity = '0';
@@ -1590,7 +1590,8 @@
         scrollToSection('#works', 'instant');
         fadeIn(mainView);
       }, 220);
-      history.pushState(null, '', location.pathname);
+      // popstate 経由では push しない（進む履歴を消さないため。openWork の fromHistory と同じ形）
+      if (!fromHistory) history.pushState(null, '', location.pathname);
     }
 
     function openWork(id, fromHistory) {
@@ -1634,7 +1635,7 @@
       if (!fromHistory) history.pushState({ workId: id }, '', `#${id}`);
     }
 
-    function closeWork() {
+    function closeWork(fromHistory) {
       document.getElementById('wd-embed').innerHTML = '';
       const mainView   = document.getElementById('main-view');
       const worksView  = document.getElementById('works-view');
@@ -1647,13 +1648,13 @@
           worksView.style.opacity = '0';
           window.scrollTo(0, 0);
           fadeIn(worksView);
-          history.pushState({ view: 'works' }, '', '#works');
+          if (!fromHistory) history.pushState({ view: 'works' }, '', '#works');
         } else {
           mainView.hidden = false;
           mainView.style.opacity = '0';
           window.scrollTo(0, 0);
           fadeIn(mainView);
-          history.pushState(null, '', location.pathname);
+          if (!fromHistory) history.pushState(null, '', location.pathname);
         }
       }, 220);
       currentWorkId = null;
@@ -1667,9 +1668,10 @@
     buildCards();
     buildPreviewCards();
 
-    document.getElementById('work-back').addEventListener('click', closeWork);
-    document.getElementById('works-back').addEventListener('click', closeWorks);
-    document.getElementById('works-cta-btn').addEventListener('click', openWorks);
+    // 関数参照を直接渡すと click イベントが fromHistory 引数に入るのでラップする
+    document.getElementById('work-back').addEventListener('click', () => closeWork());
+    document.getElementById('works-back').addEventListener('click', () => closeWorks());
+    document.getElementById('works-cta-btn').addEventListener('click', () => openWorks());
 
     document.querySelector('.logo').addEventListener('click', e => {
       e.preventDefault();
@@ -1692,7 +1694,7 @@
 
     window.addEventListener('popstate', e => {
       if (e.state?.workId) openWork(e.state.workId, true);
-      else if (e.state?.newsId) openNews(e.state.newsId);
+      else if (e.state?.newsId) openNews(e.state.newsId, true);
       else if (e.state?.view === 'works') {
         if (currentWorkId) {
           clearTimeout(viewTimer);
@@ -1701,11 +1703,11 @@
           const wv = document.getElementById('works-view');
           wv.hidden = false; wv.style.opacity = '1';
           currentWorkId = null;
-        } else if (document.getElementById('works-view').hidden) openWorks();
+        } else if (document.getElementById('works-view').hidden) openWorks(true);
       } else {
-        if (currentWorkId) closeWork();
-        else if (!document.getElementById('works-view').hidden) closeWorks();
-        else if (typeof currentNewsId !== 'undefined' && currentNewsId) closeNews();
+        if (currentWorkId) closeWork(true);
+        else if (!document.getElementById('works-view').hidden) closeWorks(true);
+        else if (typeof currentNewsId !== 'undefined' && currentNewsId) closeNews(true);
       }
     });
 
@@ -1813,7 +1815,7 @@
         ? `<a class="work-external-link" href="${n.url}" target="_blank" rel="noopener">${lang === 'en' ? 'Open link →' : 'リンクを開く →'}</a>` : '';
     }
 
-    function openNews(id) {
+    function openNews(id, fromHistory) {
       const mainView       = document.getElementById('main-view');
       const newsDetailView = document.getElementById('news-detail-view');
       mainView.style.opacity = '0';
@@ -1825,11 +1827,11 @@
         renderNewsDetail(id, currentLang);
         fadeIn(newsDetailView);
       }, 220);
-      history.pushState({ newsId: id }, '', '#' + id);
+      if (!fromHistory) history.pushState({ newsId: id }, '', '#' + id);
       currentNewsId = id;
     }
 
-    function closeNews() {
+    function closeNews(fromHistory) {
       document.getElementById('nd-embed').innerHTML = '';
       const mainView       = document.getElementById('main-view');
       const newsDetailView = document.getElementById('news-detail-view');
@@ -1841,11 +1843,11 @@
         window.scrollTo(0, 0);
         fadeIn(mainView);
       }, 220);
-      history.pushState(null, '', location.pathname);
+      if (!fromHistory) history.pushState(null, '', location.pathname);
       currentNewsId = null;
     }
 
-    document.getElementById('news-back').addEventListener('click', closeNews);
+    document.getElementById('news-back').addEventListener('click', () => closeNews());
 
     buildNewsList();
   </script>
