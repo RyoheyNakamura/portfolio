@@ -963,13 +963,13 @@
       margin: 30px 0 44px;
     }
 
-    /* カード4枚（対応領域3＋進め方）＝2×2。3列に4枚目を足すと1枚あたりが痩せて読めない */
+    /* 対応領域3枚だけの並列グリッド。進め方は種類が違うので下の .commission-process に分離（本人指摘 2026-09-01） */
     .commission-grid {
       max-width: 960px;
       display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
+      grid-template-columns: repeat(3, minmax(0, 1fr));
       gap: 24px;
-      margin-bottom: 56px;
+      margin-bottom: 24px;
     }
 
     /* 1枚の大きな囲いは「掲示板」に見える（本人差し戻し 2026-09-01）。
@@ -1013,6 +1013,20 @@
       font-weight: 700;
       color: var(--text-secondary);
       letter-spacing: 0.06em;
+    }
+
+    /* 進め方＝対応領域と並列でない1枚。横幅いっぱいの中でステップを左→右の流れとして見せる */
+    .commission-process {
+      max-width: 960px;
+      margin-bottom: 56px;
+    }
+
+    .commission-process .commission-steps {
+      display: grid;
+      /* 均等割だと 03 が「せ」1字だけ折り返す＝列幅は内容に合わせ、余白は列間で吸収 */
+      grid-template-columns: repeat(4, auto);
+      justify-content: space-between;
+      gap: 18px 24px;
     }
 
     .commission-cta {
@@ -1156,7 +1170,9 @@
       .commission > .section-title { margin-bottom: 12px; }
       .commission-lead { margin: 22px 0 32px; }
       .commission-field { padding: 22px 20px; border-radius: 16px; }
-      .commission-grid { grid-template-columns: 1fr; gap: 28px; margin-bottom: 40px; }
+      .commission-grid { grid-template-columns: 1fr; gap: 28px; margin-bottom: 28px; }
+      .commission-process { margin-bottom: 40px; }
+      .commission-process .commission-steps { grid-template-columns: 1fr; gap: 0; }
 
       /* About */
       .about { padding: 64px var(--px) 64px; }
@@ -1285,15 +1301,15 @@
         <h3 class="commission-field-title" data-i18n="com_fsd_t">サウンドデザイン</h3>
         <p class="commission-field-desc" data-i18n="com_fsd_d">アプリ・プロダクトのUIサウンドや通知音、サウンドロゴ、映像の効果音など、「機能する音」の設計。鳴る場面から逆算して、音楽と同じ耳で作ります。</p>
       </div>
-      <div class="commission-field">
-        <h3 class="commission-field-title" data-i18n="com_f3_t">進め方</h3>
-        <ol class="commission-steps">
-          <li data-i18n="com_s1">メールでお問い合わせ</li>
-          <li data-i18n="com_s2">ヒアリングとお見積り</li>
-          <li data-i18n="com_s3">デモ制作・方向性のすり合わせ</li>
-          <li data-i18n="com_s4">本制作・納品</li>
-        </ol>
-      </div>
+    </div>
+    <div class="commission-field commission-process">
+      <h3 class="commission-field-title" data-i18n="com_f3_t">進め方</h3>
+      <ol class="commission-steps">
+        <li data-i18n="com_s1">メールでお問い合わせ</li>
+        <li data-i18n="com_s2">ヒアリングとお見積り</li>
+        <li data-i18n="com_s3">デモ制作・方向性のすり合わせ</li>
+        <li data-i18n="com_s4">本制作・納品</li>
+      </ol>
     </div>
     <div class="commission-cta">
       <p class="commission-note" data-i18n="com_note">上記以外の音まわりのご相談も歓迎です。納期・費用は内容によって変わります。</p>
