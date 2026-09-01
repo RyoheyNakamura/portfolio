@@ -1190,7 +1190,8 @@
   <!-- Commission -->
   <section class="commission" id="commission">
     <h2 class="section-title">Commission</h2>
-    <!-- 空き状況の変え方: is-open / is-limited / is-full を付け替え、i18n の com_status（ja/en）を更新 -->
+    <!-- 空き状況の変え方: is-open / is-limited / is-full を付け替え、i18n の com_status（ja/en）の文言を更新
+         （「何月時点」は COM_STATUS_YM が表示時に自動で入れる。下の静的テキストは JS 無し環境用のフォールバック） -->
     <p class="commission-status is-open"><span class="status-dot"></span><span data-i18n="com_status">空きあり（2026年9月時点）</span></p>
     <p class="commission-lead" data-i18n="com_lead">TVCM・Webムービー・アニメーションPVなどの映像音楽を中心に、楽曲制作のご依頼を受け付けています。企画やコンテの段階からのご相談も歓迎です。</p>
     <div class="commission-grid">
@@ -1347,6 +1348,13 @@
 
   <!-- i18n -->
   <script>
+    // 空き状況の「何月時点」は表示時に自動更新（状態そのもの＝空きあり/要相談/満枠は手動で切り替える）
+    const COM_STATUS_YM = (() => {
+      const d = new Date();
+      const en = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][d.getMonth()] + ' ' + d.getFullYear();
+      return { ja: d.getFullYear() + '年' + (d.getMonth() + 1) + '月時点', en: 'as of ' + en };
+    })();
+
     const i18n = {
       ja: {
         hero_eyebrow:       "Sound Producer / Composer",
@@ -1355,7 +1363,7 @@
         about_text:         "1999年生まれ。九州大学芸術工学部音響設計学科卒業。<br><br>大学在学中よりフリーランスとして音楽活動を開始し、DTMによる制作を中心に大学内外を問わず活動の幅を広げる。音楽とその他のコンテンツの結び付きについて特に強い関心があり、映像演出などと紐づいたアプローチを得意とする。<br><br>Dubstep、Drum'n'Bass、Houseなどを音楽制作のルーツに持つ一方で、体系的な音楽理論に基づいたオーケストレーションやJazzプレイヤーとしての経験もあり、多彩なジャンルを取り入れた独自のスタイルを展開している。<br><br>2023年に株式会社インビジに入社。",
         about_label_contact:"Contact",
         mail_note:          "お仕事のご依頼・ご相談はメールにてお気軽にどうぞ。",
-        com_status:         "空きあり（2026年9月時点）",
+        com_status:         "空きあり（" + COM_STATUS_YM.ja + "）",
         com_lead:           "TVCM・Webムービー・アニメーションPVなどの映像音楽を中心に、楽曲制作のご依頼を受け付けています。企画やコンテの段階からのご相談も歓迎です。",
         com_f1_t:           "映像音楽",
         com_f1_d:           "TVCM・Webムービー・アニメーションPV / ティザーの音楽制作。映像の演出と同期したアプローチを得意としています。",
@@ -1383,7 +1391,7 @@
         about_text:         "Born 1999. Graduated from Kyushu University, Dept. of Acoustic Design.<br><br>Began freelance music activities during university, expanding DAW-based production both within and beyond academia. Particularly passionate about the intersection of music and other creative media, with a specialty in synchronized audiovisual approaches.<br><br>Rooted in Dubstep, Drum'n'Bass, and House, while also versed in orchestration grounded in formal music theory and experienced as a jazz performer — developing a distinctive style that bridges diverse genres.<br><br>Joined Invisi Inc. in 2023.",
         about_label_contact:"Contact",
         mail_note:          "Feel free to reach out for work inquiries or consultations.",
-        com_status:         "Available — as of Sep 2026",
+        com_status:         "Available — " + COM_STATUS_YM.en,
         com_lead:           "Now taking music commissions — primarily for TV commercials, web films, and animation PVs / teasers. Happy to join from the planning or storyboard stage.",
         com_f1_t:           "Music for Film & Ads",
         com_f1_d:           "Original music for TV commercials, web films, and animation teasers — composed in sync with the visual direction.",
