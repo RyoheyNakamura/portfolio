@@ -988,6 +988,14 @@
       margin-bottom: 10px;
     }
 
+    /* 対応領域3枚の見出し＝テキスト幅の黄色い太ラインで立たせる（本人発注 2026-09-01）。
+       進め方（.commission-process）はグリッドの外なので掛からない＝並列3枚だけの印 */
+    .commission-grid .commission-field-title {
+      display: inline-block;
+      padding-bottom: 4px;
+      border-bottom: 4px solid var(--accent);
+    }
+
     .commission-field-desc {
       font-size: 13px;
       /* 進め方の並びと同じ濃さに揃える（secondary だと2枚だけ薄く見える・本人指摘 2026-09-01） */
