@@ -678,7 +678,16 @@
       flex-shrink: 0;
       width: 88px;
     }
-    .news-item-cat { flex-shrink: 0; }
+    /* News のカテゴリは枠も塗りも持たせない。一覧は罫線で組んだ行なので、
+       チップを1つだけ置くと そこだけ浮く＝隣の日付と同じ字面に揃える */
+    .news-item-cat {
+      flex-shrink: 0;
+      width: 76px;
+      font-size: 11px;
+      font-weight: 500;
+      color: var(--text-secondary);
+      letter-spacing: 0.04em;
+    }
     .news-item-title {
       font-size: 14px;
       font-weight: 600;
@@ -694,10 +703,6 @@
       color: var(--text-secondary);
       padding: 24px 0;
     }
-    .tag.cat-event   { background: #fff8d6; color: #7a5800; border-color: #f0d060; }
-    .tag.cat-media   { background: #fff1d0; color: #8a4e00; border-color: #f5c070; }
-    .tag.cat-release { background: #fef5e0; color: #6a5200; border-color: #e8c84a; }
-    .tag.cat-other   { background: transparent; color: var(--text-secondary); border-color: var(--border); }
 
     /* ━━━━━━━━━━━━━━━━
        Works View
@@ -959,6 +964,7 @@
       .news-section { padding: 64px var(--px); }
       .news-item { gap: 10px; padding: 16px 0; }
       .news-item-date { width: 74px; font-size: 10px; }
+      .news-item-cat { width: auto; font-size: 10px; }
       .news-item-title { font-size: 13px; }
       .news-item-arrow { display: none; }
 
@@ -1167,7 +1173,7 @@
   <div id="news-detail-view" hidden>
     <div class="detail-hero-section">
       <div class="detail-meta">
-        <span class="tag" id="nd-category"></span>
+        <span class="tag category" id="nd-category"></span>
         <span class="detail-date" id="nd-date"></span>
       </div>
       <h1 class="detail-title" id="nd-title"></h1>
@@ -1763,7 +1769,7 @@
         const label = labels[n.category] || n.category;
         li.innerHTML = `
           <span class="news-item-date">${n.date || ''}</span>
-          <span class="tag news-item-cat cat-${n.category}">${label}</span>
+          <span class="news-item-cat">${label}</span>
           <span class="news-item-title">${title}</span>
           <span class="news-item-arrow">→</span>
         `;
@@ -1779,7 +1785,7 @@
       const labels = lang === 'en' ? NEWS_CATEGORY_LABEL_EN : NEWS_CATEGORY_LABEL;
       const catEl = document.getElementById('nd-category');
       catEl.textContent = labels[n.category] || n.category;
-      catEl.className = `tag cat-${n.category}`;
+      catEl.className = 'tag category';   // Works 詳細の wd-category と同じ扱い
       document.getElementById('nd-date').textContent = n.date || '';
       document.getElementById('nd-title').textContent = nt('title');
       document.getElementById('nd-body').innerHTML = nt('body');
