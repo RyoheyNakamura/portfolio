@@ -1039,12 +1039,12 @@
       width: 44px;
       height: 44px;
       border-radius: 50%;
-      background: var(--accent);
+      /* メイン黄色＋白抜き案は実物を見て差し戻し（2026-09-01）＝淡い黄色地に文字色アイコンが確定 */
+      background: rgba(255, 213, 89, 0.32);
       display: flex;
       align-items: center;
       justify-content: center;
-      /* アイコンは白抜き（本人発注 2026-09-01。mask + currentColor なので color がそのまま抜き色） */
-      color: var(--surface);
+      color: var(--text-primary);
     }
 
     .step-icon::before {

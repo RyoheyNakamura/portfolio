@@ -61,7 +61,6 @@ work('suntory-boss', {
 })
 
 work('riddle-valorant-2026', {
-  featured:   true,
   hidden:   false,
   category:   'client',
   date:       '2026.01.10',
@@ -157,6 +156,7 @@ work('coca-cola-recycle', {
 })
 
 work('kyuhaku-fumufumu', {
+  featured:   true,
   hidden:   false,
   category:   'client',
   date:       '2025.10.16',
@@ -180,6 +180,7 @@ work('kyuhaku-fumufumu', {
 })
 
 work('pokemon-go-fest-2025', {
+  featured:   true,
   hidden:   false,
   category:   'client',
   date:       '2025.07.17',
@@ -203,6 +204,7 @@ work('pokemon-go-fest-2025', {
 })
 
 work('dish-jockey', {
+  featured:   true,
   hidden:   false,
   category:   'client',
   date:       '2025.05.03',
@@ -226,6 +228,7 @@ work('dish-jockey', {
 })
 
 work('meiji-kajuugumi', {
+  featured:   true,
   hidden:   false,
   category:   'client',
   date:       '2025.03.06',
@@ -346,7 +349,6 @@ work('riddle-welcome-456', {
 // ============================================================
 
 work('dip', {
-  featured:   true,
   hidden:   false,
   category:   'self',
   date:       '2025.10.26',
@@ -416,6 +418,7 @@ work('goodnight-to-the-world', {
 })
 
 work('transpop', {
+  featured:   true,
   hidden:   false,
   category:   'self',
   date:       '2023.03.18',
@@ -577,6 +580,7 @@ work('hello-resonance', {
 // ============================================================
 
 work('nhk-eigodeasobo-welcome-to-the-jungle', {
+  featured:   true,
   hidden:   false,
   category:   'produce',
   date:       '2025.10.07',
@@ -600,6 +604,7 @@ work('nhk-eigodeasobo-welcome-to-the-jungle', {
 })
 
 work('nhk-eigodeasobo-my-old-teddy-bear', {
+  featured:   true,
   hidden:   false,
   category:   'produce',
   date:       '2024.09.12',
