@@ -1030,6 +1030,72 @@
     /* mailto を同じボタン様式で使うための下線消し */
     a.works-cta-btn { text-decoration: none; }
 
+
+    /* ━━━━━━━━━━━━━━━━
+       Icons — Tabler Icons v3.46.0（MIT・帰属表示不要）
+       出所 https://github.com/tabler/tabler-icons
+       取得 https://unpkg.com/@tabler/icons@3.46.0/icons/outline/<name>.svg
+       arrow-right / arrow-left / mail は habi/public/icons/tabler/ から流用（同版・同ライセンス）。
+       改変は stroke-width のみ（元は全て 2）＋ 表示に無関係な class 属性の削除。
+       stroke は viewBox 24 に比例して縮むので、14〜18px で描くと 2 では 1.2px 前後になり
+       本文の字画より細くなって浮く。表示サイズごとに太らせて合わせている
+       （habi は -bold 変種のファイルを持つ形で同じ手当てをしている）。
+       色は mask + background-color: currentColor ＝ ボタン色・リンク色に自動追随する。
+       ⚠ 文字ではなく疑似要素にしてあるのは、戻るボタンのラベルを JS が textContent で
+       書き換える（openWork 内）ため。子要素だと言語切替のたびに消える。
+    ━━━━━━━━━━━━━━━━ */
+    .works-cta-btn::after,
+    .work-back::before,
+    .news-item-arrow::before,
+    .work-external-link::before,
+    .about-mail-address::before {
+      content: '';
+      display: block;
+      flex-shrink: 0;
+      background-color: currentColor;
+      -webkit-mask-repeat: no-repeat;  mask-repeat: no-repeat;
+      -webkit-mask-position: center;   mask-position: center;
+      -webkit-mask-size: contain;      mask-size: contain;
+      transition: transform 0.2s;
+    }
+
+    /* news の矢印は素の span＝そのままだと疑似要素に width/height が効かない */
+    .news-item-arrow { display: inline-flex; align-items: center; }
+
+    .works-cta-btn::after,
+    .news-item-arrow::before {
+      -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round' %3E%3Cpath stroke='none' d='M0 0h24v24H0z' fill='none' /%3E%3Cpath d='M5 12l14 0' /%3E%3Cpath d='M13 18l6 -6' /%3E%3Cpath d='M13 6l6 6' /%3E%3C/svg%3E"); mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round' %3E%3Cpath stroke='none' d='M0 0h24v24H0z' fill='none' /%3E%3Cpath d='M5 12l14 0' /%3E%3Cpath d='M13 18l6 -6' /%3E%3Cpath d='M13 6l6 6' /%3E%3C/svg%3E");
+    }
+    .works-cta-btn::after    { width: 16px; height: 16px; }
+    .news-item-arrow::before { width: 14px; height: 14px; }
+
+    .work-back::before {
+      -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round' %3E%3Cpath stroke='none' d='M0 0h24v24H0z' fill='none' /%3E%3Cpath d='M5 12l14 0' /%3E%3Cpath d='M5 12l6 6' /%3E%3Cpath d='M5 12l6 -6' /%3E%3C/svg%3E"); mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round' %3E%3Cpath stroke='none' d='M0 0h24v24H0z' fill='none' /%3E%3Cpath d='M5 12l14 0' /%3E%3Cpath d='M5 12l6 6' /%3E%3Cpath d='M5 12l6 -6' /%3E%3C/svg%3E");
+      width: 14px; height: 14px;
+    }
+    .work-external-link::before {
+      -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round' %3E%3Cpath stroke='none' d='M0 0h24v24H0z' fill='none' /%3E%3Cpath d='M12 6h-6a2 2 0 0 0 -2 2v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-6' /%3E%3Cpath d='M11 13l9 -9' /%3E%3Cpath d='M15 4h5v5' /%3E%3C/svg%3E"); mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round' %3E%3Cpath stroke='none' d='M0 0h24v24H0z' fill='none' /%3E%3Cpath d='M12 6h-6a2 2 0 0 0 -2 2v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-6' /%3E%3Cpath d='M11 13l9 -9' /%3E%3Cpath d='M15 4h5v5' /%3E%3C/svg%3E");
+      width: 15px; height: 15px;
+    }
+    .about-mail-address::before {
+      -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' %3E%3Cpath stroke='none' d='M0 0h24v24H0z' fill='none' /%3E%3Cpath d='M3 7a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v10a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-10' /%3E%3Cpath d='M3 7l9 6l9 -6' /%3E%3C/svg%3E"); mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' %3E%3Cpath stroke='none' d='M0 0h24v24H0z' fill='none' /%3E%3Cpath d='M3 7a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v10a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-10' /%3E%3Cpath d='M3 7l9 6l9 -6' /%3E%3C/svg%3E");
+      width: 18px; height: 18px;
+    }
+
+    /* 文字だった時にできなかった動き＝矢印だけを進行方向へ滑らせる */
+    .works-cta-btn:hover::after               { transform: translateX(4px); }
+    .work-back:hover::before                  { transform: translateX(-3px); }
+    .news-item:hover .news-item-arrow::before  { transform: translateX(3px); }
+
+    @media (prefers-reduced-motion: reduce) {
+      .works-cta-btn::after,
+      .work-back::before,
+      .news-item-arrow::before { transition: none; }
+      .works-cta-btn:hover::after,
+      .work-back:hover::before,
+      .news-item:hover .news-item-arrow::before { transform: none; }
+    }
+
     @media (max-width: 768px) {
       :root { --px: 20px; }
 
@@ -1177,7 +1243,7 @@
     </div>
     <div class="grid preview-grid"></div>
     <div class="works-cta-bottom">
-      <button class="works-cta-btn" id="works-cta-btn" data-i18n="works_cta">すべての作品を見る →</button>
+      <button class="works-cta-btn" id="works-cta-btn" data-i18n="works_cta">すべての作品を見る</button>
     </div>
   </section>
 
@@ -1215,7 +1281,7 @@
     </div>
     <div class="commission-cta">
       <p class="commission-note" data-i18n="com_note">上記以外の音まわりのご相談も歓迎です。納期・費用は内容によって変わります。</p>
-      <a class="works-cta-btn" href="mailto:ryoheynakamura@invisi.jp" data-i18n="com_mail">メールで相談する →</a>
+      <a class="works-cta-btn" href="mailto:ryoheynakamura@invisi.jp" data-i18n="com_mail">メールで相談する</a>
     </div>
   </section>
 
@@ -1283,7 +1349,7 @@
       <div class="grid"></div>
     </div>
     <div class="detail-back-bar">
-      <button class="work-back" id="works-back" data-i18n="works_back">← ホームへ</button>
+      <button class="work-back" id="works-back" data-i18n="works_back">ホームへ</button>
     </div>
     <footer class="detail-footer-bar">
       <span><span class="footer-yolk"></span>Ryohey Nakamura</span>
@@ -1311,7 +1377,7 @@
       <div class="grid"></div>
     </section>
     <div class="detail-back-bar">
-      <button class="work-back" id="work-back" data-i18n="detail_back">← 一覧へ</button>
+      <button class="work-back" id="work-back" data-i18n="detail_back">一覧へ</button>
     </div>
     <footer class="detail-footer-bar">
       <span><span class="footer-yolk"></span>Ryohey Nakamura</span>
@@ -1335,7 +1401,7 @@
       <div id="nd-url"></div>
     </div>
     <div class="detail-back-bar">
-      <button class="work-back" id="news-back" data-i18n="news_back">← Newsへ</button>
+      <button class="work-back" id="news-back" data-i18n="news_back">Newsへ</button>
     </div>
     <footer class="detail-footer-bar">
       <span><span class="footer-yolk"></span>Ryohey Nakamura</span>
@@ -1375,14 +1441,14 @@
         com_s3:             "デモ制作・方向性のすり合わせ",
         com_s4:             "本制作・納品",
         com_note:           "上記以外の音まわりのご相談も歓迎です。納期・費用は内容によって変わります。",
-        com_mail:           "メールで相談する →",
+        com_mail:           "メールで相談する",
         view_external:            "外部サイトで見る",
-        detail_back:              "← ホームへ",
-        detail_back_works:        "← 一覧へ",
+        detail_back:              "ホームへ",
+        detail_back_works:        "一覧へ",
         related_title:            "More Works",
-        works_cta:                "すべての作品を見る →",
-        works_back:               "← ホームへ",
-        news_back:                "← ホームへ",
+        works_cta:                "すべての作品を見る",
+        works_back:               "ホームへ",
+        news_back:                "ホームへ",
       },
       en: {
         hero_eyebrow:       "Sound Producer / Composer",
@@ -1403,14 +1469,14 @@
         com_s3:             "Demo & direction check",
         com_s4:             "Production & delivery",
         com_note:           "Other sound-related inquiries are welcome. Schedule and fees depend on the project.",
-        com_mail:           "Get in touch →",
+        com_mail:           "Get in touch",
         view_external:            "View on external site",
-        detail_back:              "← Home",
-        detail_back_works:        "← Works",
+        detail_back:              "Home",
+        detail_back_works:        "Works",
         related_title:            "More Works",
-        works_cta:                "View All Works →",
-        works_back:               "← Home",
-        news_back:                "← Home",
+        works_cta:                "View All Works",
+        works_back:               "Home",
+        news_back:                "Home",
       },
     };
 
@@ -1671,7 +1737,7 @@
         embed += `<div class="work-music-player bandcamp">${bc}</div>`;
       }
       if (w.url) {
-        embed += `<a class="work-external-link" href="${w.url}" target="_blank" rel="noopener">↗ ${tr.view_external || '外部サイトで見る'}</a>`;
+        embed += `<a class="work-external-link" href="${w.url}" target="_blank" rel="noopener">${tr.view_external || '外部サイトで見る'}</a>`;
       }
       document.getElementById('wd-embed').innerHTML = embed;
       requestAnimationFrame(fitBandcampEmbeds);
@@ -1804,8 +1870,8 @@
       const backBtn = document.getElementById('work-back');
       backBtn.dataset.i18n = prevView === 'works' ? 'detail_back_works' : 'detail_back';
       backBtn.textContent  = prevView === 'works'
-        ? (currentLang === 'en' ? '← Works' : '← 一覧へ')
-        : (currentLang === 'en' ? '← Home'  : '← ホームへ');
+        ? (currentLang === 'en' ? 'Works' : '一覧へ')
+        : (currentLang === 'en' ? 'Home'  : 'ホームへ');
       const fromView = prevView === 'works' ? worksView : mainView;
       fromView.style.opacity = '0';
       schedule(() => {
@@ -1956,7 +2022,7 @@
           <span class="news-item-date">${n.date || ''}</span>
           <span class="news-item-cat">${label}</span>
           <span class="news-item-title">${title}</span>
-          <span class="news-item-arrow">→</span>
+          <span class="news-item-arrow"></span>
         `;
         li.addEventListener('click', () => openNews(n.id));
         list.appendChild(li);
@@ -1995,7 +2061,7 @@
       requestAnimationFrame(fitBandcampEmbeds);
       const urlEl = document.getElementById('nd-url');
       urlEl.innerHTML = n.url
-        ? `<a class="work-external-link" href="${n.url}" target="_blank" rel="noopener">${lang === 'en' ? 'Open link →' : 'リンクを開く →'}</a>` : '';
+        ? `<a class="work-external-link" href="${n.url}" target="_blank" rel="noopener">${lang === 'en' ? 'Open link' : 'リンクを開く'}</a>` : '';
     }
 
     function openNews(id, fromHistory) {
