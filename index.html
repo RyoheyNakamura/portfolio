@@ -406,6 +406,10 @@
     }
 
     .about-inner {
+      /* 卵の上でも本文が読めるように薄い白を敷く（.section-veil と同じ・本人発注 2026-09-01） */
+      background: rgba(255, 255, 255, 0.72);
+      border-radius: 18px;
+      padding: 40px;
       max-width: 920px;
       display: grid;
       grid-template-columns: minmax(0, clamp(240px, 34%, 340px)) minmax(0, 1fr);
@@ -933,7 +937,33 @@
       border-top: 1px solid var(--border);
     }
 
-    .commission > .section-title { margin-bottom: 28px; }
+    .commission > .section-title { margin-bottom: 14px; }
+
+    /* 空き状況。変える時は is-open / is-limited / is-full を付け替え、i18n の com_status（ja/en）を更新 */
+    .commission-status {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin: 0;
+      font-size: 13px;
+      font-weight: 600;
+    }
+    .commission-status .status-dot { width: 8px; height: 8px; border-radius: 50%; }
+    .commission-status.is-open    .status-dot { background: #43a06b; }
+    .commission-status.is-limited .status-dot { background: var(--accent-deep); }
+    .commission-status.is-full    .status-dot { background: var(--text-secondary); }
+
+    /* 卵の上でも本文が読めるように敷く薄い白（本人発注 2026-09-01）。枠線・影は付けない */
+    .section-veil {
+      background: rgba(255, 255, 255, 0.72);
+      border-radius: 18px;
+    }
+
+    .commission-veil {
+      max-width: 1000px;
+      padding: 40px;
+      margin-top: 30px;
+    }
 
     .commission-lead {
       max-width: 640px;
@@ -1042,13 +1072,14 @@
 
       /* Commission */
       .commission { padding: 64px var(--px); }
-      .commission > .section-title { margin-bottom: 24px; }
+      .commission > .section-title { margin-bottom: 12px; }
+      .commission-veil { padding: 22px; border-radius: 16px; margin-top: 24px; }
       .commission-lead { margin-bottom: 36px; }
       .commission-grid { grid-template-columns: 1fr; gap: 28px; margin-bottom: 40px; }
 
       /* About */
       .about { padding: 64px var(--px) 64px; }
-      .about-inner { grid-template-columns: 1fr; gap: 32px; }
+      .about-inner { grid-template-columns: 1fr; gap: 32px; padding: 22px; border-radius: 16px; }
       .about-portrait { max-width: 300px; border-radius: 14px; }
 
       /* Detail view */
@@ -1155,6 +1186,9 @@
   <!-- Commission -->
   <section class="commission" id="commission">
     <h2 class="section-title">Commission</h2>
+    <!-- 空き状況の変え方: is-open / is-limited / is-full を付け替え、i18n の com_status（ja/en）を更新 -->
+    <p class="commission-status is-open"><span class="status-dot"></span><span data-i18n="com_status">空きあり（2026年9月時点）</span></p>
+    <div class="section-veil commission-veil">
     <p class="commission-lead" data-i18n="com_lead">TVCM・Webムービー・アニメーションPVなどの映像音楽を中心に、楽曲制作のご依頼を受け付けています。企画やコンテの段階からのご相談も歓迎です。</p>
     <div class="commission-grid">
       <div class="commission-field">
@@ -1179,6 +1213,7 @@
       <p class="commission-note" data-i18n="com_note">上記以外の音まわりのご相談も歓迎です。納期・費用は内容によって変わります。</p>
       <a class="works-cta-btn" href="mailto:ryoheynakamura@invisi.jp" data-i18n="com_mail">メールで相談する →</a>
     </div>
+    </div><!-- /.section-veil -->
   </section>
 
   <!-- About -->
@@ -1318,6 +1353,7 @@
         about_text:         "1999年生まれ。九州大学芸術工学部音響設計学科卒業。<br><br>大学在学中よりフリーランスとして音楽活動を開始し、DTMによる制作を中心に大学内外を問わず活動の幅を広げる。音楽とその他のコンテンツの結び付きについて特に強い関心があり、映像演出などと紐づいたアプローチを得意とする。<br><br>Dubstep、Drum'n'Bass、Houseなどを音楽制作のルーツに持つ一方で、体系的な音楽理論に基づいたオーケストレーションやJazzプレイヤーとしての経験もあり、多彩なジャンルを取り入れた独自のスタイルを展開している。<br><br>2023年に株式会社インビジに入社。",
         about_label_contact:"Contact",
         mail_note:          "お仕事のご依頼・ご相談はメールにてお気軽にどうぞ。",
+        com_status:         "空きあり（2026年9月時点）",
         com_lead:           "TVCM・Webムービー・アニメーションPVなどの映像音楽を中心に、楽曲制作のご依頼を受け付けています。企画やコンテの段階からのご相談も歓迎です。",
         com_f1_t:           "映像音楽",
         com_f1_d:           "TVCM・Webムービー・アニメーションPV / ティザーの音楽制作。映像の演出と同期したアプローチを得意としています。",
@@ -1345,6 +1381,7 @@
         about_text:         "Born 1999. Graduated from Kyushu University, Dept. of Acoustic Design.<br><br>Began freelance music activities during university, expanding DAW-based production both within and beyond academia. Particularly passionate about the intersection of music and other creative media, with a specialty in synchronized audiovisual approaches.<br><br>Rooted in Dubstep, Drum'n'Bass, and House, while also versed in orchestration grounded in formal music theory and experienced as a jazz performer — developing a distinctive style that bridges diverse genres.<br><br>Joined Invisi Inc. in 2023.",
         about_label_contact:"Contact",
         mail_note:          "Feel free to reach out for work inquiries or consultations.",
+        com_status:         "Available — as of Sep 2026",
         com_lead:           "Now taking music commissions — primarily for TV commercials, web films, and animation PVs / teasers. Happy to join from the planning or storyboard stage.",
         com_f1_t:           "Music for Film & Ads",
         com_f1_d:           "Original music for TV commercials, web films, and animation teasers — composed in sync with the visual direction.",
