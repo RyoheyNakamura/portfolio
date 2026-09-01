@@ -1008,19 +1008,72 @@
       counter-reset: com-step;
     }
 
+    /* ステップ＝アイコン円＋番号ラベルの縦組み。番号は li::before から .step-label::before へ移動
+       （li::before はアイコン・li::after は矢印に使うため。数字の見た目は従来と同じ） */
     .commission-steps li {
       counter-increment: com-step;
+      position: relative;
       display: flex;
+      flex-direction: column;
+      align-items: center;
       gap: 12px;
       font-size: 13px;
-      padding: 4px 0;
+      text-align: center;
     }
 
-    .commission-steps li::before {
+    .step-label {
+      /* 2行になる時は均等に割る（「せ」1字だけの孤立行を作らない。非対応ブラウザは従来の折返し） */
+      text-wrap: balance;
+    }
+
+    .step-label::before {
       content: "0" counter(com-step);
       font-weight: 700;
       color: var(--text-secondary);
       letter-spacing: 0.06em;
+      margin-right: 6px;
+    }
+
+    /* アイコンの円。アイコンはサイト共通の mask + currentColor（Tabler v3.46.0・20px なので stroke 2.2） */
+    .step-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: rgba(255, 213, 89, 0.32);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-primary);
+    }
+
+    .step-icon::before {
+      content: '';
+      width: 20px;
+      height: 20px;
+      background-color: currentColor;
+      -webkit-mask-repeat: no-repeat;  mask-repeat: no-repeat;
+      -webkit-mask-position: center;   mask-position: center;
+      -webkit-mask-size: contain;      mask-size: contain;
+    }
+
+    .step-icon-mail::before { -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round' %3E%3Cpath stroke='none' d='M0 0h24v24H0z' fill='none' /%3E%3Cpath d='M3 7a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v10a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-10' /%3E%3Cpath d='M3 7l9 6l9 -6' /%3E%3C/svg%3E"); mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round' %3E%3Cpath stroke='none' d='M0 0h24v24H0z' fill='none' /%3E%3Cpath d='M3 7a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v10a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-10' /%3E%3Cpath d='M3 7l9 6l9 -6' /%3E%3C/svg%3E"); }
+    .step-icon-hearing::before { -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round' %3E%3Cpath stroke='none' d='M0 0h24v24H0z' fill='none' /%3E%3Cpath d='M21 14l-3 -3h-7a1 1 0 0 1 -1 -1v-6a1 1 0 0 1 1 -1h9a1 1 0 0 1 1 1v10' /%3E%3Cpath d='M14 15v2a1 1 0 0 1 -1 1h-7l-3 3v-10a1 1 0 0 1 1 -1h2' /%3E%3C/svg%3E"); mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round' %3E%3Cpath stroke='none' d='M0 0h24v24H0z' fill='none' /%3E%3Cpath d='M21 14l-3 -3h-7a1 1 0 0 1 -1 -1v-6a1 1 0 0 1 1 -1h9a1 1 0 0 1 1 1v10' /%3E%3Cpath d='M14 15v2a1 1 0 0 1 -1 1h-7l-3 3v-10a1 1 0 0 1 1 -1h2' /%3E%3C/svg%3E"); }
+    .step-icon-demo::before { -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round' %3E%3Cpath stroke='none' d='M0 0h24v24H0z' fill='none' /%3E%3Cpath d='M3 17a3 3 0 1 0 6 0a3 3 0 0 0 -6 0' /%3E%3Cpath d='M13 17a3 3 0 1 0 6 0a3 3 0 0 0 -6 0' /%3E%3Cpath d='M9 17v-13h10v13' /%3E%3Cpath d='M9 8h10' /%3E%3C/svg%3E"); mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round' %3E%3Cpath stroke='none' d='M0 0h24v24H0z' fill='none' /%3E%3Cpath d='M3 17a3 3 0 1 0 6 0a3 3 0 0 0 -6 0' /%3E%3Cpath d='M13 17a3 3 0 1 0 6 0a3 3 0 0 0 -6 0' /%3E%3Cpath d='M9 17v-13h10v13' /%3E%3Cpath d='M9 8h10' /%3E%3C/svg%3E"); }
+    .step-icon-deliver::before { -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round' %3E%3Cpath stroke='none' d='M0 0h24v24H0z' fill='none' /%3E%3Cpath d='M3 12a9 9 0 1 0 18 0a9 9 0 1 0 -18 0' /%3E%3Cpath d='M9 12l2 2l4 -4' /%3E%3C/svg%3E"); mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round' %3E%3Cpath stroke='none' d='M0 0h24v24H0z' fill='none' /%3E%3Cpath d='M3 12a9 9 0 1 0 18 0a9 9 0 1 0 -18 0' /%3E%3Cpath d='M9 12l2 2l4 -4' /%3E%3C/svg%3E"); }
+
+    /* ステップ間の矢印。円の中心の高さ（top 14 = 円44/2 − 矢印16/2）・列間ギャップ24px の真ん中 */
+    .commission-steps li:not(:last-child)::after {
+      content: '';
+      position: absolute;
+      top: 14px;
+      right: -20px;
+      width: 16px;
+      height: 16px;
+      background-color: var(--text-secondary);
+      -webkit-mask-repeat: no-repeat;  mask-repeat: no-repeat;
+      -webkit-mask-position: center;   mask-position: center;
+      -webkit-mask-size: contain;      mask-size: contain;
+      -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round' %3E%3Cpath stroke='none' d='M0 0h24v24H0z' fill='none' /%3E%3Cpath d='M9 6l6 6l-6 6' /%3E%3C/svg%3E"); mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round' %3E%3Cpath stroke='none' d='M0 0h24v24H0z' fill='none' /%3E%3Cpath d='M9 6l6 6l-6 6' /%3E%3C/svg%3E");
     }
 
     /* 進め方＝対応領域と並列でない1枚。横幅いっぱいの中でステップを左→右の流れとして見せる */
@@ -1031,9 +1084,8 @@
 
     .commission-process .commission-steps {
       display: grid;
-      /* 均等割だと 03 が「せ」1字だけ折り返す＝列幅は内容に合わせ、余白は列間で吸収 */
-      grid-template-columns: repeat(4, auto);
-      justify-content: space-between;
+      /* アイコン円の縦組みにしたので均等割に戻す（中央揃えの2行折返しは許容） */
+      grid-template-columns: repeat(4, minmax(0, 1fr));
       gap: 18px 24px;
     }
 
@@ -1180,7 +1232,10 @@
       .commission-field { padding: 22px 20px; border-radius: 16px; }
       .commission-grid { grid-template-columns: 1fr; gap: 28px; margin-bottom: 28px; }
       .commission-process { margin-bottom: 40px; }
-      .commission-process .commission-steps { grid-template-columns: 1fr; gap: 0; }
+      .commission-process .commission-steps { grid-template-columns: 1fr; gap: 14px; }
+      .commission-steps li { flex-direction: row; text-align: left; gap: 14px; }
+      .step-icon { width: 36px; height: 36px; flex-shrink: 0; }
+      .commission-steps li:not(:last-child)::after { display: none; }
 
       /* About */
       .about { padding: 64px var(--px) 64px; }
@@ -1313,10 +1368,10 @@
     <div class="commission-field commission-process">
       <h3 class="commission-field-title" data-i18n="com_f3_t">進め方</h3>
       <ol class="commission-steps">
-        <li data-i18n="com_s1">メールでお問い合わせ</li>
-        <li data-i18n="com_s2">ヒアリングとお見積り</li>
-        <li data-i18n="com_s3">デモ制作・方向性のすり合わせ</li>
-        <li data-i18n="com_s4">本制作・納品</li>
+        <li><span class="step-icon step-icon-mail" aria-hidden="true"></span><span class="step-label" data-i18n="com_s1">メールでお問い合わせ</span></li>
+        <li><span class="step-icon step-icon-hearing" aria-hidden="true"></span><span class="step-label" data-i18n="com_s2">ヒアリングとお見積り</span></li>
+        <li><span class="step-icon step-icon-demo" aria-hidden="true"></span><span class="step-label" data-i18n="com_s3">デモ制作・方向性のすり合わせ</span></li>
+        <li><span class="step-icon step-icon-deliver" aria-hidden="true"></span><span class="step-label" data-i18n="com_s4">本制作・納品</span></li>
       </ol>
     </div>
     <div class="commission-cta">
