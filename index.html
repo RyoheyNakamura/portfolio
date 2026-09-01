@@ -557,6 +557,27 @@
 
     .about-mail-address:hover { color: var(--accent); }
 
+    /* 関連作品（作品詳細の下） */
+    .detail-related {
+      border-top: 1px solid var(--border);
+      padding: 56px var(--px) 8px;
+    }
+
+    .detail-related-title {
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--text-secondary);
+      margin-bottom: 26px;
+    }
+
+    /* Works の広いグリッドではなく本文幅に揃える */
+    .detail-related .grid {
+      padding: 0;
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    }
+
     /* ━━━━━━━━━━━━━━━━
        Footer
     ━━━━━━━━━━━━━━━━ */
@@ -947,6 +968,8 @@
       .about-portrait { max-width: 300px; border-radius: 14px; }
 
       /* Detail view */
+      .detail-related { padding: 44px var(--px) 4px; }
+      .detail-related .grid { grid-template-columns: 1fr; gap: 20px; }
       .detail-hero-section { padding: 48px var(--px) 36px; }
       .detail-body { padding: 48px var(--px) 64px; }
       .detail-title { font-size: clamp(28px, 8vw, 48px); }
@@ -1112,6 +1135,10 @@
       <p class="detail-desc" id="wd-desc"></p>
       <div class="detail-credits" id="wd-credits"></div>
     </div>
+    <section class="detail-related" id="wd-related" hidden>
+      <h2 class="detail-related-title" data-i18n="related_title">関連する作品</h2>
+      <div class="grid"></div>
+    </section>
     <div class="detail-back-bar">
       <button class="work-back" id="work-back" data-i18n="detail_back">← 一覧へ</button>
     </div>
@@ -1161,6 +1188,7 @@
         view_external:            "外部サイトで見る",
         detail_back:              "← ホームへ",
         detail_back_works:        "← 一覧へ",
+        related_title:            "関連する作品",
         works_cta:                "すべての作品を見る →",
         works_back:               "← ホームへ",
         news_back:                "← ホームへ",
@@ -1175,6 +1203,7 @@
         view_external:            "View on external site",
         detail_back:              "← Home",
         detail_back_works:        "← Works",
+        related_title:            "Related Works",
         works_cta:                "View All Works →",
         works_back:               "← Home",
         news_back:                "← Home",
@@ -1325,10 +1354,11 @@
       });
     }
 
-    function buildCards() {
-      const grid = document.querySelector('#works-view .grid');
+    // カード生成はここ1本。Works一覧 / トップのプレビュー / 詳細ページの関連作品が共有する
+    function renderCards(grid, works, withWorkId) {
+      if (!grid) return;
       grid.innerHTML = '';
-      VISIBLE_WORKS.forEach(w => {
+      works.forEach(w => {
         const year  = (w.date || '').slice(0, 4);
         const tags  = (w.tags || '').split(',').map(s => s.trim()).filter(Boolean);
         const yt0   = ytIds(w)[0];
@@ -1340,6 +1370,7 @@
                     :                 'No Image';
         const el = document.createElement('a');
         el.className = 'card';
+        if (withWorkId) el.dataset.workId = w.id;
         el.href = `#${w.id}`;
         el.dataset.category = w.category;
         el.dataset.workId   = w.id;
@@ -1372,6 +1403,35 @@
           getSpotifyThumb(w.spotify).then(url => { if (url && img) img.src = url; });
         }
       });
+    }
+
+    // 関連度＝共有タグ数を最優先、次に同カテゴリ、最後に新しい順。
+    // 必ず n 件返す（タグが1つも重ならない作品でも「次に見るもの」を絶やさないため）
+    function relatedWorks(base, n) {
+      const tagsOf   = w => (w.tags || '').split(',').map(t => t.trim()).filter(Boolean);
+      const baseTags = new Set(tagsOf(base));
+      return VISIBLE_WORKS
+        .filter(w => w.id !== base.id)
+        .map(w => ({
+          w,
+          score: tagsOf(w).filter(t => baseTags.has(t)).length * 10
+               + (w.category === base.category ? 3 : 0),
+        }))
+        .sort((x, y) => y.score - x.score || (x.w.date < y.w.date ? 1 : -1))
+        .slice(0, n)
+        .map(x => x.w);
+    }
+
+    function renderRelated(base) {
+      const sec = document.getElementById('wd-related');
+      if (!sec) return;
+      const list = relatedWorks(base, 3);
+      sec.hidden = !list.length;
+      renderCards(sec.querySelector('.grid'), list, false);
+    }
+
+    function buildCards() {
+      renderCards(document.querySelector('#works-view .grid'), VISIBLE_WORKS, true);
       applyFilter();
     }
 
@@ -1417,11 +1477,19 @@
       const creditsEl = document.getElementById('wd-credits');
       creditsEl.innerHTML = credits;
       creditsEl.hidden = !credits;
+      renderRelated(w);
     }
 
     // 進行中のビュー切替（220ms）。ナビはどのビューでも押せるので、
     // 切替の途中で押されると後から発火したコールバックが main-view を隠し返す
     let viewTimer = null;
+
+    // ビュー切替の予約は必ずここを通す。前の予約を取り消さないと、隠れたビューに
+    // 埋め込みを作り直して裏で再生が残る
+    function schedule(fn, ms) {
+      clearTimeout(viewTimer);
+      viewTimer = setTimeout(fn, ms);
+    }
 
     // どのビューに居ても Main へ戻る。sel を渡すとそのセクションまで送る
     function goMain(sel) {
@@ -1460,7 +1528,7 @@
       const mainView  = document.getElementById('main-view');
       const worksView = document.getElementById('works-view');
       mainView.style.opacity = '0';
-      viewTimer = setTimeout(() => {
+      schedule(() => {
         mainView.hidden  = true;
         worksView.hidden = false;
         worksView.style.opacity = '0';
@@ -1474,7 +1542,7 @@
       const mainView  = document.getElementById('main-view');
       const worksView = document.getElementById('works-view');
       worksView.style.opacity = '0';
-      viewTimer = setTimeout(() => {
+      schedule(() => {
         worksView.hidden = true;
         mainView.hidden  = false;
         mainView.style.opacity = '0';
@@ -1486,13 +1554,29 @@
       history.pushState(null, '', location.pathname);
     }
 
-    function openWork(id) {
+    function openWork(id, fromHistory) {
       if (!WORKS.find(x => x.id === id)) return;
-      currentWorkId = id;
-      renderDetail(id);
       const worksView  = document.getElementById('works-view');
       const mainView   = document.getElementById('main-view');
       const detailView = document.getElementById('detail-view');
+
+      // 詳細→詳細（関連作品からの遷移）。戻り先は最初に入った所を保つ＝prevView は触らない
+      if (!detailView.hidden) {
+        clearTimeout(viewTimer);
+        currentWorkId = id;
+        document.getElementById('wd-embed').innerHTML = '';   // 前の作品の再生を即止める
+        detailView.style.opacity = '0';
+        schedule(() => {
+          renderDetail(id);
+          window.scrollTo({ top: 0, behavior: 'instant' });
+          detailView.style.opacity = '1';
+        }, 180);
+        if (!fromHistory) history.pushState({ workId: id }, '', `#${id}`);
+        return;
+      }
+
+      currentWorkId = id;
+      renderDetail(id);
       prevView = worksView.hidden ? 'main' : 'works';
       const backBtn = document.getElementById('work-back');
       backBtn.dataset.i18n = prevView === 'works' ? 'detail_back_works' : 'detail_back';
@@ -1501,14 +1585,14 @@
         : (currentLang === 'en' ? '← Home'  : '← ホームへ');
       const fromView = prevView === 'works' ? worksView : mainView;
       fromView.style.opacity = '0';
-      viewTimer = setTimeout(() => {
+      schedule(() => {
         fromView.hidden = true;
         detailView.hidden = false;
         detailView.style.opacity = '0';
         window.scrollTo(0, 0);
         requestAnimationFrame(() => requestAnimationFrame(() => detailView.style.opacity = '1'));
       }, 220);
-      history.pushState({ workId: id }, '', `#${id}`);
+      if (!fromHistory) history.pushState({ workId: id }, '', `#${id}`);
     }
 
     function closeWork() {
@@ -1517,7 +1601,7 @@
       const worksView  = document.getElementById('works-view');
       const detailView = document.getElementById('detail-view');
       detailView.style.opacity = '0';
-      viewTimer = setTimeout(() => {
+      schedule(() => {
         detailView.hidden = true;
         if (prevView === 'works') {
           worksView.hidden = false;
@@ -1540,52 +1624,7 @@
 
 
     function buildPreviewCards() {
-      const grid = document.querySelector('.preview-grid');
-      if (!grid) return;
-      grid.innerHTML = '';
-      VISIBLE_WORKS.slice(0, 6).forEach(w => {
-        const year  = (w.date || '').slice(0, 4);
-        const tags  = (w.tags || '').split(',').map(s => s.trim()).filter(Boolean);
-        const yt0   = ytIds(w)[0];
-        const thumb = yt0          ? `<img src="https://img.youtube.com/vi/${yt0}/mqdefault.jpg" alt="">`
-                    : w.image      ? `<img src="${w.image}" alt="">`
-                    : w.vimeo      ? `<img class="js-vimeo-thumb" alt="">`
-                    : w.soundcloud ? `<img class="js-sc-thumb" alt="">`
-                    : w.spotify    ? `<img class="js-sp-thumb" alt="">`
-                    :                 'No Image';
-        const el = document.createElement('a');
-        el.className = 'card';
-        el.href = `#${w.id}`;
-        el.dataset.category = w.category;
-        el.innerHTML = `
-          <div class="card-thumb">${thumb}</div>
-          <div class="card-body">
-            <div class="card-meta">
-              <span class="card-year">${year}</span>
-              <div class="card-tags">
-                <span class="tag category">${CATEGORY_LABEL[w.category] || w.category}</span>
-                ${tags.map(t => `<span class="tag">${t}</span>`).join('')}
-              </div>
-            </div>
-            <h3 class="card-title">${wt(w, 'title')}</h3>
-            <p class="card-desc">${wt(w, 'desc')}</p>
-          </div>
-        `;
-        el.addEventListener('click', e => { e.preventDefault(); openWork(w.id); });
-        grid.appendChild(el);
-        if (w.vimeo && !yt0 && !w.image) {
-          const img = el.querySelector('.js-vimeo-thumb');
-          getVimeoThumb(w.vimeo).then(url => { if (url && img) img.src = url; });
-        }
-        if (w.soundcloud && !yt0 && !w.image && !w.vimeo) {
-          const img = el.querySelector('.js-sc-thumb');
-          getSoundCloudThumb(w.soundcloud).then(url => { if (url && img) img.src = url; });
-        }
-        if (w.spotify && !yt0 && !w.image && !w.vimeo && !w.soundcloud) {
-          const img = el.querySelector('.js-sp-thumb');
-          getSpotifyThumb(w.spotify).then(url => { if (url && img) img.src = url; });
-        }
-      });
+      renderCards(document.querySelector('.preview-grid'), VISIBLE_WORKS.slice(0, 6), false);
     }
 
     buildCards();
@@ -1615,10 +1654,11 @@
     });
 
     window.addEventListener('popstate', e => {
-      if (e.state?.workId) openWork(e.state.workId);
+      if (e.state?.workId) openWork(e.state.workId, true);
       else if (e.state?.newsId) openNews(e.state.newsId);
       else if (e.state?.view === 'works') {
         if (currentWorkId) {
+          clearTimeout(viewTimer);
           document.getElementById('wd-embed').innerHTML = '';
           document.getElementById('detail-view').hidden = true;
           const wv = document.getElementById('works-view');
@@ -1740,7 +1780,7 @@
       const mainView       = document.getElementById('main-view');
       const newsDetailView = document.getElementById('news-detail-view');
       mainView.style.opacity = '0';
-      viewTimer = setTimeout(() => {
+      schedule(() => {
         mainView.hidden       = true;
         newsDetailView.hidden = false;
         newsDetailView.style.opacity = '0';
@@ -1757,7 +1797,7 @@
       const mainView       = document.getElementById('main-view');
       const newsDetailView = document.getElementById('news-detail-view');
       newsDetailView.style.opacity = '0';
-      viewTimer = setTimeout(() => {
+      schedule(() => {
         newsDetailView.hidden = true;
         mainView.hidden       = false;
         mainView.style.opacity = '0';
