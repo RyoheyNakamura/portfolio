@@ -1301,8 +1301,6 @@
 
     /* ナビ4つ目（Commission）だけは狭い画面で畳む（セクション自体はスクロールで届く）。
        3リンク前提で詰め切った下の 460/360 の2段（f2a3d1f）を壊さないための線 */
-    @media (max-width: 520px) { .nav-commission { display: none; } }
-
     /* 狭い画面。ハンバーガーを持たないので、ナビは消さずに詰めて残す。
        2段階にしてあるのは、1段階だと 400〜430px でロゴとナビが接してしまうため */
     @media (max-width: 460px) {
@@ -1323,6 +1321,20 @@
       .lang-btn { padding: 4px 2px; }
     }
 
+    /* ≤520px＝4本ぶんの語がロゴと衝突する幅。語を消して data-abbr の頭文字1文字だけ出す
+       （~~.nav-commission を畳む~~ は 2026-09-02 廃止＝頭文字なら4本とも入る）。
+       文字が小さいぶん padding でタップ領域を稼ぐ＝gap は詰めて、押せる面積は広げる。
+       ⚠ 460/360 の詰めより「後ろ」に置くこと。gap と font-size は同じ詳細度なので後勝ちで効かせている */
+    @media (max-width: 520px) {
+      .nav-main-links { gap: 2px; }
+      .nav-main-links a { font-size: 0; padding: 9px; }
+      .nav-main-links a::before {
+        content: attr(data-abbr);
+        font-size: 13px;
+        font-weight: 600;
+      }
+    }
+
     /* タッチデバイスではカードのtranslateYを無効化 */
     @media (hover: none) {
       .card:hover { transform: none; }
@@ -1336,10 +1348,10 @@
     <a class="logo" href="#">Ryohey Nakamura</a>
     <nav>
       <span class="nav-main-links">
-        <a href="#works">Works</a>
-        <a href="#news-section">News</a>
-        <a href="#commission" class="nav-commission">Commission</a>
-        <a href="#about">About</a>
+        <a href="#works"      data-abbr="W" aria-label="Works">Works</a>
+        <a href="#news-section" data-abbr="N" aria-label="News">News</a>
+        <a href="#commission" class="nav-commission" data-abbr="C" aria-label="Commission">Commission</a>
+        <a href="#about"      data-abbr="A" aria-label="About">About</a>
       </span>
       <div class="lang-switcher">
         <button class="lang-btn active" data-lang="ja">JA</button>
