@@ -640,6 +640,16 @@
 
     .newsletter-submit { flex: 0 0 auto; }
 
+    /* 送信結果。role="status" で読み上げるので、色ではなく文言で意味を持たせる */
+    .newsletter-msg {
+      margin-top: 18px;
+      max-width: 560px;
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--text-primary);
+    }
+    .newsletter-msg:empty { display: none; }
+
     .newsletter-note {
       margin-top: 18px;
       max-width: 560px;
@@ -1548,6 +1558,7 @@
              data-i18n-ph="nl_placeholder">
       <button class="works-cta-btn newsletter-submit" type="submit" data-i18n="nl_submit">登録する</button>
     </form>
+    <p class="newsletter-msg" id="newsletter-msg" role="status" aria-live="polite"></p>
     <p class="newsletter-note reveal" data-i18n="nl_note">いつでも解除できます。アドレスは配信以外には使いません。</p>
   </section>
 
@@ -1720,6 +1731,9 @@
         nl_placeholder:     "メールアドレス",
         nl_submit:          "登録する",
         nl_note:            "いつでも解除できます。アドレスは配信以外には使いません。",
+        nl_sending:         "送信中…",
+        nl_ok:              "登録ありがとうございます。確認メールをお送りしましたので、メール内のリンクを押すと購読が完了します。",
+        nl_err:             "うまく送信できませんでした。アドレスをご確認のうえ、もう一度お試しください。",
       },
       en: {
         hero_eyebrow:       "Sound Producer / Composer",
@@ -1755,6 +1769,9 @@
         nl_placeholder:     "Email address",
         nl_submit:          "Subscribe",
         nl_note:            "Unsubscribe anytime. Your address is used for nothing else.",
+        nl_sending:         "Sending…",
+        nl_ok:              "Thank you. A confirmation email is on its way — click the link inside to finish subscribing.",
+        nl_err:             "That did not go through. Please check the address and try again.",
       },
     };
 
@@ -1807,6 +1824,53 @@
       sec.hidden  = false;
       // hidden の間はレイアウトが無く IntersectionObserver が当たらないので、出してから観測し直す
       if (typeof observeReveals === 'function') observeReveals(sec);
+
+      /* 素の form 送信だと Kit の英語の宣伝ページ（Built with Kit）に着地して読者が驚くので、
+         fetch で送ってこのページの中で結果を出す。⚠ form の action/method/target は残す＝
+         JS が無い・fetch が失敗した時はそのまま素の送信に落ちる（登録の機会を落とさない）。
+         Kit は失敗でも HTTP 200 を返すので、判定は本文の status で行う（実測 2026-09-02）。 */
+      const msg = document.getElementById('newsletter-msg');
+      const btn = form.querySelector('button[type="submit"]');
+      const t   = () => (typeof i18n !== 'undefined' && i18n[currentLang]) || {};
+      let sending = false;
+
+      form.addEventListener('submit', async (ev) => {
+        if (!form.checkValidity()) return;      // 既定の検証にまかせる
+        ev.preventDefault();
+        if (sending) return;
+        sending = true;
+        const label = btn.textContent;
+        btn.disabled = true;
+        btn.textContent = t().nl_sending || '送信中…';
+        msg.textContent = '';
+        try {
+          const r = await fetch(NEWSLETTER_ACTION, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+            body: JSON.stringify({ email_address: document.getElementById('newsletter-email').value }),
+          });
+          const data = await r.json();
+          /* ⚠ 成功と見なすのは明示的な2つだけ（Kit 自身の ck.5.js が
+             switch(status){case "success" / case "quarantined" / default:errors} で
+             そう分けている＝実物に合わせた）。既定はエラー側に倒す——
+             「実は登録できていないのに完了と出す」と読者は二度と戻ってこない。 */
+          const okStatus = r.ok && data &&
+            (data.status === 'success' || data.status === 'quarantined');
+          if (okStatus) {
+            msg.textContent = t().nl_ok || '';
+            form.hidden = true;                 // 二重送信を止める
+          } else {
+            msg.textContent = t().nl_err || '';
+            btn.disabled = false;
+            btn.textContent = label;
+          }
+        } catch (e) {
+          // 到達できない（CORS/オフライン等）＝素の送信に落として登録の機会を残す
+          form.submit();
+        } finally {
+          sending = false;
+        }
+      });
     })();
 
     document.querySelectorAll('.lang-btn').forEach(btn => {
