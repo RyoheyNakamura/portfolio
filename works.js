@@ -18,6 +18,8 @@
 //    titleEn    : '英語タイトル'                  （省略するとtitleを表示）
 //    desc       : '日本語説明文'                  （必須）
 //    descEn     : '英語説明文'                    （省略するとdescを表示）
+//    approach   : '「どう考えたか」の一行'          （任意・課題→アプローチ。省略すると欄ごと出ない）
+//    approachEn : 'その英訳'                        （省略するとapproachを表示）
 //    credits    : '日本語クレジット'              （任意・<br>で改行）
 //    creditsEn  : '英語クレジット'                （省略するとcreditsを表示）
 //    hidden     : true                           （非表示にしたい場合のみ記載。省略すると表示）
@@ -79,6 +81,9 @@ work('riddle-valorant-2026', {
 
   desc:      'プロゲーミングチーム「RIDDLE ORDER」のVALORANT部門の2026年ロスター映像の音楽を担当いたしました。',
   descEn:    "Composed the music for pro gaming team RIDDLE ORDER's VALORANT 2026 roster announcement video.",
+
+  approach:  '毎年続くロスター映像なので、前年・前々年の雰囲気は意図して引き継ぎ、サウンドだけを新しくしました。チームが積み上げてきた歴史と、その年の刷新感を、一本の中で同時に鳴らすためです。',
+  approachEn: "This roster film returns every year, so I deliberately carried over the atmosphere of the previous two editions and renewed only the sound itself \u2014 letting the team's accumulated history and the new season's sense of renewal play in the same piece.",
 
   credits:   '',
   creditsEn: '',

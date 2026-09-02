@@ -882,6 +882,22 @@
       margin-bottom: 20px;
     }
 
+    .detail-approach-label {
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--text-secondary);
+      margin-bottom: 10px;
+    }
+
+    .detail-approach {
+      font-size: 15px;
+      line-height: 2.0;
+      max-width: 640px;
+      margin-bottom: 28px;
+    }
+
     .detail-credits {
       font-size: 12px;
       color: var(--text-secondary);
@@ -1493,6 +1509,10 @@
     <div class="detail-body">
       <div id="wd-embed"></div>
       <p class="detail-desc" id="wd-desc"></p>
+      <div id="wd-approach-block" hidden>
+        <p class="detail-approach-label" data-i18n="wd_label_approach">Approach</p>
+        <p class="detail-approach" id="wd-approach"></p>
+      </div>
       <div class="detail-credits" id="wd-credits"></div>
     </div>
     <section class="detail-related" id="wd-related" hidden>
@@ -1583,6 +1603,7 @@
       ja: {
         hero_eyebrow:       "Sound Producer / Composer",
         about_label_profile:"Profile",
+        wd_label_approach:  "Approach",
         about_role:         "Sound Producer / Composer",
         about_text:         "1999年生まれ。九州大学芸術工学部音響設計学科卒業。<br><br>大学在学中よりフリーランスとして音楽活動を開始し、DTMによる制作を中心に大学内外を問わず活動の幅を広げる。音楽とその他のコンテンツの結び付きについて特に強い関心があり、映像演出などと紐づいたアプローチを得意とする。<br><br>Dubstep、Drum'n'Bass、Houseなどを音楽制作のルーツに持つ一方で、体系的な音楽理論に基づいたオーケストレーションやJazzプレイヤーとしての経験もあり、多彩なジャンルを取り入れた独自のスタイルを展開している。<br><br>2023年に株式会社インビジに入社。",
         about_label_contact:"Contact",
@@ -1613,6 +1634,7 @@
       en: {
         hero_eyebrow:       "Sound Producer / Composer",
         about_label_profile:"Profile",
+        wd_label_approach:  "Approach",
         about_role:         "Sound Producer / Composer",
         about_text:         "Born 1999. Graduated from Kyushu University, Dept. of Acoustic Design.<br><br>Began freelance music activities during university, expanding DAW-based production both within and beyond academia. Particularly passionate about the intersection of music and other creative media, with a specialty in synchronized audiovisual approaches.<br><br>Rooted in Dubstep, Drum'n'Bass, and House, while also versed in orchestration grounded in formal music theory and experienced as a jazz performer — developing a distinctive style that bridges diverse genres.<br><br>Joined Invisi Inc. in 2023.",
         about_label_contact:"Contact",
@@ -1876,6 +1898,9 @@
       document.getElementById('wd-date').textContent     = w.date || '';
       document.getElementById('wd-title').innerHTML      = wt(w, 'title');
       document.getElementById('wd-desc').innerHTML       = wt(w, 'desc');
+      const approach = wt(w, 'approach') || '';
+      document.getElementById('wd-approach').innerHTML    = approach;
+      document.getElementById('wd-approach-block').hidden = !approach;
       let embed = '';
       const yt = ytIds(w);
       yt.forEach(id => {
