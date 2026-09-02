@@ -204,6 +204,42 @@
 
     .hero-title .accent { color: var(--accent-deep); }
 
+    /* 名前の下の「for ___.」。名詞は同じマスに重ねて（inline-grid ＋ grid-area 1/1）幅を最長語に固定し、
+       クロスフェードで入れ替える＝語の長さで行が伸び縮みしない。動きは reveal と同じ「ふわっと上へ」。
+       黄色は名前が持っているので、この行は黒のまま（for だけ一段薄く） */
+    .hero-for {
+      font-size: 18px;
+      font-weight: 500;
+      letter-spacing: -0.01em;
+      line-height: 1.4;
+      color: var(--text-primary);
+    }
+    .hero-for-word { color: var(--text-secondary); }
+    .hero-for-nouns {
+      display: inline-grid;
+      text-align: left;
+      vertical-align: baseline;
+    }
+    .hero-for-nouns > span {
+      grid-area: 1 / 1;
+      opacity: 0;
+      translate: 0 0.3em;
+      transition: opacity 0.5s ease, translate 0.5s cubic-bezier(.16, 1, .3, 1);
+    }
+    .hero-for-nouns > span.is-on  { opacity: 1; translate: 0 0; }
+    .hero-for-nouns > span.is-out { opacity: 0; translate: 0 -0.3em; }
+
+    /* 読み上げ用（見た目には出さない） */
+    .sr-only {
+      position: absolute;
+      width: 1px; height: 1px;
+      padding: 0; margin: -1px;
+      overflow: hidden;
+      clip: rect(0 0 0 0);
+      white-space: nowrap;
+      border: 0;
+    }
+
 .hero-desc {
       font-size: 14px;
       color: var(--text-secondary);
@@ -1295,6 +1331,8 @@
 
       /* 動きを減らす設定では、ふわっと出さずに最初から見えている状態にする */
       html.js-reveal .reveal { opacity: 1; translate: none; transition: none; }
+      /* 名前の下の名詞は回さない（JS 側も matchMedia で止める）＝1語目で静止 */
+      .hero-for-nouns > span { transition: none; }
     }
 
     @media (max-width: 768px) {
@@ -1450,6 +1488,14 @@
         Ryohey<br>
         <span class="accent">Nakamura</span>
       </h1>
+      <!-- 名前の下の一行。「for」は固定・名詞だけが入れ替わる（Client 映像／Client その場限りの体験／Produce／Self の順）。
+           英語のまま JA/EN 両方に出す（上の eyebrow と同じ扱い＝data-i18n を付けない）。
+           1語目に is-on を書いておく＝JS 無し・動きを減らす設定では「for films.」で静止する -->
+      <p class="hero-for reveal">
+        <span class="sr-only">for films, places, artists and myself.</span>
+        <span class="hero-for-word" aria-hidden="true">for</span>
+        <span class="hero-for-nouns" aria-hidden="true"><span class="is-on">films.</span><span>places.</span><span>artists.</span><span>myself.</span></span>
+      </p>
     </div>
 
     <a class="hero-scroll reveal" href="#works">
@@ -1692,6 +1738,55 @@
     }
 
     observeReveals(document);
+  </script>
+
+  <!-- 名前の下の「for ___.」の名詞を回す -->
+  <script>
+    // 2.5秒ごとに次の語へ。出ていく語は is-out（上へ消える）→ 消えたら外して、次の出番まで下で待たせる。
+    // ⚠ 背面タブでは進めない（setInterval は間引かれるだけで止まらない＝戻った瞬間に連続で切り替わるのを防ぐ）
+    // ⚠ 動きを減らす設定では回さない＝1語目「films.」で静止（CSS 側も transition を切っている）。
+    //    設定はページを開いたまま切り替わりうるので、matchMedia の change を聞いて止める／再開する（Codex [P2] 2026-09-02）
+    (function () {
+      const box = document.querySelector('.hero-for-nouns');
+      if (!box || box.children.length < 2) return;
+      // ⚠ この行は 100vh の Hero の底に居て、登場前は 24px 下がっている＝reveal の観測域（下 8% を除く）の外に
+      //    落ちることがある（実測：390×844 で永久に出なかった）。観測任せにせず読み込み時に自分で出す。
+      //    遅れは reveal の段差（0/70/140ms）の3段目に合わせる
+      const line = box.closest('.hero-for');
+      if (line) setTimeout(() => line.classList.add('is-in'), 140);
+
+      const words = Array.from(box.children);
+      const mq = window.matchMedia ? window.matchMedia('(prefers-reduced-motion: reduce)') : null;
+      let i = Math.max(0, words.findIndex(w => w.classList.contains('is-on')));
+      let timer = null;
+
+      function show(n) {
+        words.forEach(w => w.classList.remove('is-on', 'is-out'));
+        words[n].classList.add('is-on');
+        i = n;
+      }
+      function start() {
+        if (timer) return;
+        timer = setInterval(() => {
+          if (document.hidden) return;
+          const cur = words[i];
+          i = (i + 1) % words.length;
+          cur.classList.remove('is-on');
+          cur.classList.add('is-out');
+          words[i].classList.add('is-on');
+          setTimeout(() => cur.classList.remove('is-out'), 600);
+        }, 2500);
+      }
+      function stop() {
+        clearInterval(timer);
+        timer = null;
+        show(0);
+      }
+      function sync() { (mq && mq.matches) ? stop() : start(); }
+
+      sync();
+      if (mq) (mq.addEventListener ? mq.addEventListener('change', sync) : mq.addListener(sync));
+    })();
   </script>
 
   <!-- i18n -->
