@@ -87,6 +87,11 @@
 
     html { scroll-behavior: smooth; }
 
+    /* ⚠ UA の [hidden]{display:none} は、こちらが display を書いた時点で負ける（作者スタイルが優先）。
+       .newsletter-form が display:flex を持つため el.hidden = true が効いていなかった（2026-09-02 実測）。
+       hidden を付けたら必ず消えることを全要素で保証する。 */
+    [hidden] { display: none !important; }
+
     body {
       background: var(--bg);
       color: var(--text-primary);
@@ -649,6 +654,8 @@
       color: var(--text-primary);
     }
     .newsletter-msg:empty { display: none; }
+    /* 確認リンクから ?subscribed=1 で戻ってきた時の完了表示。節の先頭に立つので lead と同じ間を取る */
+    .newsletter-msg.is-done { margin-top: 30px; font-size: 15px; }
 
     .newsletter-note {
       margin-top: 18px;
@@ -1734,6 +1741,7 @@
         nl_sending:         "送信中…",
         nl_ok:              "登録ありがとうございます。確認メールをお送りしましたので、メール内のリンクを押すと購読が完了します。届かない場合は迷惑メールフォルダもご確認ください。",
         nl_err:             "うまく送信できませんでした。アドレスをご確認のうえ、もう一度お試しください。",
+        nl_done:            "購読の確認が完了しました。ありがとうございます。",
       },
       en: {
         hero_eyebrow:       "Sound Producer / Composer",
@@ -1772,6 +1780,7 @@
         nl_sending:         "Sending…",
         nl_ok:              "Thank you. A confirmation email is on its way — click the link inside to finish subscribing. If it does not arrive, please check your spam folder.",
         nl_err:             "That did not go through. Please check the address and try again.",
+        nl_done:            "Your subscription is confirmed. Thank you.",
       },
     };
 
@@ -1832,6 +1841,27 @@
       const msg = document.getElementById('newsletter-msg');
       const btn = form.querySelector('button[type="submit"]');
       const t   = () => (typeof i18n !== 'undefined' && i18n[currentLang]) || {};
+
+      /* 確認メールのリンクを押した読者は Kit の redirect でここへ戻る
+         （Kit 側 After confirming redirect to = https://ryoheynakamura.com/?subscribed=1）。
+         素のトップへ戻すと「完了した」の言葉がどこにも出ないので、この節を完了の姿にして見せる。
+         ⚠ 文面は nl_done ＋ 既存の nl_lead / nl_note で組む＝「数か月に一度」を二重に持たない
+            （頻度を変える時に片方だけ直る事故を作らないため）。
+         ⚠ 値まで見る＝有無だけだと ?subscribed=0 でも完了と出る。送信結果の判定と同じで既定は
+            出さない側に倒す（登録できていないのに完了と出すと読者は二度と戻ってこない）。 */
+      if (new URLSearchParams(location.search).get('subscribed') === '1') {
+        msg.dataset.i18n = 'nl_done';   // 言語を切り替えても追従する（setLang が [data-i18n] を回す）
+        msg.textContent  = t().nl_done || '';
+        msg.classList.add('is-done');
+        sec.insertBefore(msg, sec.querySelector('.newsletter-lead'));  // 完了の一文を節の先頭へ
+        form.hidden = true;             // 確認を済ませた読者に登録欄は出さない
+        // scrollToSection は後続の <script> で定義される＝この時点では未定義。次のタスクまで待つ
+        setTimeout(() => {
+          if (typeof scrollToSection === 'function') scrollToSection('#newsletter', 'smooth');
+        }, 0);
+        return;                         // 登録フォームを出していないので送信ハンドラは要らない
+      }
+
       let sending = false;
 
       form.addEventListener('submit', async (ev) => {
