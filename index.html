@@ -1068,19 +1068,20 @@
     .step-icon-demo::before { -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round' %3E%3Cpath stroke='none' d='M0 0h24v24H0z' fill='none' /%3E%3Cpath d='M3 17a3 3 0 1 0 6 0a3 3 0 0 0 -6 0' /%3E%3Cpath d='M13 17a3 3 0 1 0 6 0a3 3 0 0 0 -6 0' /%3E%3Cpath d='M9 17v-13h10v13' /%3E%3Cpath d='M9 8h10' /%3E%3C/svg%3E"); mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round' %3E%3Cpath stroke='none' d='M0 0h24v24H0z' fill='none' /%3E%3Cpath d='M3 17a3 3 0 1 0 6 0a3 3 0 0 0 -6 0' /%3E%3Cpath d='M13 17a3 3 0 1 0 6 0a3 3 0 0 0 -6 0' /%3E%3Cpath d='M9 17v-13h10v13' /%3E%3Cpath d='M9 8h10' /%3E%3C/svg%3E"); }
     .step-icon-deliver::before { -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round' %3E%3Cpath stroke='none' d='M0 0h24v24H0z' fill='none' /%3E%3Cpath d='M3 12a9 9 0 1 0 18 0a9 9 0 1 0 -18 0' /%3E%3Cpath d='M9 12l2 2l4 -4' /%3E%3C/svg%3E"); mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round' %3E%3Cpath stroke='none' d='M0 0h24v24H0z' fill='none' /%3E%3Cpath d='M3 12a9 9 0 1 0 18 0a9 9 0 1 0 -18 0' /%3E%3Cpath d='M9 12l2 2l4 -4' /%3E%3C/svg%3E"); }
 
-    /* ステップ間の矢印。円の中心の高さ（top 14 = 円44/2 − 矢印16/2）・列間ギャップ24px の真ん中 */
+    /* ステップ間の矢印＝Tabler arrow-narrow-right（chevron だと軸が無く矢印に見えなかった）。
+       円の中心の高さ（top 12 = 円44/2 − 矢印20/2）・列間ギャップ24px の真ん中（right = −(24+20)/2） */
     .commission-steps li:not(:last-child)::after {
       content: '';
       position: absolute;
-      top: 14px;
-      right: -20px;
-      width: 16px;
-      height: 16px;
+      top: 12px;
+      right: -22px;
+      width: 20px;
+      height: 20px;
       background-color: var(--text-secondary);
       -webkit-mask-repeat: no-repeat;  mask-repeat: no-repeat;
       -webkit-mask-position: center;   mask-position: center;
       -webkit-mask-size: contain;      mask-size: contain;
-      -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round' %3E%3Cpath stroke='none' d='M0 0h24v24H0z' fill='none' /%3E%3Cpath d='M9 6l6 6l-6 6' /%3E%3C/svg%3E"); mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round' %3E%3Cpath stroke='none' d='M0 0h24v24H0z' fill='none' /%3E%3Cpath d='M9 6l6 6l-6 6' /%3E%3C/svg%3E");
+      -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' %3E%3Cpath stroke='none' d='M0 0h24v24H0z' fill='none' /%3E%3Cpath d='M5 12l14 0' /%3E%3Cpath d='M15 16l4 -4' /%3E%3Cpath d='M15 8l4 4' /%3E%3C/svg%3E"); mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' %3E%3Cpath stroke='none' d='M0 0h24v24H0z' fill='none' /%3E%3Cpath d='M5 12l14 0' /%3E%3Cpath d='M15 16l4 -4' /%3E%3Cpath d='M15 8l4 4' /%3E%3C/svg%3E");
     }
 
     /* 進め方＝対応領域と並列でない1枚。横幅いっぱいの中でステップを左→右の流れとして見せる */
