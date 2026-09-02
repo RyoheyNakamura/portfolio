@@ -594,6 +594,60 @@
     }
 
     /* ━━━━━━━━━━━━━━━━
+       Newsletter
+       ⚠ セクションは markup で hidden。NEWSLETTER_ACTION に送り先が入っている時だけ出る
+         ＝送り先の無いフォームを公開しないための既定値
+    ━━━━━━━━━━━━━━━━ */
+    .newsletter {
+      padding: 96px var(--px);
+      border-top: 1px solid var(--border);
+    }
+
+    .newsletter-lead {
+      max-width: 640px;
+      margin: 30px 0 32px;
+    }
+
+    .newsletter-form {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      max-width: 560px;
+    }
+
+    /* 枠線を持たせず面と影で入力欄を示す（1px枠線を使わない意匠に合わせる） */
+    .newsletter-input {
+      flex: 1 1 260px;
+      min-width: 0;
+      padding: 14px 18px;
+      background: var(--surface);
+      border: none;
+      border-radius: 8px;
+      box-shadow: var(--shadow-sm);
+      font-family: inherit;
+      font-size: 15px;
+      line-height: 1.6;
+      color: var(--text-primary);
+      transition: box-shadow 0.2s;
+    }
+    .newsletter-input::placeholder { color: var(--text-secondary); }
+    /* outline を消しているので、キーボード可視性はこの box-shadow が担う（消さないこと） */
+    .newsletter-input:focus-visible,
+    .newsletter-input:focus {
+      outline: none;
+      box-shadow: var(--shadow-md), 0 0 0 2px var(--accent-deep);
+    }
+
+    .newsletter-submit { flex: 0 0 auto; }
+
+    .newsletter-note {
+      margin-top: 18px;
+      max-width: 560px;
+      font-size: 13px;
+      color: var(--text-secondary);
+    }
+
+    /* ━━━━━━━━━━━━━━━━
        Footer
     ━━━━━━━━━━━━━━━━ */
     footer {
@@ -1287,6 +1341,11 @@
       .about-profile { padding: 24px 20px; border-radius: 16px; }
       .about-portrait { max-width: 300px; border-radius: 14px; }
 
+      /* Newsletter */
+      .newsletter { padding: 64px var(--px); }
+      .newsletter-lead { margin: 22px 0 26px; }
+      .newsletter-submit { width: 100%; justify-content: center; }
+
       /* Detail view */
       .detail-related { padding: 48px var(--px) 64px; }
       .detail-related .grid { grid-template-columns: 1fr; gap: 20px; }
@@ -1477,6 +1536,21 @@
     </div>
   </section>
 
+  <!-- Newsletter
+       ⚠ 既定で hidden。下の NEWSLETTER_ACTION に Kit のフォーム URL を入れると出る。
+          送り先の無いフォームを公開しないための既定値なので、空のまま hidden を外さないこと。 -->
+  <section class="newsletter" id="newsletter" hidden>
+    <h2 class="section-title reveal">Newsletter</h2>
+    <p class="newsletter-lead reveal" data-i18n="nl_lead">新作のリリースと、制作について考えていることを、数か月に一度お送りします。</p>
+    <form class="newsletter-form reveal" id="newsletter-form" method="post" target="_blank">
+      <input class="newsletter-input" id="newsletter-email" type="email" name="email_address"
+             required autocomplete="email" placeholder="メールアドレス" aria-label="メールアドレス"
+             data-i18n-ph="nl_placeholder">
+      <button class="works-cta-btn newsletter-submit" type="submit" data-i18n="nl_submit">登録する</button>
+    </form>
+    <p class="newsletter-note reveal" data-i18n="nl_note">いつでも解除できます。アドレスは配信以外には使いません。</p>
+  </section>
+
   <!-- Footer -->
   <footer>
     <span><span class="footer-yolk"></span>Ryohey Nakamura</span>
@@ -1642,6 +1716,10 @@
         works_cta:                "すべての作品を見る",
         works_back:               "ホームへ",
         news_back:                "ホームへ",
+        nl_lead:            "新作のリリースと、制作について考えていることを、数か月に一度お送りします。",
+        nl_placeholder:     "メールアドレス",
+        nl_submit:          "登録する",
+        nl_note:            "いつでも解除できます。アドレスは配信以外には使いません。",
       },
       en: {
         hero_eyebrow:       "Sound Producer / Composer",
@@ -1673,6 +1751,10 @@
         works_cta:                "View All Works",
         works_back:               "Home",
         news_back:                "Home",
+        nl_lead:            "New releases, and notes on what I have been thinking about while making things — a few times a year.",
+        nl_placeholder:     "Email address",
+        nl_submit:          "Subscribe",
+        nl_note:            "Unsubscribe anytime. Your address is used for nothing else.",
       },
     };
 
@@ -1688,6 +1770,11 @@
         const v = t[el.dataset.i18n];
         if (v !== undefined) el.innerHTML = v;
       });
+      // 入力欄は innerHTML では切り替わらないので placeholder と読み上げ名を別に当てる
+      document.querySelectorAll('[data-i18n-ph]').forEach(el => {
+        const v = t[el.dataset.i18nPh];
+        if (v !== undefined) { el.placeholder = v; el.setAttribute('aria-label', v); }
+      });
       document.querySelectorAll('.lang-btn').forEach(btn => {
         btn.classList.toggle('active', btn.dataset.lang === lang);
       });
@@ -1701,6 +1788,26 @@
         renderNewsDetail(currentNewsId, lang);
       }
     }
+
+    /* ── Newsletter ──────────────────────────────────────────────
+       Kit（旧 ConvertKit）のフォーム URL を入れると Newsletter セクションが出る。
+       例: 'https://app.kit.com/forms/1234567/subscriptions'
+       ⚠ 空のままにしておくこと＝送り先の無いフォームを公開しないための既定値。
+       ⚠ 1通目を送る前に、特定電子メール法の表示義務（氏名・住所・解除の通知先・
+          問い合わせ先）を Kit 側のフッター設定で満たすこと。住所は未定。
+       ⚠ 送信欄名 email_address は Kit の仕様。別サービスにするなら markup 側も変える。 */
+    const NEWSLETTER_ACTION = '';
+
+    (() => {
+      if (!NEWSLETTER_ACTION) return;
+      const sec  = document.getElementById('newsletter');
+      const form = document.getElementById('newsletter-form');
+      if (!sec || !form) return;
+      form.action = NEWSLETTER_ACTION;
+      sec.hidden  = false;
+      // hidden の間はレイアウトが無く IntersectionObserver が当たらないので、出してから観測し直す
+      if (typeof observeReveals === 'function') observeReveals(sec);
+    })();
 
     document.querySelectorAll('.lang-btn').forEach(btn => {
       btn.addEventListener('click', () => setLang(btn.dataset.lang));
