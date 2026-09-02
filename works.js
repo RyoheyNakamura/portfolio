@@ -61,6 +61,7 @@ work('suntory-boss', {
 })
 
 work('riddle-valorant-2026', {
+  featured:   true,
   hidden:   false,
   category:   'client',
   date:       '2026.01.10',
@@ -132,7 +133,6 @@ work('lotte-painomi', {
 })
 
 work('coca-cola-recycle', {
-  featured:   true,
   hidden:   false,
   category:   'client',
   date:       '2025.11.01',
@@ -156,7 +156,6 @@ work('coca-cola-recycle', {
 })
 
 work('kyuhaku-fumufumu', {
-  featured:   true,
   hidden:   false,
   category:   'client',
   date:       '2025.10.16',
