@@ -215,6 +215,8 @@
       color: var(--text-primary);
     }
     .hero-for-word { color: var(--text-secondary); }
+    /* 名乗り（Music & Sound）は黒・繋ぎの for だけ薄い＝名乗りと行き先の名詞が対に見える（2026-09-03） */
+    .hero-for-kindname { color: var(--text-primary); }
     .hero-for-nouns {
       display: inline-grid;
       text-align: left;
@@ -1488,13 +1490,15 @@
         Ryohey<br>
         <span class="accent">Nakamura</span>
       </h1>
-      <!-- 名前の下の一行。「for」は固定・名詞だけが入れ替わる（Client 映像／Client その場限りの体験／Produce／Self の順）。
+      <!-- 名前の下の一行。名乗り「Music & Sound」と「for」は固定・名詞だけが入れ替わる
+           （Client 映像／Client その場限りの体験／Produce／Self の順）。
            英語のまま JA/EN 両方に出す（上の eyebrow と同じ扱い＝data-i18n を付けない）。
-           1語目に is-on を書いておく＝JS 無し・動きを減らす設定では「for films.」で静止する -->
+           1語目に is-on を書いておく＝JS 無し・動きを減らす設定では「Music & Sound for Films.」で静止する -->
       <p class="hero-for reveal">
-        <span class="sr-only">for films, places, artists and myself.</span>
+        <span class="sr-only">Music and sound for films, places, artists and myself.</span>
+        <span class="hero-for-kindname" aria-hidden="true">Music &amp; Sound</span>
         <span class="hero-for-word" aria-hidden="true">for</span>
-        <span class="hero-for-nouns" aria-hidden="true"><span class="is-on">films.</span><span>places.</span><span>artists.</span><span>myself.</span></span>
+        <span class="hero-for-nouns" aria-hidden="true"><span class="is-on">Films.</span><span>Places.</span><span>Artists.</span><span>Myself.</span></span>
       </p>
     </div>
 
