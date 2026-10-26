@@ -452,7 +452,7 @@ work('pop-culture-communication', {
   tags:       'ElectroHouse',
   youtube:    [],
   vimeo:      '',
-  url:        '',
+  url:        'https://physicalloosesolidarity.bandcamp.com/album/physicists-high',
   image:      '',
   soundcloud: 'https://soundcloud.com/ryoheynakamura/pop-culture-communication-free-download?utm_source=clipboard&utm_campaign=wtshare&utm_medium=widget&utm_content=https%253A%252F%252Fsoundcloud.com%252Fryoheynakamura%252Fpop-culture-communication-free-download',
   spotify:    '',
@@ -461,8 +461,8 @@ work('pop-culture-communication', {
   title:     'Pop Culture Communication',
   titleEn:   'Pop Culture Communication',
 
-  desc:      'ポップカルチャーをテーマに制作した自主制作のElectro House楽曲。',
-  descEn:    'An original Electro House track themed around pop culture.',
+  desc:      'ポップカルチャーをテーマに制作した自主制作のElectro House楽曲。ネットレーベル『物理的で緩やかな連帯』のコンピレーションアルバム「Physicists\' High」に「Original Mix」として収録。',
+  descEn:    'An original Electro House track themed around pop culture, also included as the Original Mix on the compilation album “Physicists’ High” by 物理的で緩やかな連帯.',
 
   credits:   '',
   creditsEn: '',
@@ -638,7 +638,7 @@ work('kinoshita-tamako-soda-no-mahou', {
   tags:       '木下珠子',
   youtube:    ['eEizjCmOvnY'],
   vimeo:      '',
-  url:        '',
+  url:        'https://booth.pm/ja/items/5142021',
   image:      '',
   soundcloud: '',
   spotify:    '',
@@ -698,7 +698,7 @@ work("kinoshita-tamako-re", {
 
 work("kinoshita-tamako-blooming", {
   "category": "produce",
-  "date": "2025.11.08",
+  "date": "2025.10.26",
   "hidden": false,
   "tags": "木下珠子, Album",
   "youtube": [
@@ -718,7 +718,7 @@ work("relattice-compilation", {
   "category": "self",
   "date": "2026.04.26",
   "featured": false,
-  "hidden": true,
+  "hidden": false,
   "tags": "Relattice, Compilation, Saku",
   "url": "https://relattice.bandcamp.com/album/relattice",
   "image": "images/relattice.jpg",
@@ -734,12 +734,12 @@ work("relattice-compilation", {
 work("kinoshita-tamako-shining", {
   "category": "produce",
   "date": "2024.10.27",
-  "hidden": true,
+  "hidden": false,
   "tags": "木下珠子, Album",
   "youtube": [
     "zF7M1pdMpnM"
   ],
-  "url": "https://linkco.re/ap8QH0h1",
+  "url": "https://booth.pm/ja/items/6163190",
   "image": "images/kinoshita-tamako-beyond.jpg",
   "title": "木下珠子<br>2nd Album「Beyond」収録曲「Shining!!」",
   "titleEn": "Tamako Kinoshita<br>“Shining!!” from “Beyond”",
@@ -777,4 +777,91 @@ work("nhk-mitateru-winter-sp", {
   "descEn": "Created sound effects for the winter special of NHK E-tele’s “Mitateru-phose,” a 30-minute program exploring imaginative ways of seeing everyday objects.",
   "credits": "効果音：Ryohey Nakamura<br>音楽：米田望<br>音楽プロデューサー：松尾謙二郎",
   "creditsEn": "Sound Effects: Ryohey Nakamura<br>Music: 米田望<br>Music Producer: 松尾謙二郎"
+});
+
+// Additional label releases — sources: images/works-catalog-20261027.md
+
+work("the-emperor-walks-on-the-whale", {
+  "category": "self",
+  "date": "2020.10.22",
+  "hidden": false,
+  "featured": false,
+  "tags": "物理的で緩やかな連帯, Physicists' Hill",
+  "url": "https://physicalloosesolidarity.bandcamp.com/track/the-emperor-walks-on-the-whale",
+  "image": "images/physicists-hill.jpg",
+  "bandcamp": "<iframe style=\"border: 0; width: 100%; height: 120px;\" src=\"https://bandcamp.com/EmbeddedPlayer/track=2789756234/size=large/bgcol=ffffff/linkcol=0687f5/tracklist=false/artwork=small/transparent=true/\" title=\"The Emperor Walks on The Whale\" seamless></iframe>",
+  "title": "The Emperor Walks on The Whale",
+  "titleEn": "The Emperor Walks on The Whale",
+  "desc": "ネットレーベル『物理的で緩やかな連帯』のコンピレーションアルバム「Physicists' Hill」収録曲。",
+  "descEn": "Included in “Physicists' Hill,” a compilation album by the netlabel 物理的で緩やかな連帯.",
+  "credits": "Artist : Ryohey Nakamura",
+  "creditsEn": "Artist : Ryohey Nakamura"
+});
+
+work("fluorescence-night-flow-remix", {
+  "category": "self",
+  "date": "2020.10.22",
+  "hidden": false,
+  "featured": false,
+  "tags": "物理的で緩やかな連帯, Physicists' Hill, Remix",
+  "url": "https://physicalloosesolidarity.bandcamp.com/track/fluorescence-night-flow-remix",
+  "image": "images/physicists-hill.jpg",
+  "bandcamp": "<iframe style=\"border: 0; width: 100%; height: 120px;\" src=\"https://bandcamp.com/EmbeddedPlayer/track=2577919269/size=large/bgcol=ffffff/linkcol=0687f5/tracklist=false/artwork=small/transparent=true/\" title=\"Fluorescence (NIGHT FLOW Remix)\" seamless></iframe>",
+  "title": "Fluorescence (NIGHT FLOW Remix)",
+  "titleEn": "Fluorescence (NIGHT FLOW Remix)",
+  "desc": "Kurage543「Fluorescence」のリミックス。ネットレーベル『物理的で緩やかな連帯』のコンピレーションアルバム「Physicists' Hill」収録曲。",
+  "descEn": "A remix of “Fluorescence” by Kurage543. Included in “Physicists' Hill,” a compilation album by the netlabel 物理的で緩やかな連帯.",
+  "credits": "リミックス：Ryohey Nakamura<br>原曲：Kurage543",
+  "creditsEn": "Remix: Ryohey Nakamura<br>Original: Kurage543"
+});
+
+work("pinky-step", {
+  "category": "self",
+  "date": "2022.10.30",
+  "hidden": false,
+  "featured": false,
+  "tags": "物理的で緩やかな連帯, Physicists' Hype",
+  "url": "https://physicalloosesolidarity.bandcamp.com/track/pinky-step",
+  "image": "images/physicists-hype.jpg",
+  "bandcamp": "<iframe style=\"border: 0; width: 100%; height: 120px;\" src=\"https://bandcamp.com/EmbeddedPlayer/track=2167378569/size=large/bgcol=ffffff/linkcol=0687f5/tracklist=false/artwork=small/transparent=true/\" title=\"Pinky Step\" seamless></iframe>",
+  "title": "Pinky Step",
+  "titleEn": "Pinky Step",
+  "desc": "ネットレーベル『物理的で緩やかな連帯』のコンピレーションアルバム「Physicists' Hype」収録曲。",
+  "descEn": "Included in “Physicists' Hype,” a compilation album by the netlabel 物理的で緩やかな連帯.",
+  "credits": "Artist : Ryohey Nakamura",
+  "creditsEn": "Artist : Ryohey Nakamura"
+});
+
+work("autumn-themed-radio-jingle", {
+  "category": "self",
+  "date": "2023.10.29",
+  "hidden": false,
+  "featured": false,
+  "tags": "物理的で緩やかな連帯, Physicists’ Habit",
+  "url": "https://physicalloosesolidarity.bandcamp.com/track/autumn-themed-radio-jingle",
+  "image": "images/goodnight-to-the-world.jpg",
+  "bandcamp": "<iframe style=\"border: 0; width: 100%; height: 120px;\" src=\"https://bandcamp.com/EmbeddedPlayer/track=2573548020/size=large/bgcol=ffffff/linkcol=0687f5/tracklist=false/artwork=small/transparent=true/\" title=\"Autumn-Themed Radio Jingle\" seamless></iframe>",
+  "title": "Autumn-Themed Radio Jingle",
+  "titleEn": "Autumn-Themed Radio Jingle",
+  "desc": "ネットレーベル『物理的で緩やかな連帯』のコンピレーションアルバム「Physicists’ Habit」収録曲。",
+  "descEn": "Included in “Physicists’ Habit,” a compilation album by the netlabel 物理的で緩やかな連帯.",
+  "credits": "Artist : Ryohey Nakamura",
+  "creditsEn": "Artist : Ryohey Nakamura"
+});
+
+work("waiting-for-you-still", {
+  "category": "self",
+  "date": "2026.10.25",
+  "hidden": false,
+  "featured": false,
+  "tags": "物理的で緩やかな連帯, heptaphobic",
+  "url": "https://physicalloosesolidarity.bandcamp.com/track/waiting-for-you-still",
+  "image": "images/heptaphobic.jpg",
+  "bandcamp": "<iframe style=\"border: 0; width: 100%; height: 120px;\" src=\"https://bandcamp.com/EmbeddedPlayer/track=4146657706/size=large/bgcol=ffffff/linkcol=0687f5/tracklist=false/artwork=small/transparent=true/\" title=\"Waiting for You (Still)\" seamless></iframe>",
+  "title": "Waiting for You (Still)",
+  "titleEn": "Waiting for You (Still)",
+  "desc": "ネットレーベル『物理的で緩やかな連帯』のコンピレーションアルバム「heptaphobic」収録曲。",
+  "descEn": "Included in “heptaphobic,” a compilation album by the netlabel 物理的で緩やかな連帯.",
+  "credits": "Artist : Ryohey Nakamura",
+  "creditsEn": "Artist : Ryohey Nakamura"
 });

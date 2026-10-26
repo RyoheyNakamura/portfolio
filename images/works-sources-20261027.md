@@ -14,7 +14,7 @@ Images are official album/product artwork or published program stills, resized a
 ## Credits and dates
 
 - Re: — [artist’s BOOTH](https://booth.pm/ja/items/8977824), release 2026-10-25. “Mebuki no Kotoba”: composition/arrangement; “Re:”: arrangement.
-- Blooming — [TANO*C STORE credits](https://www.tanocstore.net/shopdetail/000000004437/) and [TuneCore](https://linkco.re/ENN68BQx?lang=ja). Displayed date 2025-11-08 is the digital release date. “Lily Light”: lyrics/composition/arrangement; “Blooming”: composition/arrangement.
+- Blooming — [TANO*C STORE credits](https://www.tanocstore.net/shopdetail/000000004437/) and [TuneCore](https://linkco.re/ENN68BQx?lang=ja). The original displayed date was the later streaming release (2025-11-08); it is now 2025-10-26, verified from the [artist’s BOOTH](https://booth.pm/ja/items/7525431). “Lily Light”: lyrics/composition/arrangement; “Blooming”: composition/arrangement.
 - Relattice — [label’s Bandcamp](https://relattice.bandcamp.com/album/relattice), released 2026-04-26. Track 02 “PURE”; track 12 “Key Point”, with Saku. One page groups the two contributions to avoid duplicate album cards.
 - Shining!! — [artist’s production notes](https://note.com/tamachan_music/n/nb416971348f0) and [artist’s BOOTH](https://tamachan-music.booth.pm/items/6163190), CD release 2024-10-27. Composition/arrangement.
 - Mitateru autumn — [invisi](https://invisi.jp/works/mitateru-fsp-2), first broadcast 2024-10-14; sound effects.
@@ -27,9 +27,9 @@ Images are official album/product artwork or published program stills, resized a
 
 ## Visibility
 
-- Listed: Re:, Blooming, Mitateru winter.
-- Hidden from listings: Relattice, Shining!! and Mitateru autumn. They remain accessible by their direct hash URLs, matching the existing hidden behavior.
-- Re: is featured. Relattice was removed from featured and hidden at the artist’s request because it is already covered in News. The homepage continues to select the six newest featured works.
-- Existing entries are unchanged. Shining!! overlaps the newer Tamako Kinoshita releases; autumn overlaps winter, so those two additions are kept off the listing.
+- Listed: Re:, Blooming, Relattice, Shining!!, Mitateru winter (latest revision; see works-catalog-20261027.md).
+- Hidden from listings: Mitateru autumn. They remain accessible by their direct hash URLs, matching the existing hidden behavior.
+- Re: is featured. Relattice is listed but not featured at the artist’s latest request. The homepage continues to select the six newest featured works.
+- Earlier curation kept Shining!! and autumn off the listing. Shining!! is now listed after the catalog review; autumn remains hidden because it overlaps winter. The catalog review also adds verified album information to existing entries; see works-catalog-20261027.md.
 
 - Artist-approved display credit: Ryohey Nakamura in both languages, including the two Mitateru pages. Source pages may use kanji.
