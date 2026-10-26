@@ -1724,7 +1724,7 @@
   </div>
 
   <script src="news.js?v=20261026"></script>
-  <script src="works.js?v=20261027c"></script>
+  <script src="works.js?v=20261027d"></script>
 
   <!-- スクロールで各要素をふわっと出す -->
   <script>
@@ -2030,6 +2030,8 @@
   <script>
     WORKS.sort((a, b) => (b.date || '').replace(/\./g, '').localeCompare((a.date || '').replace(/\./g, '')));
     const VISIBLE_WORKS = WORKS.filter(w => !w.hidden);
+    const WORK_ALIASES = new Map(WORKS.flatMap(w => (w.aliases || []).map(alias => [alias, w.id])));
+    function resolveWorkId(id) { return WORK_ALIASES.get(id) || id; }
 
     // Structured data: works as an ItemList, generated from works.js so it never drifts.
     (function injectWorksJsonLd() {
@@ -2361,6 +2363,7 @@
     }
 
     function openWork(id, fromHistory) {
+      id = resolveWorkId(id);
       if (!WORKS.find(x => x.id === id)) return;
       const worksView  = document.getElementById('works-view');
       const mainView   = document.getElementById('main-view');
@@ -2480,7 +2483,7 @@
       }
     });
 
-    const initHash = location.hash.slice(1);
+    const initHash = resolveWorkId(location.hash.slice(1));
     if (initHash && WORKS.find(x => x.id === initHash)) openWork(initHash);
     else if (initHash === 'works') openWorks();
   </script>

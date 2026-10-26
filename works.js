@@ -22,6 +22,7 @@
 //    approachEn : 'その英訳'                        （省略するとapproachを表示）
 //    credits    : '日本語クレジット'              （任意・<br>で改行）
 //    creditsEn  : '英語クレジット'                （省略するとcreditsを表示）
+//    aliases    : ['old-id']                    （任意・旧URLをこの作品へ案内）
 //    hidden     : true                           （非表示にしたい場合のみ記載。省略すると表示）
 //    featured   : true                           （おすすめ。ホームの Works はこの中から新しい順に6件を表示。省略すると一覧のみ）
 //
@@ -398,28 +399,7 @@ work('vdshttr', {
   creditsEn: '',
 })
 
-work('goodnight-to-the-world', {
-  hidden:   false,
-  category:   'self',
-  date:       '2023.10.29',
-  tags:       'Ambient',
-  youtube:    [],
-  vimeo:      '',
-  url:        '',
-  image:      'images/goodnight-to-the-world.jpg',
-  soundcloud: '',
-  spotify:    '',
-  bandcamp:   '<iframe style="border: 0; width: 100%; height: 120px;" src="https://bandcamp.com/EmbeddedPlayer/album=366363831/size=large/bgcol=ffffff/linkcol=0687f5/tracklist=false/artwork=small/track=1683783587/transparent=true/" seamless><a href="https://physicalloosesolidarity.bandcamp.com/album/physicists-habit">Physicists’ Habit Ryohey Nakamura</a></iframe>',
 
-  title:     'Goodnight to the World We Once Knew',
-  titleEn:   'Goodnight to the World We Once Knew',
-
-  desc:      'ネットレーベル『物理的で緩やかな連帯』のコンピレーションアルバム「Physicists\' Habit」収録曲。',
-  descEn:    'Included in "Physicists\' Habit," a compilation album by net label Physical and Gradual Solidarity.',
-
-  credits:   '',
-  creditsEn: '',
-})
 
 work('transpop', {
   featured:   true,
@@ -781,39 +761,9 @@ work("nhk-mitateru-winter-sp", {
 
 // Additional label releases — sources: images/works-catalog-20261027.md
 
-work("the-emperor-walks-on-the-whale", {
-  "category": "self",
-  "date": "2020.10.22",
-  "hidden": false,
-  "featured": false,
-  "tags": "物理的で緩やかな連帯, Physicists' Hill",
-  "url": "https://physicalloosesolidarity.bandcamp.com/track/the-emperor-walks-on-the-whale",
-  "image": "images/physicists-hill.jpg",
-  "bandcamp": "<iframe style=\"border: 0; width: 100%; height: 120px;\" src=\"https://bandcamp.com/EmbeddedPlayer/track=2789756234/size=large/bgcol=ffffff/linkcol=0687f5/tracklist=false/artwork=small/transparent=true/\" title=\"The Emperor Walks on The Whale\" seamless></iframe>",
-  "title": "The Emperor Walks on The Whale",
-  "titleEn": "The Emperor Walks on The Whale",
-  "desc": "ネットレーベル『物理的で緩やかな連帯』のコンピレーションアルバム「Physicists' Hill」収録曲。",
-  "descEn": "Included in “Physicists' Hill,” a compilation album by the netlabel 物理的で緩やかな連帯.",
-  "credits": "Artist : Ryohey Nakamura",
-  "creditsEn": "Artist : Ryohey Nakamura"
-});
 
-work("fluorescence-night-flow-remix", {
-  "category": "self",
-  "date": "2020.10.22",
-  "hidden": false,
-  "featured": false,
-  "tags": "物理的で緩やかな連帯, Physicists' Hill, Remix",
-  "url": "https://physicalloosesolidarity.bandcamp.com/track/fluorescence-night-flow-remix",
-  "image": "images/physicists-hill.jpg",
-  "bandcamp": "<iframe style=\"border: 0; width: 100%; height: 120px;\" src=\"https://bandcamp.com/EmbeddedPlayer/track=2577919269/size=large/bgcol=ffffff/linkcol=0687f5/tracklist=false/artwork=small/transparent=true/\" title=\"Fluorescence (NIGHT FLOW Remix)\" seamless></iframe>",
-  "title": "Fluorescence (NIGHT FLOW Remix)",
-  "titleEn": "Fluorescence (NIGHT FLOW Remix)",
-  "desc": "Kurage543「Fluorescence」のリミックス。ネットレーベル『物理的で緩やかな連帯』のコンピレーションアルバム「Physicists' Hill」収録曲。",
-  "descEn": "A remix of “Fluorescence” by Kurage543. Included in “Physicists' Hill,” a compilation album by the netlabel 物理的で緩やかな連帯.",
-  "credits": "リミックス：Ryohey Nakamura<br>原曲：Kurage543",
-  "creditsEn": "Remix: Ryohey Nakamura<br>Original: Kurage543"
-});
+
+
 
 work("pinky-step", {
   "category": "self",
@@ -832,22 +782,7 @@ work("pinky-step", {
   "creditsEn": "Artist : Ryohey Nakamura"
 });
 
-work("autumn-themed-radio-jingle", {
-  "category": "self",
-  "date": "2023.10.29",
-  "hidden": false,
-  "featured": false,
-  "tags": "物理的で緩やかな連帯, Physicists’ Habit",
-  "url": "https://physicalloosesolidarity.bandcamp.com/track/autumn-themed-radio-jingle",
-  "image": "images/goodnight-to-the-world.jpg",
-  "bandcamp": "<iframe style=\"border: 0; width: 100%; height: 120px;\" src=\"https://bandcamp.com/EmbeddedPlayer/track=2573548020/size=large/bgcol=ffffff/linkcol=0687f5/tracklist=false/artwork=small/transparent=true/\" title=\"Autumn-Themed Radio Jingle\" seamless></iframe>",
-  "title": "Autumn-Themed Radio Jingle",
-  "titleEn": "Autumn-Themed Radio Jingle",
-  "desc": "ネットレーベル『物理的で緩やかな連帯』のコンピレーションアルバム「Physicists’ Habit」収録曲。",
-  "descEn": "Included in “Physicists’ Habit,” a compilation album by the netlabel 物理的で緩やかな連帯.",
-  "credits": "Artist : Ryohey Nakamura",
-  "creditsEn": "Artist : Ryohey Nakamura"
-});
+
 
 work("waiting-for-you-still", {
   "category": "self",
@@ -864,4 +799,67 @@ work("waiting-for-you-still", {
   "descEn": "Included in “heptaphobic,” a compilation album by the netlabel 物理的で緩やかな連帯.",
   "credits": "Artist : Ryohey Nakamura",
   "creditsEn": "Artist : Ryohey Nakamura"
+});
+
+// Album-level entries and Cygames — sources: images/works-grouping-cygames-20261027.md
+
+work("physicists-hill", {
+  "aliases": [
+    "the-emperor-walks-on-the-whale",
+    "fluorescence-night-flow-remix"
+  ],
+  "category": "self",
+  "date": "2020.10.22",
+  "hidden": false,
+  "featured": false,
+  "tags": "物理的で緩やかな連帯, Compilation",
+  "url": "https://physicalloosesolidarity.bandcamp.com/album/physicists-hill",
+  "image": "images/physicists-hill.jpg",
+  "bandcamp": "<iframe style=\"border: 0; width: 100%; height: 120px;\" src=\"https://bandcamp.com/EmbeddedPlayer/track=2789756234/size=large/bgcol=ffffff/linkcol=0687f5/tracklist=false/artwork=small/transparent=true/\" title=\"The Emperor Walks on The Whale\" seamless></iframe><iframe style=\"border: 0; width: 100%; height: 120px;\" src=\"https://bandcamp.com/EmbeddedPlayer/track=2577919269/size=large/bgcol=ffffff/linkcol=0687f5/tracklist=false/artwork=small/transparent=true/\" title=\"Fluorescence (NIGHT FLOW Remix)\" seamless></iframe>",
+  "title": "Physicists’ Hill",
+  "titleEn": "Physicists’ Hill",
+  "desc": "ネットレーベル『物理的で緩やかな連帯』のコンピレーションアルバム「Physicists’ Hill」に、「The Emperor Walks on The Whale」と、Kurage543「Fluorescence」のリミックス「Fluorescence (NIGHT FLOW Remix)」の2曲で参加しました。",
+  "descEn": "Contributed “The Emperor Walks on The Whale” and “Fluorescence (NIGHT FLOW Remix),” a remix of Kurage543’s “Fluorescence,” to the compilation album “Physicists’ Hill” by 物理的で緩やかな連帯.",
+  "credits": "Tr.02「The Emperor Walks on The Whale」：Ryohey Nakamura<br>Tr.09「Fluorescence (NIGHT FLOW Remix)」リミックス：Ryohey Nakamura<br>「Fluorescence」原曲：Kurage543",
+  "creditsEn": "Tr.02 “The Emperor Walks on The Whale”: Ryohey Nakamura<br>Tr.09 “Fluorescence (NIGHT FLOW Remix)” — Remix: Ryohey Nakamura<br>“Fluorescence” — Original: Kurage543"
+});
+
+work("physicists-habit", {
+  "aliases": [
+    "goodnight-to-the-world",
+    "autumn-themed-radio-jingle"
+  ],
+  "category": "self",
+  "date": "2023.10.29",
+  "hidden": false,
+  "featured": false,
+  "tags": "物理的で緩やかな連帯, Compilation",
+  "url": "https://physicalloosesolidarity.bandcamp.com/album/physicists-habit",
+  "image": "images/goodnight-to-the-world.jpg",
+  "bandcamp": "<iframe style=\"border: 0; width: 100%; height: 120px;\" src=\"https://bandcamp.com/EmbeddedPlayer/track=2573548020/size=large/bgcol=ffffff/linkcol=0687f5/tracklist=false/artwork=small/transparent=true/\" title=\"Autumn-Themed Radio Jingle\" seamless></iframe><iframe style=\"border: 0; width: 100%; height: 120px;\" src=\"https://bandcamp.com/EmbeddedPlayer/track=1683783587/size=large/bgcol=ffffff/linkcol=0687f5/tracklist=false/artwork=small/transparent=true/\" title=\"Goodnight to the World We Once Knew\" seamless></iframe>",
+  "title": "Physicists’ Habit",
+  "titleEn": "Physicists’ Habit",
+  "desc": "ネットレーベル『物理的で緩やかな連帯』のコンピレーションアルバム「Physicists’ Habit」に、「Autumn-Themed Radio Jingle」と「Goodnight to the World We Once Knew」の2曲で参加しました。",
+  "descEn": "Contributed “Autumn-Themed Radio Jingle” and “Goodnight to the World We Once Knew” to the compilation album “Physicists’ Habit” by 物理的で緩やかな連帯.",
+  "credits": "Tr.01「Autumn-Themed Radio Jingle」：Ryohey Nakamura<br>Tr.06「Goodnight to the World We Once Knew」：Ryohey Nakamura",
+  "creditsEn": "Tr.01 “Autumn-Themed Radio Jingle”: Ryohey Nakamura<br>Tr.06 “Goodnight to the World We Once Knew”: Ryohey Nakamura"
+});
+
+work("cygames-saga", {
+  "category": "client",
+  "date": "2026.10.24",
+  "hidden": false,
+  "featured": true,
+  "tags": "WebCM, Cygames",
+  "youtube": [
+    "mVZHI6JyrPk"
+  ],
+  "url": "https://invisi.jp/works/cygames-cm-or",
+  "image": "images/cygames-saga.jpg",
+  "title": "Cygames<br>「佐賀から世界へ」篇",
+  "titleEn": "Cygames<br>“From Saga to the World”",
+  "desc": "CygamesのコーポレートCM「佐賀から世界へ」篇の音楽を担当しました。",
+  "descEn": "Created the music for Cygames’ corporate commercial, “From Saga to the World.”",
+  "credits": "Music Producer : Yuichi Nakamura<br>Music : Ryohey Nakamura",
+  "creditsEn": "Music Producer : Yuichi Nakamura<br>Music : Ryohey Nakamura"
 });

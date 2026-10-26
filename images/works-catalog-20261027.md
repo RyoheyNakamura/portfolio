@@ -35,3 +35,7 @@ These six songs already had entries or were named in their album pages. No addit
 ## Visibility
 
 Relattice is listed again (hidden=false) while featured remains false, per the artist’s latest instruction. All five additional label tracks are listed but not featured. The homepage selection is unchanged from the preceding release. Mitateru autumn remains hidden.
+
+## Later grouping revision
+
+The initial per-track entries for Hill and Habit were consolidated into one entry per album. The four old track IDs redirect to their album via work aliases; see works-grouping-cygames-20261027.md. Cygames is now featured, so the earlier statement about an unchanged homepage applies only to the catalog-addition release.
