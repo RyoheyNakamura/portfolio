@@ -717,8 +717,8 @@ work("kinoshita-tamako-blooming", {
 work("relattice-compilation", {
   "category": "self",
   "date": "2026.04.26",
-  "featured": true,
-  "hidden": false,
+  "featured": false,
+  "hidden": true,
   "tags": "Relattice, Compilation, Saku",
   "url": "https://relattice.bandcamp.com/album/relattice",
   "image": "images/relattice.jpg",
@@ -760,7 +760,7 @@ work("nhk-mitateru-autumn-sp", {
   "titleEn": "NHK E-tele<br>“Mitateru-phose” Autumn Special",
   "desc": "NHK Eテレ「みたてるふぉーぜ 秋SP」の効果音を担当しました。身の回りのものを別のものに見立てる番組の、30分のスペシャルです。",
   "descEn": "Created sound effects for the autumn special of NHK E-tele’s “Mitateru-phose,” a 30-minute program that invites viewers to imagine everyday objects as something else.",
-  "credits": "効果音：中村燎平<br>音楽：米田望<br>音楽プロデューサー：松尾謙二郎",
+  "credits": "効果音：Ryohey Nakamura<br>音楽：米田望<br>音楽プロデューサー：松尾謙二郎",
   "creditsEn": "Sound Effects: Ryohey Nakamura<br>Music: 米田望<br>Music Producer: 松尾謙二郎"
 });
 
@@ -775,6 +775,6 @@ work("nhk-mitateru-winter-sp", {
   "titleEn": "NHK E-tele<br>“Mitateru-phose” Winter Special",
   "desc": "NHK Eテレ「みたてるふぉーぜ 冬SP」の効果音を担当しました。「冬さがそーぜ」「いろどろーぜ」など、身近なものから見立ての世界を広げる30分のスペシャルです。",
   "descEn": "Created sound effects for the winter special of NHK E-tele’s “Mitateru-phose,” a 30-minute program exploring imaginative ways of seeing everyday objects.",
-  "credits": "効果音：中村燎平<br>音楽：米田望<br>音楽プロデューサー：松尾謙二郎",
+  "credits": "効果音：Ryohey Nakamura<br>音楽：米田望<br>音楽プロデューサー：松尾謙二郎",
   "creditsEn": "Sound Effects: Ryohey Nakamura<br>Music: 米田望<br>Music Producer: 松尾謙二郎"
 });

@@ -27,7 +27,9 @@ Images are official album/product artwork or published program stills, resized a
 
 ## Visibility
 
-- Listed: Re:, Blooming, Relattice, Mitateru winter.
-- Hidden from listings: Shining!! and Mitateru autumn. They remain accessible by their direct hash URLs, matching the existing hidden behavior.
-- Re: and Relattice are featured to represent current artist production and original music. The homepage continues to select the six newest featured works.
+- Listed: Re:, Blooming, Mitateru winter.
+- Hidden from listings: Relattice, Shining!! and Mitateru autumn. They remain accessible by their direct hash URLs, matching the existing hidden behavior.
+- Re: is featured. Relattice was removed from featured and hidden at the artist’s request because it is already covered in News. The homepage continues to select the six newest featured works.
 - Existing entries are unchanged. Shining!! overlaps the newer Tamako Kinoshita releases; autumn overlaps winter, so those two additions are kept off the listing.
+
+- Artist-approved display credit: Ryohey Nakamura in both languages, including the two Mitateru pages. Source pages may use kanji.
