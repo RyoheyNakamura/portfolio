@@ -907,8 +907,66 @@ work('artificial-aesthetics-01', {
   url: 'https://music.apple.com/jp/album/1851378267',
   title: 'Artificial Aesthetics 01<br>“reconstruction”',
   titleEn: 'Artificial Aesthetics 01<br>“reconstruction”',
-  desc: 'Neo Ikuta、無來、Ryohey Nakamuraの共同名義による、全3曲収録のリリース「Artificial Aesthetics 01 “reconstruction”」に参加しました。',
-  descEn: 'Participated in Artificial Aesthetics 01 “reconstruction”, a three-track release credited jointly to Neo Ikuta, Nakuru and Ryohey Nakamura.',
-  credits: 'Artists : Neo Ikuta / 無來 / Ryohey Nakamura',
-  creditsEn: 'Artists : Neo Ikuta / Nakuru / Ryohey Nakamura',
+  desc: 'Neo IkutaのConcept EP「Artificial Aesthetics 01 “reconstruction”」に参加し、M1「浸水（Reconstruction Edit）」の編曲を担当しました。',
+  descEn: 'Arranged track 1, “Inundation (Reconstruction Edit)”, for Neo Ikuta’s concept EP Artificial Aesthetics 01 “reconstruction”.',
+  youtube: ['mfCDwIHTXpo'],
+  credits: 'Artists : Neo Ikuta / 無來 / Ryohey Nakamura<br>Arrangement (M1「浸水 / Reconstruction Edit」) : Ryohey Nakamura',
+  creditsEn: 'Artists : Neo Ikuta / Nakuru / Ryohey Nakamura<br>Arrangement (M1 “Inundation / Reconstruction Edit”) : Ryohey Nakamura',
+});
+
+
+work('riddle-valorant-2025', {
+  category: 'client',
+  featured: false,
+  date: '2024.11.12',
+  tags: 'WebMovie, RIDDLE ORDER, VALORANT',
+  youtube: ['bdk-xAlJ6e8'],
+  title: 'RIDDLE ORDER<br>2025 VALORANT ROSTER PV「NEW CHAPTER」',
+  titleEn: 'RIDDLE ORDER<br>2025 VALORANT Roster Film “NEW CHAPTER”',
+  desc: 'RIDDLE ORDERの2025 VALORANT ROSTER PV「NEW CHAPTER」の音楽を担当しました。2024年11月に公開された、新体制を紹介する映像です。',
+  descEn: 'Created the music for RIDDLE ORDER’s 2025 VALORANT roster film, “NEW CHAPTER”, released in November 2024 to introduce the new lineup.',
+  credits: 'Music : Ryohey Nakamura',
+});
+
+work('riddle-unleash-the-beast', {
+  category: 'client',
+  featured: false,
+  date: '2024.06.03',
+  tags: 'WebMovie, RIDDLE ORDER',
+  image: 'images/riddle-unleash.jpg',
+  url: 'https://x.com/RIDDLEORDER/status/1797554916397121827',
+  title: 'RIDDLE ORDER<br>“Unleash The Beast.”',
+  titleEn: 'RIDDLE ORDER<br>“Unleash The Beast.”',
+  desc: 'RIDDLE ORDERの映像「Unleash The Beast.」の音楽・効果音を担当しました。',
+  descEn: 'Created the music and sound effects for RIDDLE ORDER’s film “Unleash The Beast.”',
+  credits: 'Director / Screenplay / Editor : Sqkurq<br>Music / Sound Effects : Ryohey Nakamura',
+});
+
+work('natsuga-teruyama-momiji', {
+  category: 'self',
+  featured: false,
+  date: '2025.03.01',
+  tags: 'Collaboration, 照山紅葉',
+  youtube: ['vxI9rkxiyMw'],
+  title: '照山紅葉<br>「夏が」',
+  titleEn: 'Teruyama Momiji<br>“Natsu ga”',
+  desc: '照山紅葉との共同制作楽曲「夏が」。音楽を共同で制作しました。',
+  descEn: 'Co-created the music for “Natsu ga” with Teruyama Momiji.',
+  credits: 'Music : Ryohey Nakamura / 照山紅葉<br>Video : ちゃん / 照山紅葉',
+  creditsEn: 'Music : Ryohey Nakamura / Teruyama Momiji<br>Video : Chan / Teruyama Momiji',
+});
+
+work('rasen-misora-asahina', {
+  category: 'produce',
+  featured: false,
+  date: '2026.06.10',
+  tags: 'Arrangement, Mix, 朝比奈御空',
+  youtube: ['Oepmq3uqX_o'],
+  url: 'https://www.youtube.com/watch?v=o5-eBGdLweg',
+  title: '朝比奈御空<br>「螺旋」「螺旋（Re-recording）」',
+  titleEn: 'Misora Asahina<br>“Rasen” / “Rasen (Re-recording)”',
+  desc: '朝比奈御空の「螺旋」の編曲・ミックスを担当しました。2023年のコンピレーションアルバム「かたち」収録版と、2026年の1st EP「インクの海で夢を見ていた」収録の再録版「螺旋（Re-recording）」を紹介しています。ページ内の動画は2023年版です。再録版は外部リンクからお聴きいただけます。',
+  descEn: 'Arranged and mixed “Rasen” by Misora Asahina. This page presents the 2023 version from the compilation Katachi and “Rasen (Re-recording)” from the 2026 debut EP Inku no Umi de Yume wo Miteita. The embedded video is the 2023 version; the external link opens the re-recording.',
+  credits: '「螺旋」（2023 / かたち）<br>Artist : 朝比奈御空<br>Arrangement / Mix : Ryohey Nakamura<br><br>「螺旋（Re-recording）」（2026 / インクの海で夢を見ていた M3）<br>Lyrics / Music : 朝比奈御空<br>Arrangement / Mix : Ryohey Nakamura',
+  creditsEn: '“Rasen” (2023 / Katachi)<br>Artist : Misora Asahina<br>Arrangement / Mix : Ryohey Nakamura<br><br>“Rasen (Re-recording)” (2026 / Inku no Umi de Yume wo Miteita, Track 3)<br>Lyrics / Music : Misora Asahina<br>Arrangement / Mix : Ryohey Nakamura',
 });
