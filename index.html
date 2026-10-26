@@ -2483,7 +2483,6 @@
     const initHash = location.hash.slice(1);
     if (initHash && WORKS.find(x => x.id === initHash)) openWork(initHash);
     else if (initHash === 'works') openWorks();
-    else if (initHash.startsWith('news-') && typeof NEWS !== 'undefined' && NEWS.find(x => x.id === initHash)) openNews(initHash);
   </script>
 
   <!-- News -->
@@ -2620,6 +2619,7 @@
     document.getElementById('news-back').addEventListener('click', () => closeNews());
 
     buildNewsList();
+    if (initHash.startsWith('news-') && typeof NEWS !== 'undefined' && NEWS.find(x => x.id === initHash)) openNews(initHash);
   </script>
 
   <!-- Filter -->
