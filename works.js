@@ -672,3 +672,109 @@ work('kinoshita-tamako-soda-no-mahou', {
 //   credits:    '',
 //   creditsEn:  '',
 // })
+
+// ============================================================
+//  2026-10-27 additions — public credits and assets: images/works-sources-20261027.md
+// ============================================================
+
+work("kinoshita-tamako-re", {
+  "category": "produce",
+  "date": "2026.10.25",
+  "featured": true,
+  "hidden": false,
+  "tags": "木下珠子, Album",
+  "youtube": [
+    "mf-W5UaDeNw"
+  ],
+  "url": "https://booth.pm/ja/items/8977824",
+  "image": "images/kinoshita-tamako-re.jpg",
+  "title": "木下珠子<br>4th Album「Re:」",
+  "titleEn": "Tamako Kinoshita<br>4th Album “Re:”",
+  "desc": "木下珠子さんの4th Album「Re:」に収録された「芽吹きの言葉」の作曲・編曲と、表題曲「Re:」の編曲を担当しました。",
+  "descEn": "Composed and arranged “Mebuki no Kotoba” and arranged the title track “Re:” for Tamako Kinoshita’s fourth album.",
+  "credits": "「芽吹きの言葉」作曲・編曲：Ryohey Nakamura<br>「芽吹きの言葉」作詞：久遠真雪<br>「Re:」編曲：Ryohey Nakamura<br>「Re:」作詞・作曲：木下珠子",
+  "creditsEn": "“Mebuki no Kotoba” — Composition & Arrangement: Ryohey Nakamura<br>“Mebuki no Kotoba” — Lyrics: 久遠真雪<br>“Re:” — Arrangement: Ryohey Nakamura<br>“Re:” — Lyrics & Composition: Tamako Kinoshita"
+});
+
+work("kinoshita-tamako-blooming", {
+  "category": "produce",
+  "date": "2025.11.08",
+  "hidden": false,
+  "tags": "木下珠子, Album",
+  "youtube": [
+    "eMsnkwwO3Fs"
+  ],
+  "url": "https://linkco.re/ENN68BQx",
+  "image": "images/kinoshita-tamako-blooming.jpg",
+  "title": "木下珠子<br>3rd Album「Blooming」",
+  "titleEn": "Tamako Kinoshita<br>3rd Album “Blooming”",
+  "desc": "木下珠子さんの3rd Album「Blooming」に収録された「リリィ・ライト」の作詞・作曲・編曲と、表題曲「Blooming」の作曲・編曲を担当しました。",
+  "descEn": "Wrote the lyrics, composed and arranged “Lily Light,” and composed and arranged the title track for Tamako Kinoshita’s third album, “Blooming.”",
+  "credits": "「リリィ・ライト」作詞・作曲・編曲：Ryohey Nakamura<br>「Blooming」作曲・編曲：Ryohey Nakamura<br>「Blooming」作詞：木下珠子",
+  "creditsEn": "“Lily Light” — Lyrics, Composition & Arrangement: Ryohey Nakamura<br>“Blooming” — Composition & Arrangement: Ryohey Nakamura<br>“Blooming” — Lyrics: Tamako Kinoshita"
+});
+
+work("relattice-compilation", {
+  "category": "self",
+  "date": "2026.04.26",
+  "featured": true,
+  "hidden": false,
+  "tags": "Relattice, Compilation, Saku",
+  "url": "https://relattice.bandcamp.com/album/relattice",
+  "image": "images/relattice.jpg",
+  "bandcamp": "<iframe style=\"border: 0; width: 100%; height: 120px;\" src=\"https://bandcamp.com/EmbeddedPlayer/track=807563539/size=large/bgcol=ffffff/linkcol=0687f5/artwork=small/tracklist=false/transparent=true/\" title=\"Ryohey Nakamura — PURE\" seamless></iframe><iframe style=\"border: 0; width: 100%; height: 120px;\" src=\"https://bandcamp.com/EmbeddedPlayer/track=1814914475/size=large/bgcol=ffffff/linkcol=0687f5/artwork=small/tracklist=false/transparent=true/\" title=\"Saku, Ryohey Nakamura — Key Point\" seamless></iframe>",
+  "title": "Relattice<br>「PURE」「キーポイント」",
+  "titleEn": "Relattice<br>“PURE” / “Key Point”",
+  "desc": "コンピレーションアルバム「Relattice」に、本人名義の「PURE」と、Sakuとの共作「キーポイント」の2曲を提供しました。",
+  "descEn": "Contributed “PURE” under my own name and “Key Point,” a collaboration with Saku, to the compilation album “Relattice.”",
+  "credits": "Tr.02「PURE」：Ryohey Nakamura<br>Tr.12「キーポイント」：Saku, Ryohey Nakamura",
+  "creditsEn": "Tr.02 “PURE”: Ryohey Nakamura<br>Tr.12 “Key Point”: Saku, Ryohey Nakamura"
+});
+
+work("kinoshita-tamako-shining", {
+  "category": "produce",
+  "date": "2024.10.27",
+  "hidden": true,
+  "tags": "木下珠子, Album",
+  "youtube": [
+    "zF7M1pdMpnM"
+  ],
+  "url": "https://linkco.re/ap8QH0h1",
+  "image": "images/kinoshita-tamako-beyond.jpg",
+  "title": "木下珠子<br>2nd Album「Beyond」収録曲「Shining!!」",
+  "titleEn": "Tamako Kinoshita<br>“Shining!!” from “Beyond”",
+  "desc": "木下珠子さんの2nd Album「Beyond」に収録された「Shining!!」の作曲・編曲を担当しました。",
+  "descEn": "Composed and arranged “Shining!!” for Tamako Kinoshita’s second album, “Beyond.”",
+  "credits": "作曲・編曲：Ryohey Nakamura<br>作詞・歌唱：木下珠子",
+  "creditsEn": "Composition & Arrangement: Ryohey Nakamura<br>Lyrics & Vocals: Tamako Kinoshita"
+});
+
+work("nhk-mitateru-autumn-sp", {
+  "category": "client",
+  "date": "2024.10.14",
+  "hidden": true,
+  "tags": "NHK, Eテレ, 効果音",
+  "url": "https://invisi.jp/works/mitateru-fsp-2",
+  "image": "images/mitateru-autumn-sp.jpg",
+  "title": "NHK Eテレ<br>「みたてるふぉーぜ 秋SP」",
+  "titleEn": "NHK E-tele<br>“Mitateru-phose” Autumn Special",
+  "desc": "NHK Eテレ「みたてるふぉーぜ 秋SP」の効果音を担当しました。身の回りのものを別のものに見立てる番組の、30分のスペシャルです。",
+  "descEn": "Created sound effects for the autumn special of NHK E-tele’s “Mitateru-phose,” a 30-minute program that invites viewers to imagine everyday objects as something else.",
+  "credits": "効果音：中村燎平<br>音楽：米田望<br>音楽プロデューサー：松尾謙二郎",
+  "creditsEn": "Sound Effects: Ryohey Nakamura<br>Music: 米田望<br>Music Producer: 松尾謙二郎"
+});
+
+work("nhk-mitateru-winter-sp", {
+  "category": "client",
+  "date": "2025.02.11",
+  "hidden": false,
+  "tags": "NHK, Eテレ, 効果音",
+  "url": "https://invisi.jp/works/nhketv-mitateru-wsp",
+  "image": "images/mitateru-winter-sp.jpg",
+  "title": "NHK Eテレ<br>「みたてるふぉーぜ 冬SP」",
+  "titleEn": "NHK E-tele<br>“Mitateru-phose” Winter Special",
+  "desc": "NHK Eテレ「みたてるふぉーぜ 冬SP」の効果音を担当しました。「冬さがそーぜ」「いろどろーぜ」など、身近なものから見立ての世界を広げる30分のスペシャルです。",
+  "descEn": "Created sound effects for the winter special of NHK E-tele’s “Mitateru-phose,” a 30-minute program exploring imaginative ways of seeing everyday objects.",
+  "credits": "効果音：中村燎平<br>音楽：米田望<br>音楽プロデューサー：松尾謙二郎",
+  "creditsEn": "Sound Effects: Ryohey Nakamura<br>Music: 米田望<br>Music Producer: 松尾謙二郎"
+});
