@@ -863,3 +863,52 @@ work("cygames-saga", {
   "credits": "Music Producer : Yuichi Nakamura<br>Music : Ryohey Nakamura",
   "creditsEn": "Music Producer : Yuichi Nakamura<br>Music : Ryohey Nakamura"
 });
+
+
+// Additional public credits verified 2026-10-27.
+work('planetshopper', {
+  category: 'client',
+  featured: false,
+  date: '2024.09.20',
+  tags: 'Installation, 佐賀県立宇宙科学館',
+  image: 'images/planetshopper.jpg',
+  vimeo: '943939796?h=09ac186dd0',
+  url: 'https://mtblanc.jp/works/7345/',
+  title: '佐賀県立宇宙科学館《ゆめぎんが》<br>プラネッツホッパー',
+  titleEn: 'Saga Prefectural Space & Science Museum<br>Planets Hopper',
+  desc: '佐賀県立宇宙科学館《ゆめぎんが》の体験型展示「プラネッツホッパー」の音楽を担当しました。床面スクリーンに映し出された太陽系の惑星を、ジャンプして巡る展示です。',
+  descEn: 'Composed music for Planets Hopper, an interactive exhibit at the Saga Prefectural Space & Science Museum. Visitors jump between planets in a solar system projected onto a floor screen.',
+  credits: 'Client : 佐賀県 / 乃村工藝社 / モンブラン・ピクチャーズ<br>Sound Designer : Yuichi Nakamura (invisi)<br>Composer : Ryohey Nakamura (invisi)',
+  creditsEn: 'Client : Saga Prefecture / NOMURA / MontBlanc Pictures<br>Sound Designer : Yuichi Nakamura (invisi)<br>Composer : Ryohey Nakamura (invisi)',
+});
+
+work('current-compilation', {
+  category: 'self',
+  featured: false,
+  date: '2025.10.26',
+  tags: 'Compilation, 隙間産業大学',
+  image: 'images/current-compilation.jpg',
+  soundcloud: 'https://soundcloud.com/sui-fuji/current-xfd',
+  url: 'https://sukimadaigaku.booth.pm/items/7589715',
+  title: 'Current<br>「Fallen Leaves Steps」',
+  titleEn: 'Current<br>“Fallen Leaves Steps”',
+  desc: '隙間産業大学のコンピレーションアルバム「Current」に、楽曲「Fallen Leaves Steps」で参加しました。2025年秋のM3で頒布。収録曲は8曲目です。',
+  descEn: 'Contributed “Fallen Leaves Steps” to Current, a compilation album by Sukima Sangyo Daigaku, released at M3 Autumn 2025. The track appears as number 8.',
+  credits: 'Track 08 : Fallen Leaves Steps — Ryohey Nakamura<br>Label : 隙間産業大学',
+  creditsEn: 'Track 08 : Fallen Leaves Steps — Ryohey Nakamura<br>Label : Sukima Sangyo Daigaku',
+});
+
+work('artificial-aesthetics-01', {
+  category: 'self',
+  featured: false,
+  date: '2025.10.26',
+  tags: 'Collaboration, Release',
+  image: 'images/artificial-aesthetics-01.jpg',
+  url: 'https://music.apple.com/jp/album/1851378267',
+  title: 'Artificial Aesthetics 01<br>“reconstruction”',
+  titleEn: 'Artificial Aesthetics 01<br>“reconstruction”',
+  desc: 'Neo Ikuta、無來、Ryohey Nakamuraの共同名義による、全3曲収録のリリース「Artificial Aesthetics 01 “reconstruction”」に参加しました。',
+  descEn: 'Participated in Artificial Aesthetics 01 “reconstruction”, a three-track release credited jointly to Neo Ikuta, Nakuru and Ryohey Nakamura.',
+  credits: 'Artists : Neo Ikuta / 無來 / Ryohey Nakamura',
+  creditsEn: 'Artists : Neo Ikuta / Nakuru / Ryohey Nakamura',
+});
