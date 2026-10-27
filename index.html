@@ -388,40 +388,6 @@
       opacity: 0; transition: opacity 0.2s;
     }
     .card-thumb > img.is-loaded { opacity: 1; }
-    .card-sleeve {
-      position: absolute; inset: 0; overflow: hidden;
-      display: flex; flex-direction: column; justify-content: space-between;
-      padding: clamp(16px, 2vw, 26px); text-align: left;
-      background: #22231f; color: #ffd559;
-      text-transform: none; letter-spacing: normal;
-    }
-    .card-sleeve[hidden] { display: none; }
-    .card-sleeve::before {
-      content: ''; position: absolute; width: 72%; aspect-ratio: 1;
-      right: -24%; top: -18%; border: 1px solid currentColor;
-      border-radius: 50%; opacity: .22;
-      box-shadow: 0 0 0 16px #22231f, 0 0 0 17px currentColor,
-                  0 0 0 33px #22231f, 0 0 0 34px currentColor;
-    }
-    .card-sleeve.variant-1 { background: #ffd559; color: #22231f; }
-    .card-sleeve.variant-1::before {
-      border-radius: 0; transform: rotate(-25deg); top: -45%;
-      box-shadow: 0 0 0 16px #ffd559, 0 0 0 17px currentColor,
-                  0 0 0 33px #ffd559, 0 0 0 34px currentColor;
-    }
-    .card-sleeve.variant-2 { background: #ece8df; color: #272821; }
-    .card-sleeve.variant-2::before {
-      top: 10%; box-shadow: 0 0 0 16px #ece8df, 0 0 0 17px currentColor,
-                            0 0 0 33px #ece8df, 0 0 0 34px currentColor;
-    }
-    .card-sleeve-meta, .card-sleeve-title, .card-sleeve-signature { position: relative; }
-    .card-sleeve-meta { font-size: 9px; letter-spacing: .12em; text-transform: uppercase; }
-    .card-sleeve-title {
-      font-size: clamp(18px, 2vw, 27px); font-weight: 600; line-height: 1.12;
-      letter-spacing: -.035em; max-width: 90%; overflow-wrap: anywhere;
-      display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 3; overflow: hidden;
-    }
-    .card-sleeve-signature { font-size: 9px; letter-spacing: .02em; opacity: .8; }
     @media (prefers-reduced-motion: reduce) { .card-thumb > img { transition: none; } }
 
 
@@ -1497,7 +1463,7 @@
   </style>
 <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;1,400&family=Urbanist:wght@400;500&display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="site.css?v=20261027">
+<link rel="stylesheet" href="site.css?v=20261027-sleeves">
 <noscript><style>header.on-opening{opacity:1;visibility:visible;pointer-events:auto}</style></noscript>
 </head>
 <body>
@@ -2215,7 +2181,20 @@
           ['card-sleeve-signature', 'Ryohey Nakamura']
         ]) {
           const line = document.createElement('span');
-          line.className = className; line.textContent = text; sleeve.appendChild(line);
+          line.className = className;
+          if (className === 'card-sleeve-title' && text.length <= 48 &&
+              text.trim().split(/\s+/).every(word => word.length <= 18)) {
+            // Keep words readable while echoing the opening's loosely set type.
+            text.trim().split(/\s+/).forEach((word, index) => {
+              if (index) line.appendChild(document.createTextNode(' '));
+              const part = document.createElement('span');
+              part.className = 'card-sleeve-word'; part.textContent = word;
+              line.appendChild(part);
+            });
+          } else {
+            line.textContent = text;
+          }
+          sleeve.appendChild(line);
         }
         thumbBox.prepend(sleeve);
         const cover = thumbBox.querySelector('img');
