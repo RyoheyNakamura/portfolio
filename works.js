@@ -252,6 +252,7 @@ work('meiji-kajuugumi', {
 
   credits:   'Producer : Masayuki Noda, Ryohey Nakamura<br>CM Arrangement : Ryohey Nakamura<br>CM Lyrics : Masayuki Noda<br>Recording & Mixing Engineer : Shinya Unoh (ODEN STUDIO)',
   creditsEn: '',
+  thumbnail: 'images/meiji-kajuugumi.png',
 })
 
 work('valorant-gc-2024', {

@@ -381,6 +381,50 @@
 
     .card-thumb img { width: 100%; height: 100%; object-fit: cover; }
 
+    /* A small typographic sleeve remains visible until real artwork loads. */
+    .card-thumb { position: relative; isolation: isolate; }
+    .card-thumb > img {
+      position: absolute; inset: 0; z-index: 1;
+      opacity: 0; transition: opacity 0.2s;
+    }
+    .card-thumb > img.is-loaded { opacity: 1; }
+    .card-sleeve {
+      position: absolute; inset: 0; overflow: hidden;
+      display: flex; flex-direction: column; justify-content: space-between;
+      padding: clamp(16px, 2vw, 26px); text-align: left;
+      background: #22231f; color: #ffd559;
+      text-transform: none; letter-spacing: normal;
+    }
+    .card-sleeve[hidden] { display: none; }
+    .card-sleeve::before {
+      content: ''; position: absolute; width: 72%; aspect-ratio: 1;
+      right: -24%; top: -18%; border: 1px solid currentColor;
+      border-radius: 50%; opacity: .22;
+      box-shadow: 0 0 0 16px #22231f, 0 0 0 17px currentColor,
+                  0 0 0 33px #22231f, 0 0 0 34px currentColor;
+    }
+    .card-sleeve.variant-1 { background: #ffd559; color: #22231f; }
+    .card-sleeve.variant-1::before {
+      border-radius: 0; transform: rotate(-25deg); top: -45%;
+      box-shadow: 0 0 0 16px #ffd559, 0 0 0 17px currentColor,
+                  0 0 0 33px #ffd559, 0 0 0 34px currentColor;
+    }
+    .card-sleeve.variant-2 { background: #ece8df; color: #272821; }
+    .card-sleeve.variant-2::before {
+      top: 10%; box-shadow: 0 0 0 16px #ece8df, 0 0 0 17px currentColor,
+                            0 0 0 33px #ece8df, 0 0 0 34px currentColor;
+    }
+    .card-sleeve-meta, .card-sleeve-title, .card-sleeve-signature { position: relative; }
+    .card-sleeve-meta { font-size: 9px; letter-spacing: .12em; text-transform: uppercase; }
+    .card-sleeve-title {
+      font-size: clamp(18px, 2vw, 27px); font-weight: 600; line-height: 1.12;
+      letter-spacing: -.035em; max-width: 90%; overflow-wrap: anywhere;
+      display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 3; overflow: hidden;
+    }
+    .card-sleeve-signature { font-size: 9px; letter-spacing: .02em; opacity: .8; }
+    @media (prefers-reduced-motion: reduce) { .card-thumb > img { transition: none; } }
+
+
     /* サムネ以下のテキスト領域（サムネはカードにフル幅で接する） */
     .card-body {
       display: flex;
@@ -1698,7 +1742,7 @@
   </div>
 
   <script src="news.js?v=20261026"></script>
-  <script src="works.js?v=20261027g"></script>
+  <script src="works.js?v=20261027h"></script>
 
   <!-- スクロールで各要素をふわっと出す -->
   <script>
@@ -2125,7 +2169,7 @@
                     : w.vimeo      ? `<img class="js-vimeo-thumb" alt="">`
                     : w.soundcloud ? `<img class="js-sc-thumb" alt="">`
                     : w.spotify    ? `<img class="js-sp-thumb" alt="">`
-                    :                 'No Image';
+                    :                 '';
         const el = document.createElement('a');
         el.className = 'card reveal';
         if (withWorkId) el.dataset.workId = w.id;
@@ -2146,6 +2190,37 @@
           </div>
         `;
         el.addEventListener('click', e => { e.preventDefault(); openWork(w.id); });
+        const thumbBox = el.querySelector('.card-thumb');
+        const sleeve = document.createElement('div');
+        const seed = [...w.id].reduce((sum, char) => sum + char.charCodeAt(0), 0);
+        sleeve.className = 'card-sleeve variant-' + (seed % 3);
+        sleeve.setAttribute('aria-hidden', 'true');
+        const titleText = document.createElement('span');
+        titleText.innerHTML = wt(w, 'title').replace(/<br\s*\/?\s*>/gi, ' ');
+        for (const [className, text] of [
+          ['card-sleeve-meta', (CATEGORY_LABEL[w.category] || w.category) + ' / ' + year],
+          ['card-sleeve-title', titleText.textContent],
+          ['card-sleeve-signature', 'Ryohey Nakamura']
+        ]) {
+          const line = document.createElement('span');
+          line.className = className; line.textContent = text; sleeve.appendChild(line);
+        }
+        thumbBox.prepend(sleeve);
+        const cover = thumbBox.querySelector('img');
+        if (cover) {
+          const showCover = () => {
+            // YouTube returns a 120px placeholder for unavailable videos with HTTP 200.
+            const isPlaceholder = yt0 && !w.thumbnail && cover.naturalWidth <= 120;
+            const loaded = cover.naturalWidth > 0 && !isPlaceholder;
+            cover.classList.toggle('is-loaded', loaded);
+            sleeve.hidden = loaded;
+          };
+          cover.addEventListener('load', showCover);
+          cover.addEventListener('error', () => {
+            cover.classList.remove('is-loaded'); sleeve.hidden = false;
+          });
+          if (cover.complete) showCover();
+        }
         grid.appendChild(el);
         if (w.vimeo && !w.thumbnail && !yt0 && !w.image) {
           const img = el.querySelector('.js-vimeo-thumb');
