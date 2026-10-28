@@ -22,10 +22,12 @@
 - `#news-detail-view` — ニュース詳細
 - ビュー切替: `hidden` 属性 + opacity アニメーション
 - ナビリンク: トップのオープニング中は非表示。本文の上端がヘッダー下端に届くとフェード表示し、戻る時もフェードする。その他のビューでは常設。非表示中は inert / aria-hidden。
-  どのビューからでも `goMain(sel)` で main へ戻り当該セクションへ送る。⚠ `main-view` を出した直後は
-  レイアウトが古く scroll が clamp されるので `getBoundingClientRect()` で強制リフローしてから `scrollTo`。
-  ⚠ `goMain` はフェードしない（rAF が来ないと白紙で固まる）。⚠ 220ms のビュー切替は `viewTimer` で
-  取り消せる＋`away` の判定に `location.hash` を含める（`pushState` は 220ms を待たず先に走るため）
+  ヘッダーの `goMain(sel)` はトップ内の該当セクションへ移動する。Worksだけ全件一覧へ変更しない（2026-10-28本人判断）。
+- `navigateRoute()` が4ビューの切替・埋め込み停止・瞬時スクロール・フォーカスを管理する。出る側をフェード→`viewTimer`で220ms（関連作品間180ms）→全ビューを隠して対象だけ表示→位置復元→`fadeIn()`。
+- 各history entryにview/scrollY/filter/returnTo/focusSelectorを保持。初期URLは`replaceState`、通常遷移は`pushState`、popstateはURLとstateを照合して復元する。初期表示で同じURLをpushしない。
+- スクロール位置はメモリへ即時保存し、historyへの書込みは120ms debounce。`scrollRestoration='manual'`、位置復元は必ず`instant`。表示前にリフローし、focusは`preventScroll:true`。
+- 本文のopen/closeは`changingView`中の重複操作を抑止。ヘッダーナビとpopstateは予約をキャンセルして移動可能。
+- News行は`li > a.news-item`。通常クリック/EnterのみSPA処理し、修飾クリック・中クリック・リンクコピーはブラウザ標準に任せる。
 
 ## 主要な設計メモ
 - オープニング: 白に近い背景、Music & SoundとSVG目玉焼き、隙間を縫うDM Sans 300の名前。本文が上から覆う。
@@ -33,7 +35,7 @@
 - 作品カード: サムネのホバー/フォーカスによる拡大・回転なし。一覧は段差なし。
 - 作品詳細: メディア・説明・クレジットを中央800px内の縦積みにし、More Worksには左右余白を確保。
 - Clients: About内の正式な組織名9件と「ほか / and more」。調査記録はVault、公開ファイルに私有資料URLを含めない。
-- 作品詳細の戻る先: `prevView`（'main' or 'works'）で分岐
+- 作品詳細の戻る先: routeの`returnTo`で元の位置・フィルタへ復帰（関連作品間でも保持）。直リンクの戻り先がない場合はトップWorks/Newsへ。`prevView`は作品の戻るラベルに使用。
 - 言語切替: `i18n` オブジェクト + `data-i18n` 属性 + `setLang()`
 - 作品テキスト（title/desc）は works.js の `title/titleEn/desc/descEn` フィールドで管理（i18nには持たない）
 

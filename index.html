@@ -789,6 +789,8 @@
       margin: 0;
     }
     .news-item {
+      color: inherit;
+      text-decoration: none;
       display: flex;
       align-items: center;
       gap: 16px;
@@ -797,7 +799,7 @@
       cursor: pointer;
       transition: opacity 0.2s;
     }
-    .news-item:first-child { border-top: 1px solid var(--border); }
+    .news-list > li:first-child .news-item { border-top: 1px solid var(--border); }
     .news-item:hover { opacity: 0.55; }
     .news-item-date {
       font-size: 11px;
@@ -1463,7 +1465,7 @@
   </style>
 <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;1,400&family=Urbanist:wght@400;500&display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="site.css?v=20261027-sleeves">
+<link rel="stylesheet" href="site.css?v=20261028-navigation">
 <noscript><style>header.on-opening{opacity:1;visibility:visible;pointer-events:auto}</style></noscript>
 </head>
 <body>
@@ -1833,7 +1835,7 @@
         related_title:            "More Works",
         works_cta:                "すべての作品を見る",
         works_back:               "ホームへ",
-        news_back:                "ホームへ",
+        news_back:                "Newsへ",
         nl_lead:            "新作のリリースと、制作について考えていることを、数か月に一度お送りします。",
         nl_placeholder:     "メールアドレス",
         nl_submit:          "登録する",
@@ -1879,7 +1881,7 @@
         related_title:            "More Works",
         works_cta:                "View All Works",
         works_back:               "Home",
-        news_back:                "Home",
+        news_back:                "News",
         nl_lead:            "New releases, and notes on what I have been thinking about while making things — a few times a year.",
         nl_placeholder:     "Email address",
         nl_submit:          "Subscribe",
@@ -2127,6 +2129,7 @@
     function applyFilter() {
       document.querySelectorAll('#works-view .filter-btn').forEach(button => {
         button.setAttribute('aria-pressed', String(button.dataset.filter === currentFilter));
+        button.classList.toggle('active', button.dataset.filter === currentFilter);
       });
       document.querySelectorAll('#works-view .card').forEach(c => {
         c.classList.toggle('hidden', currentFilter !== 'all' && c.dataset.category !== currentFilter);
@@ -2304,165 +2307,196 @@
       renderRelated(w);
     }
 
-    // 進行中のビュー切替（220ms）。ナビはどのビューでも押せるので、
-    // 切替の途中で押されると後から発火したコールバックが main-view を隠し返す
+    // Each history entry owns its scroll position, filter and return destination.
     let viewTimer = null;
+    let positionTimer = null;
+    let routeSequence = 0;
+    let currentRoute = null;
+    let changingView = false;
+    const routePositions = new Map();
+    const viewIds = { main: 'main-view', works: 'works-view', work: 'detail-view', news: 'news-detail-view' };
 
-    // ビュー切替の予約は必ずここを通す。前の予約を取り消さないと、隠れたビューに
-    // 埋め込みを作り直して裏で再生が残る
     function schedule(fn, ms) {
       clearTimeout(viewTimer);
       viewTimer = setTimeout(fn, ms);
     }
 
-    // hidden を外した直後はまだ旧レイアウトのままで scroll が効かない。
-    // getBoundingClientRect の参照で強制リフローを起こしてから飛ばす（closeWorks と同じ罠）
     function scrollToSection(sel, behavior) {
       const target = sel && document.querySelector(sel);
       const y = target ? target.getBoundingClientRect().top + window.scrollY - document.querySelector('header').getBoundingClientRect().height - 20 : 0;
-      window.scrollTo({ top: Math.max(0, y), behavior });
+      window.scrollTo({ top: Math.max(0, y), left: 0, behavior });
     }
 
-    // rAF はバックグラウンドタブで発火しない＝待つと opacity 0 のまま白紙で固まる。
-    // 強制リフローで遷移の起点を確定させる（同期なので必ず 1 に戻る）
+    // Do not wait for rAF: a background tab must not get stuck at opacity 0.
     function fadeIn(el) {
       el.style.opacity = '0';
       void el.offsetHeight;
       el.style.opacity = '1';
     }
 
-    // どのビューに居ても Main へ戻る。sel を渡すとそのセクションまで送る
-    function goMain(sel) {
+    function routeUrl(route) {
+      const hash = route.view === 'work' ? route.workId
+        : route.view === 'news' ? route.newsId
+        : route.view === 'works' ? 'works' : route.hash || '';
+      return location.pathname + location.search + (hash ? '#' + hash : '');
+    }
+
+    function routeFromLocation() {
+      const id = resolveWorkId(location.hash.slice(1));
+      if (WORKS.some(w => w.id === id)) return { view: 'work', workId: id, scrollY: 0 };
+      if (NEWS.some(n => n.id === id)) return { view: 'news', newsId: id, scrollY: 0 };
+      if (id === 'works') return { view: 'works', scrollY: 0 };
+      const section = ['news-section', 'commission', 'about', 'newsletter'].includes(id) ? '#' + id : null;
+      return { view: 'main', scrollY: section ? null : 0, section, hash: section ? id : '' };
+    }
+
+    function matchesRoute(a, b) {
+      return a?.portfolio === 1 && a.view === b.view && a.workId === b.workId && a.newsId === b.newsId
+        && (a.hash || '') === (b.hash || '');
+    }
+
+    function rememberRoute(persist = true) {
+      clearTimeout(positionTimer);
+      if (!currentRoute || changingView) return currentRoute;
+      currentRoute = { ...currentRoute, scrollY: window.scrollY, filter: currentFilter };
+      routePositions.set(currentRoute.entryId, currentRoute);
+      // During popstate, history already points at the destination entry.
+      if (persist && history.state?.entryId === currentRoute.entryId) {
+        history.replaceState(currentRoute, '', location.href);
+      }
+      return currentRoute;
+    }
+
+    function rememberOrigin(focusSelector) {
+      currentRoute = { ...currentRoute, focusSelector };
+      return rememberRoute();
+    }
+
+    function navigateRoute(route, { fromHistory = false, initial = false } = {}) {
+      if (!fromHistory) rememberRoute();
+      clearTimeout(positionTimer);
       clearTimeout(viewTimer);
-      const mainView       = document.getElementById('main-view');
-      const worksView      = document.getElementById('works-view');
-      const detailView     = document.getElementById('detail-view');
-      const newsDetailView = document.getElementById('news-detail-view');
-      // 切替の途中は main-view がまだ hidden=false だが、ハッシュは先に積まれている。
-      // URL も判定材料に入れないと #works のまま Main を出して、リロードで戻ってしまう
-      const away = mainView.hidden || !!location.hash;
-      // すでに Main に居るなら、その場でスクロールするだけ
-      if (!away) { scrollToSection(sel, 'smooth'); return; }
+      const next = {
+        scrollY: 0, filter: currentFilter, ...route, portfolio: 1,
+        entryId: fromHistory && route.entryId ? route.entryId : Date.now() + '-' + (++routeSequence)
+      };
+      const previousView = currentRoute?.view;
+      const outgoing = Object.values(viewIds).map(id => document.getElementById(id)).find(el => !el.hidden);
+      currentRoute = next;
+      changingView = true;
+      currentWorkId = next.view === 'work' ? next.workId : null;
+      currentNewsId = next.view === 'news' ? next.newsId : null;
+      prevView = next.returnTo?.view === 'works' ? 'works' : 'main';
+      history[fromHistory ? 'replaceState' : 'pushState'](next, '', routeUrl(next));
 
       const swap = () => {
-        // 埋め込みを両方止める（裏で再生が続くのを防ぐ）
         document.getElementById('wd-embed').innerHTML = '';
         document.getElementById('nd-embed').innerHTML = '';
-        [detailView, worksView, newsDetailView].forEach(v => { v.hidden = true; v.style.opacity = '0'; });
-        currentWorkId = null;
-        if (typeof currentNewsId !== 'undefined') currentNewsId = null;
-        // 出す前に 0 にしておく（全開で1フレーム映ってから沈むのを防ぐ）
-        mainView.style.opacity = '0';
-        mainView.hidden = false;
-        // 別ビューから来た時は飛ばす（全ページ分をスクロールさせない）
-        scrollToSection(sel, 'instant');
-        fadeIn(mainView);
-        history.pushState(null, '', location.pathname + location.search);
+        const incoming = document.getElementById(viewIds[next.view]);
+        Object.values(viewIds).forEach(id => {
+          const el = document.getElementById(id);
+          el.style.opacity = '0';
+          el.hidden = el !== incoming;
+        });
+        currentFilter = ['all', 'client', 'self', 'produce'].includes(next.filter) ? next.filter : 'all';
+        applyFilter();
+        if (next.view === 'work') {
+          renderDetail(next.workId);
+          const back = document.getElementById('work-back');
+          back.dataset.i18n = prevView === 'works' ? 'detail_back_works' : 'detail_back';
+          back.textContent = i18n[currentLang][back.dataset.i18n];
+        } else if (next.view === 'news') {
+          renderNewsDetail(next.newsId, currentLang);
+        }
+        // Lay out the revealed view before restoring a position from its previous visit.
+        void incoming.offsetHeight;
+        if (Number.isFinite(next.scrollY)) {
+          window.scrollTo({ top: next.scrollY, left: 0, behavior: 'instant' });
+        } else {
+          scrollToSection(next.section, 'instant');
+        }
+        const section = next.section && incoming.querySelector(next.section);
+        const focus = (next.focusSelector && incoming.querySelector(next.focusSelector))
+          || (section && section.querySelector('h1, h2'))
+          || (next.view === 'main' ? incoming : incoming.querySelector('h1, h2'));
+        if (focus && !initial) {
+          if (!focus.matches('a, button')) focus.setAttribute('tabindex', '-1');
+          focus.focus({ preventScroll: true });
+        }
+        fadeIn(incoming);
+        changingView = false;
+        rememberRoute();
       };
-
-      // 出ていく側をフェードアウトさせてから入れ替える（closeWork / closeWorks と同じリズム）。
-      // 切替の途中でフェードさせる相手が居ない時だけ、待たずに入れ替える
-      const fromView = [detailView, newsDetailView, worksView].find(v => !v.hidden);
-      if (!fromView) { swap(); return; }
-      fromView.style.opacity = '0';
-      schedule(swap, 220);
+      if (initial || !outgoing) swap();
+      else {
+        outgoing.style.opacity = '0';
+        schedule(swap, previousView === 'work' && next.view === 'work' ? 180 : 220);
+      }
     }
 
-    function openWorks(fromHistory) {
-      const mainView  = document.getElementById('main-view');
-      const worksView = document.getElementById('works-view');
-      mainView.style.opacity = '0';
-      schedule(() => {
-        mainView.hidden  = true;
-        worksView.hidden = false;
-        worksView.style.opacity = '0';
-        window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
-        fadeIn(worksView);
-      }, 220);
-      if (!fromHistory) history.pushState({ view: 'works' }, '', location.pathname + location.search + '#works');
-    }
-
-    function closeWorks(fromHistory) {
-      const mainView  = document.getElementById('main-view');
-      const worksView = document.getElementById('works-view');
-      worksView.style.opacity = '0';
-      schedule(() => {
-        worksView.hidden = true;
-        mainView.hidden  = false;
-        mainView.style.opacity = '0';
-        scrollToSection('#works', 'instant');
-        fadeIn(mainView);
-      }, 220);
-      // popstate 経由では push しない（進む履歴を消さないため。openWork の fromHistory と同じ形）
-      if (!fromHistory) history.pushState(null, '', location.pathname + location.search);
-    }
-
-    function openWork(id, fromHistory) {
-      id = resolveWorkId(id);
-      if (!WORKS.find(x => x.id === id)) return;
-      const worksView  = document.getElementById('works-view');
-      const mainView   = document.getElementById('main-view');
-      const detailView = document.getElementById('detail-view');
-
-      // 詳細→詳細（関連作品からの遷移）。戻り先は最初に入った所を保つ＝prevView は触らない
-      if (!detailView.hidden) {
-        clearTimeout(viewTimer);
-        currentWorkId = id;
-        document.getElementById('wd-embed').innerHTML = '';   // 前の作品の再生を即止める
-        detailView.style.opacity = '0';
-        schedule(() => {
-          renderDetail(id);
-          window.scrollTo({ top: 0, behavior: 'instant' });
-          fadeIn(detailView);
-        }, 180);
-        if (!fromHistory) history.pushState({ workId: id }, '', location.pathname + location.search + `#${id}`);
+    // Header navigation remains a jump to the corresponding section of Home.
+    function goMain(sel) {
+      if (currentRoute?.view === 'main' && !changingView) {
+        currentRoute = { ...currentRoute, section: sel, focusSelector: null };
+        scrollToSection(sel, 'smooth');
         return;
       }
-
-      currentWorkId = id;
-      renderDetail(id);
-      prevView = worksView.hidden ? 'main' : 'works';
-      const backBtn = document.getElementById('work-back');
-      backBtn.dataset.i18n = prevView === 'works' ? 'detail_back_works' : 'detail_back';
-      backBtn.textContent  = prevView === 'works'
-        ? (currentLang === 'en' ? 'Works' : '一覧へ')
-        : (currentLang === 'en' ? 'Home'  : 'ホームへ');
-      const fromView = prevView === 'works' ? worksView : mainView;
-      fromView.style.opacity = '0';
-      schedule(() => {
-        fromView.hidden = true;
-        detailView.hidden = false;
-        detailView.style.opacity = '0';
-        window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
-        fadeIn(detailView);
-      }, 220);
-      if (!fromHistory) history.pushState({ workId: id }, '', location.pathname + location.search + `#${id}`);
+      navigateRoute({ view: 'main', section: sel, scrollY: null });
     }
 
-    function closeWork(fromHistory) {
-      document.getElementById('wd-embed').innerHTML = '';
-      const mainView   = document.getElementById('main-view');
-      const worksView  = document.getElementById('works-view');
-      const detailView = document.getElementById('detail-view');
-      detailView.style.opacity = '0';
-      schedule(() => {
-        detailView.hidden = true;
-        if (prevView === 'works') {
-          worksView.hidden = false;
-          worksView.style.opacity = '0';
-          window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
-          fadeIn(worksView);
-          if (!fromHistory) history.pushState({ view: 'works' }, '', location.pathname + location.search + '#works');
-        } else {
-          mainView.hidden = false;
-          mainView.style.opacity = '0';
-          window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
-          fadeIn(mainView);
-          if (!fromHistory) history.pushState(null, '', location.pathname + location.search);
-        }
-      }, 220);
-      currentWorkId = null;
+    function openWorks() {
+      if (changingView) return;
+      const source = rememberOrigin('#works-cta-btn');
+      navigateRoute({ view: 'works', returnTo: source });
     }
+
+    function closeWorks() {
+      if (changingView) return;
+      navigateRoute(currentRoute.returnTo || { view: 'main', section: '#works', scrollY: null });
+    }
+
+    function openWork(id) {
+      if (changingView) return;
+      id = resolveWorkId(id);
+      if (!WORKS.some(w => w.id === id)) return;
+      const source = rememberOrigin('.card[data-work-id="' + id + '"]');
+      const returnTo = source?.view === 'work' ? source.returnTo : source;
+      navigateRoute({ view: 'work', workId: id, returnTo });
+    }
+
+    function closeWork() {
+      if (changingView) return;
+      navigateRoute(currentRoute.returnTo || { view: 'main', section: '#works', scrollY: null });
+    }
+
+    function openNews(id) {
+      if (changingView) return;
+      if (!NEWS.some(n => n.id === id)) return;
+      const source = rememberOrigin('.news-item[data-news-id="' + id + '"]');
+      const returnTo = source?.view === 'news' ? source.returnTo : source;
+      navigateRoute({ view: 'news', newsId: id, returnTo });
+    }
+
+    function closeNews() {
+      if (changingView) return;
+      navigateRoute(currentRoute.returnTo || { view: 'main', section: '#news-section', scrollY: null });
+    }
+
+    function restoreRouteFromLocation(initial = false) {
+      rememberRoute(false);
+      const parsed = routeFromLocation();
+      const saved = matchesRoute(history.state, parsed) ? history.state : parsed;
+      const next = routePositions.get(saved.entryId) || saved;
+      navigateRoute(next, { fromHistory: true, initial });
+    }
+
+    window.addEventListener('scroll', () => {
+      // Keep an immediate in-memory snapshot, but avoid a history write on every frame.
+      rememberRoute(false);
+      positionTimer = setTimeout(() => rememberRoute(), 120);
+    }, { passive: true });
+    window.addEventListener('pagehide', () => rememberRoute());
+    window.addEventListener('popstate', () => restoreRouteFromLocation());
 
 
     function buildPreviewCards() {
@@ -2509,28 +2543,6 @@
       });
     });
 
-    window.addEventListener('popstate', e => {
-      if (e.state?.workId) openWork(e.state.workId, true);
-      else if (e.state?.newsId) openNews(e.state.newsId, true);
-      else if (e.state?.view === 'works') {
-        if (currentWorkId) {
-          clearTimeout(viewTimer);
-          document.getElementById('wd-embed').innerHTML = '';
-          document.getElementById('detail-view').hidden = true;
-          const wv = document.getElementById('works-view');
-          wv.hidden = false; wv.style.opacity = '1';
-          currentWorkId = null;
-        } else if (document.getElementById('works-view').hidden) openWorks(true);
-      } else {
-        if (currentWorkId) closeWork(true);
-        else if (!document.getElementById('works-view').hidden) closeWorks(true);
-        else if (typeof currentNewsId !== 'undefined' && currentNewsId) closeNews(true);
-      }
-    });
-
-    const initHash = resolveWorkId(location.hash.slice(1));
-    if (initHash && WORKS.find(x => x.id === initHash)) openWork(initHash);
-    else if (initHash === 'works') openWorks();
   </script>
 
   <!-- News -->
@@ -2582,16 +2594,24 @@
       const labels = currentLang === 'en' ? NEWS_CATEGORY_LABEL_EN : NEWS_CATEGORY_LABEL;
       sorted.forEach(n => {
         const li = document.createElement('li');
-        li.className = 'news-item reveal';
+        const link = document.createElement('a');
+        link.className = 'news-item reveal';
+        link.href = location.pathname + location.search + '#' + n.id;
+        link.dataset.newsId = n.id;
         const title = currentLang === 'en' ? (n.titleEn || n.title) : n.title;
         const label = labels[n.category] || n.category;
-        li.innerHTML = `
+        link.innerHTML = `
           <span class="news-item-date">${n.date || ''}</span>
           <span class="news-item-cat">${label}</span>
           <span class="news-item-title">${title}</span>
           <span class="news-item-arrow"></span>
         `;
-        li.addEventListener('click', () => openNews(n.id));
+        link.addEventListener('click', e => {
+          if (e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+          e.preventDefault();
+          openNews(n.id);
+        });
+        li.appendChild(link);
         list.appendChild(li);
       });
       observeReveals(list);
@@ -2632,42 +2652,11 @@
         ? `<a class="work-external-link" href="${n.url}" target="_blank" rel="noopener">${lang === 'en' ? 'Open link' : 'リンクを開く'}</a>` : '';
     }
 
-    function openNews(id, fromHistory) {
-      const mainView       = document.getElementById('main-view');
-      const newsDetailView = document.getElementById('news-detail-view');
-      mainView.style.opacity = '0';
-      schedule(() => {
-        mainView.hidden       = true;
-        newsDetailView.hidden = false;
-        newsDetailView.style.opacity = '0';
-        window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
-        renderNewsDetail(id, currentLang);
-        fadeIn(newsDetailView);
-      }, 220);
-      if (!fromHistory) history.pushState({ newsId: id }, '', location.pathname + location.search + '#' + id);
-      currentNewsId = id;
-    }
-
-    function closeNews(fromHistory) {
-      document.getElementById('nd-embed').innerHTML = '';
-      const mainView       = document.getElementById('main-view');
-      const newsDetailView = document.getElementById('news-detail-view');
-      newsDetailView.style.opacity = '0';
-      schedule(() => {
-        newsDetailView.hidden = true;
-        mainView.hidden       = false;
-        mainView.style.opacity = '0';
-        window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
-        fadeIn(mainView);
-      }, 220);
-      if (!fromHistory) history.pushState(null, '', location.pathname + location.search);
-      currentNewsId = null;
-    }
-
     document.getElementById('news-back').addEventListener('click', () => closeNews());
 
     buildNewsList();
-    if (initHash.startsWith('news-') && typeof NEWS !== 'undefined' && NEWS.find(x => x.id === initHash)) openNews(initHash);
+    history.scrollRestoration = 'manual';
+    restoreRouteFromLocation(true);
   </script>
 
   <!-- Filter -->
@@ -2678,6 +2667,7 @@
         btn.classList.add('active');
         currentFilter = btn.dataset.filter;
         applyFilter();
+        rememberRoute();
       });
     });
   </script>
