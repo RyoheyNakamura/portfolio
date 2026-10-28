@@ -2376,7 +2376,7 @@
         mainView.hidden  = true;
         worksView.hidden = false;
         worksView.style.opacity = '0';
-        window.scrollTo(0, 0);
+        window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
         fadeIn(worksView);
       }, 220);
       if (!fromHistory) history.pushState({ view: 'works' }, '', location.pathname + location.search + '#works');
@@ -2433,7 +2433,7 @@
         fromView.hidden = true;
         detailView.hidden = false;
         detailView.style.opacity = '0';
-        window.scrollTo(0, 0);
+        window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
         fadeIn(detailView);
       }, 220);
       if (!fromHistory) history.pushState({ workId: id }, '', location.pathname + location.search + `#${id}`);
@@ -2450,13 +2450,13 @@
         if (prevView === 'works') {
           worksView.hidden = false;
           worksView.style.opacity = '0';
-          window.scrollTo(0, 0);
+          window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
           fadeIn(worksView);
           if (!fromHistory) history.pushState({ view: 'works' }, '', location.pathname + location.search + '#works');
         } else {
           mainView.hidden = false;
           mainView.style.opacity = '0';
-          window.scrollTo(0, 0);
+          window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
           fadeIn(mainView);
           if (!fromHistory) history.pushState(null, '', location.pathname + location.search);
         }
@@ -2640,7 +2640,7 @@
         mainView.hidden       = true;
         newsDetailView.hidden = false;
         newsDetailView.style.opacity = '0';
-        window.scrollTo(0, 0);
+        window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
         renderNewsDetail(id, currentLang);
         fadeIn(newsDetailView);
       }, 220);
@@ -2657,7 +2657,7 @@
         newsDetailView.hidden = true;
         mainView.hidden       = false;
         mainView.style.opacity = '0';
-        window.scrollTo(0, 0);
+        window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
         fadeIn(mainView);
       }, 220);
       if (!fromHistory) history.pushState(null, '', location.pathname + location.search);
