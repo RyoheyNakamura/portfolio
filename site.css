@@ -438,3 +438,28 @@ header.on-opening{opacity:0;visibility:hidden;pointer-events:none;transition:opa
 .card-sleeve-word:nth-child(2n){transform:translateY(.12em) rotate(3deg)}
 .card-sleeve-word:nth-child(3n){transform:translateY(-.06em) rotate(-3deg)}
 @container(max-width:220px){.card-sleeve-signature{display:none}}
+
+
+/* Header name: one-line treatment adopted from study A. */
+header .logo {
+  min-height:44px;
+  display:inline-flex;
+  align-items:center;
+  white-space:nowrap;
+  text-transform:none;
+  font:300 15px/1.2 'DM Sans',sans-serif;
+  letter-spacing:-.035em;
+}
+header .logo .sr-only { position:absolute; }
+@media(max-width:650px) {
+  header { padding-inline:18px; }
+  header nav { gap:12px; }
+  header .nav-main-links { gap:11px; }
+  header .logo { font-size:11px; letter-spacing:-.04em; }
+}
+@media(max-width:359px) {
+  header { padding-inline:14px; }
+  header nav { gap:9px; }
+  header .nav-main-links { gap:8px; }
+  header .logo { font-size:10px; letter-spacing:-.04em; }
+}
