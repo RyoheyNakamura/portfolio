@@ -128,9 +128,9 @@ work('lotte-painomi', {
   title:     '株式会社ロッテ - パイの実<br>特別コンテンツ「パイの音 64奏」',
   titleEn:   'Lotte - Painomi<br>Special Content "Painone 64 Melodies"',
 
-  desc: "株式会社ロッテが展開する『パイの実』の特別コンテンツ「パイの音 64奏」の音楽を担当いたしました。<br>64名のクリエイターによる「パイの実を食べる音」を素材にした「パイの音 64奏 Remix」として、商品の64層のパイを音の重なりで伝える企画です。"
+  desc: "ロッテ『パイの実』の企画「パイの音 64奏 Remix」の音楽を制作しました。<br>64名のクリエイターがパイの実を食べる音を素材に、64層のパイ生地を音の重なりで表現しました。"
     + "<br><br>キャンペーンは<a href=\"https://spotifynewsroom.jp/2026-08-28/spotifyhitsjapan2026finalist/\" target=\"_blank\" rel=\"noopener\">Spotify Hits Japan 2026 Ear Candy部門</a>のファイナリストに選出され、<a href=\"https://ads.tiktok.com/business/ja/blog/tiktok-ad-awards-2026-nominated-works\" target=\"_blank\" rel=\"noopener\">TikTok Ad Awards 2026 Japan</a>にもノミネートされました。",
-  descEn: "Composed the music for Lotte's special content \"Painone 64 Melodies\" for their Painomi brand.<br>“Painone 64 Melodies Remix” layers the sounds of 64 creators eating Painomi to express the snack’s 64 layers of pastry."
+  descEn: "I created the music for “Painone 64 Melodies Remix,” a project for Lotte’s Painomi brand.<br>The music layers recordings of 64 creators eating Painomi to evoke the snack’s 64 layers of pastry."
     + "<br><br>The campaign was a finalist in the <a href=\"https://spotifynewsroom.jp/2026-08-28/spotifyhitsjapan2026finalist/\" target=\"_blank\" rel=\"noopener\">Ear Candy category at Spotify Hits Japan 2026</a> and was nominated for the <a href=\"https://ads.tiktok.com/business/ja/blog/tiktok-ad-awards-2026-nominated-works\" target=\"_blank\" rel=\"noopener\">TikTok Ad Awards 2026 Japan</a>.",
 
   credits:   '',
