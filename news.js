@@ -21,6 +21,16 @@
 
 const NEWS = [
   {
+    id: 'mitateru-emmy-nomination',
+    date: '2026.11.09',
+    category: 'media',
+    title: '『みたてるふぉーぜ』が第54回国際エミー賞にノミネート',
+    titleEn: '“Mitateru-Phose” Nominated for the 54th International Emmy Awards',
+    body: 'NHK Eテレ『みたてるふぉーぜ』が、第54回国際エミー賞 Kids: Factual &amp; Entertainment部門にノミネートされました。対象となった2本（#8・#14）の効果音を担当しました。',
+    bodyEn: 'NHK E-tele’s “Mitateru-Phose: Let’s Change Perspectives!” was nominated for the 54th International Emmy Awards in the Kids: Factual &amp; Entertainment category. I created sound effects for both nominated episodes (#8 and #14).',
+    url: 'https://invisi.jp/news/mitateru-emmy54-nomination',
+  },
+  {
     id: 'news-invisi-25th-dj',
     date: '2026.10.26',
     category: 'event',
