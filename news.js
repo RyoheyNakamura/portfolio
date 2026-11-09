@@ -26,8 +26,14 @@ const NEWS = [
     category: 'media',
     title: '『みたてるふぉーぜ』が第54回国際エミー賞にノミネート',
     titleEn: '“Mitateru-Phose” Nominated for the 54th International Emmy Awards',
-    body: 'NHK Eテレ『みたてるふぉーぜ』が、第54回国際エミー賞 Kids: Factual &amp; Entertainment部門にノミネートされました。対象となった2本（#8・#14）の効果音を担当しました。',
-    bodyEn: 'NHK E-tele’s “Mitateru-Phose: Let’s Change Perspectives!” was nominated for the 54th International Emmy Awards in the Kids: Factual &amp; Entertainment category. I created sound effects for both nominated episodes (#8 and #14).',
+    body: 'NHK Eテレ『みたてるふぉーぜ』が、第54回国際エミー賞 Kids: Factual &amp; Entertainment部門にノミネートされました。対象となった2本（#8・#14）の効果音を担当しました。<br><br>'
+      + '『みたてるふぉーぜ』は、身近なものを別のものに見立てて遊ぶ子ども番組です。#8にはミニチュアを使った「おいてみよーぜ」や、道をなぞる「みちなぞろーぜ」が登場。#14では、蛇口が登場する「うーさー」や、ミニチュアで天気を表現する「お天気みよーぜ」が放送されました。シリーズの#1は、2024年のプリ・ジュネスで6歳以下向けノンフィクション部門の最優秀賞を受賞しています。<br><br>'
+      + '国際エミー賞は、国際テレビ芸術科学アカデミーが主催する、世界の優れたテレビ作品をたたえる賞です。今回の部門は、子どもを楽しませたり、知識を伝えたりするノンフィクション番組が対象です。結果は、ニューヨークで現地時間11月23日（日本時間11月24日）に開かれる授賞式で発表されます。<br><br>'
+      + '<a href="https://www.iemmys.tv/2026-international-emmy-awards-nominees-announced/" target="_blank" rel="noopener">国際エミー賞の公式発表</a>',
+    bodyEn: 'NHK E-tele’s “Mitateru-Phose: Let’s Change Perspectives!” was nominated for the 54th International Emmy Awards in the Kids: Factual &amp; Entertainment category. I created sound effects for both nominated episodes (#8 and #14).<br><br>'
+      + 'The children’s series invites viewers to see everyday things as something else. Episode #8 plays with miniatures and traces the shapes of roads. Episode #14 features a faucet and uses miniatures to portray different kinds of weather. The first episode won the Up to 6 Years Non-Fiction category at PRIX JEUNESSE INTERNATIONAL in 2024.<br><br>'
+      + 'Presented by the International Academy of Television Arts &amp; Sciences, the International Emmy Awards recognize outstanding television from around the world. This category celebrates nonfiction programs that entertain or inform young audiences. The winners will be announced at the gala in New York on November 23 (November 24 in Japan).<br><br>'
+      + '<a href="https://www.iemmys.tv/2026-international-emmy-awards-nominees-announced/" target="_blank" rel="noopener">Official International Emmy Awards announcement</a>',
     url: 'https://invisi.jp/news/mitateru-emmy54-nomination',
   },
   {
