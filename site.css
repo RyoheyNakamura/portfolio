@@ -158,10 +158,29 @@ footer,.detail-footer-bar{flex-direction:row;justify-content:space-between;gap:1
 header{opacity:1;visibility:visible;transition:opacity .45s ease,visibility 0s linear 0s}
 header.on-opening{opacity:0;visibility:hidden;pointer-events:none;transition:opacity .45s ease,visibility 0s linear .45s}
 .about .clients-section{padding:0;margin:30px 0 28px}
+.about .about-awards .section-title,
 .about .clients-section .section-title{margin-bottom:10px;font-size:11px;letter-spacing:.02em;text-transform:none}
 .about .clients-list{font-size:13px;line-height:2.2;letter-spacing:0}
 .about .clients-list li{max-width:100%;white-space:normal;overflow-wrap:anywhere}
 .about .clients-more{color:var(--text-secondary);font-size:11px}
+
+.about-awards{margin-top:30px}
+.about-awards-list{
+  display:grid;
+  gap:12px;
+  margin:0;
+  padding:0;
+  list-style:none;
+  font-size:13px;
+  line-height:1.65;
+}
+.about-awards-list li{
+  display:grid;
+  grid-template-columns:4ch minmax(0,1fr);
+  gap:12px;
+}
+.about-awards-list time{color:var(--text-secondary);font-size:11px}
+.about-awards-list a{font-size:11px}
 /* A full-height opening, with a quiet animated scroll cue. */
 .type-opening{isolation:isolate;background:#fafaf7;height:100svh;min-height:440px;max-height:none}
 .opening-caption{position:absolute;z-index:1;inset:34px var(--px) 20px;display:flex;flex-direction:column;color:#30312b}
@@ -342,11 +361,19 @@ header.on-opening{opacity:0;visibility:hidden;pointer-events:none;transition:opa
 
 .detail-desc a[href] {
   color: inherit;
+}
+.about-awards-list a[href] {
+  color: var(--text-secondary);
+}
+.about-awards-list a[href],
+.detail-desc a[href] {
   text-decoration: underline;
   text-decoration-color: var(--accent-deep);
   text-decoration-thickness: 1px;
   text-underline-offset: .2em;
 }
+.about-awards-list a[href]:hover,
+.about-awards-list a[href]:focus-visible,
 .detail-desc a[href]:hover,
 .detail-desc a[href]:focus-visible {
   color: var(--accent-deep);
