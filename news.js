@@ -22,7 +22,7 @@
 const NEWS = [
   {
     id: 'mitateru-emmy-nomination',
-    date: '2026.11.09',
+    date: '2026.09.23',
     category: 'media',
     title: '『みたてるふぉーぜ』が第54回国際エミー賞にノミネート',
     titleEn: '“Mitateru-Phose” Nominated for the 54th International Emmy Awards',
